@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -279,7 +280,24 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onSendWeather(WeatherSpec weatherSpec) {
+        try {
+            TransactionBuilder builder;
+            builder = performInitialized("Sending current weather");
 
+            byte[] data=ByteBuffer.allocate(6).array();
+            data[0] = SMAQ2OSSConstants.MSG_SET_WEATHER;
+            data[1] = Weather.mapToPebbleCondition( weatherSpec.currentConditionCode);
+            data[2] = (byte) (weatherSpec.currentTemp-273);
+            data[3] = (byte) (weatherSpec.todayMinTemp-273);
+            data[4] = (byte) (weatherSpec.todayMaxTemp-273);
+            data[5] = (byte) weatherSpec.currentHumidity;
+
+
+            builder.write(normalWriteCharacteristic, data);
+            builder.queue(getQueue());
+        } catch (Exception ex) {
+            LOG.error("Error sending current weather", ex);
+        }
     }
 
     private void setInitialized(TransactionBuilder builder) {

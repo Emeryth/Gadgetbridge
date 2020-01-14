@@ -15,6 +15,7 @@ public class SMAQ2OSSConstants {
     public static final byte MSG_SET_TIME = 0x01;
     public static final byte MSG_BATTERY_STATE = 0x02;
     public static final byte MSG_MUSIC_EVENT = 0x03;
+    public static final byte MSG_SET_WEATHER = 0x04;
 
     public static final byte EVT_PLAY_PAUSE = 0x00;
     public static final byte EVT_FWD = 0x01;
