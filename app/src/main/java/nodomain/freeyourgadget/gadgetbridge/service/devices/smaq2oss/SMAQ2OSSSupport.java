@@ -1,6 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.smaq2oss;
 
 
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.net.Uri;
 
@@ -15,6 +16,7 @@ import java.util.GregorianCalendar;
 import java.util.UUID;
 import java.nio.ByteBuffer;
 
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.smaq2oss.SMAQ2OSSConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
@@ -55,7 +57,60 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
 
+        builder.notify(getCharacteristic(SMAQ2OSSConstants.UUID_CHARACTERISTIC_NOTIFY_NORMAL), true);
+
         return builder;
+    }
+
+    @Override
+    public boolean onCharacteristicChanged(BluetoothGatt gatt,
+                                           BluetoothGattCharacteristic characteristic) {
+        super.onCharacteristicChanged(gatt, characteristic);
+
+        UUID characteristicUUID = characteristic.getUuid();
+        if (SMAQ2OSSConstants.UUID_CHARACTERISTIC_NOTIFY_NORMAL.equals(characteristicUUID)) {
+            handleDeviceEvent(characteristic.getValue());
+        }
+        return true;
+    }
+
+    private void handleDeviceEvent(byte[] value){
+        if (value == null || value.length == 0) {
+            return;
+        }
+
+        switch (value[0]) {
+            case SMAQ2OSSConstants.MSG_MUSIC_EVENT:
+                LOG.info("got music control");
+                handleMusicEvent(value[1]);
+                break;
+
+        }
+
+    }
+
+    private void handleMusicEvent(byte value){
+        GBDeviceEventMusicControl deviceEventMusicControl = new GBDeviceEventMusicControl();
+
+        switch (value){
+            case SMAQ2OSSConstants.EVT_PLAY_PAUSE:
+                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PLAYPAUSE;
+                break;
+            case SMAQ2OSSConstants.EVT_FWD:
+                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.NEXT;
+                break;
+            case SMAQ2OSSConstants.EVT_REV:
+                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PREVIOUS;
+                break;
+            case SMAQ2OSSConstants.EVT_VOL_UP:
+                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.VOLUMEUP;
+                break;
+            case SMAQ2OSSConstants.EVT_VOL_DOWN:
+                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.VOLUMEDOWN;
+                break;
+        }
+        evaluateGBDeviceEvent(deviceEventMusicControl);
+
     }
 
     @Override
@@ -236,7 +291,7 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
 
         long offset = (c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET));
         long ts =  (c.getTimeInMillis()+ offset)/1000 ;
-        byte[] data = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN).put(SMAQ2OSSConstants.CMD_SET_TIME).putInt((int) (ts & 0xffffffffL)).array();
+        byte[] data = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN).put(SMAQ2OSSConstants.MSG_SET_TIME).putInt((int) (ts & 0xffffffffL)).array();
 
         builder.write(normalWriteCharacteristic, data);
         return this;

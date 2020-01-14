@@ -59,7 +59,7 @@ public enum DeviceType {
     BFH16(140, R.drawable.ic_device_default, R.drawable.ic_device_default_disabled, R.string.devicetype_bfh16),
     MAKIBESHR3(150, R.drawable.ic_device_default, R.drawable.ic_device_hplus_disabled, R.string.devicetype_makibes_hr3),
     MIJIA_LYWSD02(200, R.drawable.ic_device_pebble, R.drawable.ic_device_pebble_disabled, R.string.devicetype_mijia_lywsd02),
-    SMAQ2OSS(120, R.drawable.ic_device_hplus, R.drawable.ic_device_hplus_disabled,R.string.devicetype_smaq2oss),
+    SMAQ2OSS(220, R.drawable.ic_device_hplus, R.drawable.ic_device_hplus_disabled,R.string.devicetype_smaq2oss),
     TEST(1000, R.drawable.ic_device_default, R.drawable.ic_device_default_disabled, R.string.devicetype_test);
 
     private final int key;
