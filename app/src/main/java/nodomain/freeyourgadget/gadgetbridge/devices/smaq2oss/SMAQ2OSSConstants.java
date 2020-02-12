@@ -7,10 +7,14 @@ import static nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDevi
 
 public class SMAQ2OSSConstants {
 
-    public static final UUID UUID_SERVICE_SMAQ2OSS = UUID.fromString("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
-//    public static final UUID UUID_SERVICE_SMAQ2OSS = UUID.fromString(String.format(BASE_UUID, "2a04"));
-    public static final UUID UUID_CHARACTERISTIC_WRITE_NORMAL = UUID.fromString("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
-    public static final UUID UUID_CHARACTERISTIC_NOTIFY_NORMAL = UUID.fromString("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
+    // Nordic UART Service UUID
+//    public static final UUID UUID_SERVICE_SMAQ2OSS = UUID.fromString("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
+//    public static final UUID UUID_CHARACTERISTIC_WRITE_NORMAL = UUID.fromString("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
+//    public static final UUID UUID_CHARACTERISTIC_NOTIFY_NORMAL = UUID.fromString("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
+    // SMA-Q2-OSS watch service UUID 51be0000-c182-4f3a-9359-21337bce51f6
+    public static final UUID UUID_SERVICE_SMAQ2OSS = UUID.fromString("51be0001-c182-4f3a-9359-21337bce51f6");
+    public static final UUID UUID_CHARACTERISTIC_WRITE_NORMAL = UUID.fromString("51be0002-c182-4f3a-9359-21337bce51f6");
+    public static final UUID UUID_CHARACTERISTIC_NOTIFY_NORMAL = UUID.fromString("51be0003-c182-4f3a-9359-21337bce51f6");
 
     public static final byte MSG_SET_TIME = 0x01;
     public static final byte MSG_BATTERY_STATE = 0x02;

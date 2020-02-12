@@ -33,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.no1f1.No1F1Support;
+import nodomain.freeyourgadget.gadgetbridge.SMAQ2OSSProtos;
 
 public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(SMAQ2OSSSupport.class);
@@ -309,9 +310,16 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
 
         long offset = (c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET));
         long ts =  (c.getTimeInMillis()+ offset)/1000 ;
-        byte[] data = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN).put(SMAQ2OSSConstants.MSG_SET_TIME).putInt((int) (ts & 0xffffffffL)).array();
+//        byte[] data = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN).put(SMAQ2OSSConstants.MSG_SET_TIME).putInt((int) (ts & 0xffffffffL)).array();
 
-        builder.write(normalWriteCharacteristic, data);
+        SMAQ2OSSProtos.SetTime.Builder settime = SMAQ2OSSProtos.SetTime.newBuilder();
+        settime.setTimestamp((int) ts);
+
+        byte[] message=settime.build().toByteArray();
+        ByteBuffer buf=ByteBuffer.allocate(message.length+1);
+        buf.put(SMAQ2OSSConstants.MSG_SET_TIME);
+        buf.put(message);
+        builder.write(normalWriteCharacteristic,buf.array());
         return this;
     }
 
