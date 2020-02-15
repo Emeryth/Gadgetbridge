@@ -31,3 +31,10 @@ message MessageNotification
     string title = 4;
     string text = 5;
 }
+
+message MusicInfo
+{
+    string artist = 1;
+    string album = 2;
+    string track = 3;
+}

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.nio.ByteOrder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -32,8 +32,9 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSuppo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.no1f1.No1F1Support;
 import nodomain.freeyourgadget.gadgetbridge.SMAQ2OSSProtos;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(SMAQ2OSSSupport.class);
@@ -50,6 +51,7 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         normalWriteCharacteristic = getCharacteristic(SMAQ2OSSConstants.UUID_CHARACTERISTIC_WRITE_NORMAL);
+        normalWriteCharacteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
 
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
 
@@ -163,6 +165,26 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
     @Override
     public void onSetMusicInfo(MusicSpec musicSpec) {
 
+
+        SMAQ2OSSProtos.MusicInfo.Builder musicInfo = SMAQ2OSSProtos.MusicInfo.newBuilder();
+
+        musicInfo.setArtist(truncateUTF8(musicSpec.artist,SMAQ2OSSConstants.MUSIC_ARTIST_MAX_LEN));
+        musicInfo.setAlbum(truncateUTF8(musicSpec.album,SMAQ2OSSConstants.MUSIC_ALBUM_MAX_LEN));
+        musicInfo.setTrack(truncateUTF8(musicSpec.track,SMAQ2OSSConstants.MUSIC_TRACK_MAX_LEN));
+
+        try {
+            TransactionBuilder builder;
+            builder = performInitialized("Sending music info");
+            LOG.info(musicInfo.getArtist());
+            LOG.info(musicInfo.getAlbum());
+            LOG.info(musicInfo.getTrack());
+
+            builder.write(normalWriteCharacteristic,createMessage(SMAQ2OSSConstants.MSG_SET_MUSIC_INFO,musicInfo.build().toByteArray()));
+
+            builder.queue(getQueue());
+        } catch (Exception ex) {
+            LOG.error("Error sending music info", ex);
+        }
     }
 
     @Override
@@ -305,6 +327,26 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
     }
 
+    byte[] createMessage(byte msgid, byte[] data){
+
+        ByteBuffer buf=ByteBuffer.allocate(data.length+1);
+        buf.put(msgid);
+        buf.put(data);
+
+        return buf.array();
+    }
+
+    String truncateUTF8(String str, int len){
+
+        byte[] bytes=str.getBytes(UTF_8);
+
+        if (bytes.length>=len){
+            return new String(bytes, 0, len-1, UTF_8);
+        }
+
+        return str;
+    }
+
     SMAQ2OSSSupport setTime(TransactionBuilder builder) {
         Calendar c = GregorianCalendar.getInstance();
 
@@ -315,11 +357,12 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
         SMAQ2OSSProtos.SetTime.Builder settime = SMAQ2OSSProtos.SetTime.newBuilder();
         settime.setTimestamp((int) ts);
 
-        byte[] message=settime.build().toByteArray();
-        ByteBuffer buf=ByteBuffer.allocate(message.length+1);
-        buf.put(SMAQ2OSSConstants.MSG_SET_TIME);
-        buf.put(message);
-        builder.write(normalWriteCharacteristic,buf.array());
+//        byte[] message=settime.build().toByteArray();
+//        ByteBuffer buf=ByteBuffer.allocate(message.length+1);
+//        buf.put(SMAQ2OSSConstants.MSG_SET_TIME);
+//        buf.put(message);
+//        builder.write(normalWriteCharacteristic,buf.array());
+        builder.write(normalWriteCharacteristic,createMessage(SMAQ2OSSConstants.MSG_SET_TIME,settime.build().toByteArray()));
         return this;
     }
 

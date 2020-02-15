@@ -144,11 +144,16 @@ public class SMAQ2OSSCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public boolean supportsWeather() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean supportsFindDevice() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsMusicInfo() {
         return true;
     }
 }
