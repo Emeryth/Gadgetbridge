@@ -307,16 +307,27 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
             TransactionBuilder builder;
             builder = performInitialized("Sending current weather");
 
-            byte[] data=ByteBuffer.allocate(6).array();
-            data[0] = SMAQ2OSSConstants.MSG_SET_WEATHER;
-            data[1] = Weather.mapToPebbleCondition( weatherSpec.currentConditionCode);
-            data[2] = (byte) (weatherSpec.currentTemp-273);
-            data[3] = (byte) (weatherSpec.todayMinTemp-273);
-            data[4] = (byte) (weatherSpec.todayMaxTemp-273);
-            data[5] = (byte) weatherSpec.currentHumidity;
+            SMAQ2OSSProtos.SetWeather.Builder setWeather= SMAQ2OSSProtos.SetWeather.newBuilder();
 
+            setWeather.setTimestamp(weatherSpec.timestamp);
+            setWeather.setCondition(weatherSpec.currentConditionCode);
+            setWeather.setTemperature(weatherSpec.currentTemp-273);
+            setWeather.setTemperatureMin(weatherSpec.todayMinTemp-273);
+            setWeather.setTemperatureMax(weatherSpec.todayMaxTemp-273);
+            setWeather.setHumidity(weatherSpec.currentHumidity);
 
-            builder.write(normalWriteCharacteristic, data);
+            for (WeatherSpec.Forecast f:weatherSpec.forecasts) {
+
+                SMAQ2OSSProtos.Forecast.Builder fproto = SMAQ2OSSProtos.Forecast.newBuilder();
+
+                fproto.setCondition(f.conditionCode);
+                fproto.setTemperatureMin(f.minTemp-273);
+                fproto.setTemperatureMax(f.maxTemp-273);
+
+                setWeather.addForecasts(fproto);
+            }
+
+            builder.write(normalWriteCharacteristic,createMessage(SMAQ2OSSConstants.MSG_SET_WEATHER,setWeather.build().toByteArray()));
             builder.queue(getQueue());
         } catch (Exception ex) {
             LOG.error("Error sending current weather", ex);
