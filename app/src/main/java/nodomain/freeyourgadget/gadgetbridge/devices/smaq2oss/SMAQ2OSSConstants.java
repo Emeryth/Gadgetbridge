@@ -21,6 +21,9 @@ public class SMAQ2OSSConstants {
     public static final byte MSG_MUSIC_EVENT = 0x03;
     public static final byte MSG_SET_WEATHER = 0x04;
     public static final byte MSG_SET_MUSIC_INFO = 0x05;
+    public static final byte MSG_CALL_NOTIFICATION = 0x06;
+    public static final byte MSG_CALL_COMMAND = 0x07;
+    public static final byte MSG_NOTIFICATION = 0x08;
 
     public static final byte EVT_PLAY_PAUSE = 0x00;
     public static final byte EVT_FWD = 0x01;
@@ -32,5 +35,6 @@ public class SMAQ2OSSConstants {
     public static final int MUSIC_ALBUM_MAX_LEN = 32;
     public static final int MUSIC_TRACK_MAX_LEN = 64;
 
-
+    public static final int CALL_NAME_MAX_LEN = 32;
+    public static final int CALL_NUMBER_MAX_LEN = 16;
 }

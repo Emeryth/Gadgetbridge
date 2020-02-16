@@ -16,6 +16,7 @@ import java.util.GregorianCalendar;
 import java.util.UUID;
 import java.nio.ByteBuffer;
 
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCallControl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.smaq2oss.SMAQ2OSSConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -88,6 +89,10 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
                 LOG.info("got music control");
                 handleMusicEvent(value[1]);
                 break;
+            case SMAQ2OSSConstants.MSG_CALL_COMMAND:
+                LOG.info("got call control");
+                handleCallCommand(value[1]);
+                break;
 
         }
 
@@ -114,6 +119,22 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
                 break;
         }
         evaluateGBDeviceEvent(deviceEventMusicControl);
+
+    }
+
+    private void handleCallCommand(byte command){
+        GBDeviceEventCallControl callCmd = new GBDeviceEventCallControl();
+
+        switch (command){
+            case CallSpec.CALL_ACCEPT:
+                callCmd.event = GBDeviceEventCallControl.Event.ACCEPT;
+                evaluateGBDeviceEvent(callCmd);
+                break;
+            case CallSpec.CALL_REJECT:
+                callCmd.event = GBDeviceEventCallControl.Event.REJECT;
+                evaluateGBDeviceEvent(callCmd);
+                break;
+        }
 
     }
 
@@ -149,6 +170,23 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onSetCallState(CallSpec callSpec) {
+
+        SMAQ2OSSProtos.CallNotification.Builder callnotif = SMAQ2OSSProtos.CallNotification.newBuilder();
+
+        callnotif.setName(truncateUTF8(callSpec.name,SMAQ2OSSConstants.CALL_NAME_MAX_LEN));
+        callnotif.setNumber(truncateUTF8(callSpec.number,SMAQ2OSSConstants.CALL_NUMBER_MAX_LEN));
+        callnotif.setCommand(callSpec.command);
+
+        try {
+            TransactionBuilder builder;
+            builder = performInitialized("Sending call state");
+
+            builder.write(normalWriteCharacteristic,createMessage(SMAQ2OSSConstants.MSG_CALL_NOTIFICATION,callnotif.build().toByteArray()));
+
+            builder.queue(getQueue());
+        } catch (Exception ex) {
+            LOG.error("Error sending call state", ex);
+        }
 
     }
 
@@ -348,6 +386,9 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
     }
 
     String truncateUTF8(String str, int len){
+
+        if (str ==null)
+            return new String();
 
         byte[] bytes=str.getBytes(UTF_8);
 
