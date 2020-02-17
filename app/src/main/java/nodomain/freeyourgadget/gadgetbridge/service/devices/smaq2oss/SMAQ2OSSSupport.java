@@ -390,10 +390,12 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
         if (str ==null)
             return new String();
 
-        byte[] bytes=str.getBytes(UTF_8);
+        int currLen = str.getBytes(UTF_8).length;
 
-        if (bytes.length>=len){
-            return new String(bytes, 0, len-1, UTF_8);
+        while (currLen>len-1){
+
+            str=str.substring(0,str.length()-1);
+            currLen = str.getBytes(UTF_8).length;
         }
 
         return str;
