@@ -37,4 +37,8 @@ public class SMAQ2OSSConstants {
 
     public static final int CALL_NAME_MAX_LEN = 32;
     public static final int CALL_NUMBER_MAX_LEN = 16;
+
+    public static final int NOTIFICATION_SENDER_MAX_LEN = 32;
+    public static final int NOTIFICATION_SUBJECT_MAX_LEN = 32;
+    public static final int NOTIFICATION_BODY_MAX_LEN = 200;
 }

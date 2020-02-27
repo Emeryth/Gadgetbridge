@@ -34,6 +34,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.SMAQ2OSSProtos;
+import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -145,6 +147,29 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onNotification(NotificationSpec notificationSpec) {
+
+        SMAQ2OSSProtos.MessageNotification.Builder notification = SMAQ2OSSProtos.MessageNotification.newBuilder();
+
+
+        notification.setTimestamp(notificationSpec.getId());
+        String sender = StringUtils.getFirstOf(StringUtils.getFirstOf(notificationSpec.sender,notificationSpec.phoneNumber),notificationSpec.title);
+        notification.setSender(truncateUTF8(sender,SMAQ2OSSConstants.NOTIFICATION_SENDER_MAX_LEN));
+//        notification.setSubject(truncateUTF8(notificationSpec.subject,SMAQ2OSSConstants.NOTIFICATION_SUBJECT_MAX_LEN));
+        notification.setBody(truncateUTF8(notificationSpec.body,SMAQ2OSSConstants.NOTIFICATION_BODY_MAX_LEN));
+
+
+        try {
+            TransactionBuilder builder;
+            builder = performInitialized("Sending notification");
+
+            builder.write(normalWriteCharacteristic,createMessage(SMAQ2OSSConstants.MSG_NOTIFICATION,notification.build().toByteArray()));
+
+            builder.queue(getQueue());
+        } catch (Exception ex) {
+            LOG.error("Error sending notification", ex);
+        }
+
+
 
     }
 
