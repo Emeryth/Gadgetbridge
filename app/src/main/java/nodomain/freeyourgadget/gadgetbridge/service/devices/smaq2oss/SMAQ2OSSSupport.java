@@ -151,7 +151,7 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
         SMAQ2OSSProtos.MessageNotification.Builder notification = SMAQ2OSSProtos.MessageNotification.newBuilder();
 
 
-        notification.setTimestamp(notificationSpec.getId());
+        notification.setTimestamp(getTimestamp());
         String sender = StringUtils.getFirstOf(StringUtils.getFirstOf(notificationSpec.sender,notificationSpec.phoneNumber),notificationSpec.title);
         notification.setSender(truncateUTF8(sender,SMAQ2OSSConstants.NOTIFICATION_SENDER_MAX_LEN));
 //        notification.setSubject(truncateUTF8(notificationSpec.subject,SMAQ2OSSConstants.NOTIFICATION_SUBJECT_MAX_LEN));
@@ -426,21 +426,21 @@ public class SMAQ2OSSSupport extends AbstractBTLEDeviceSupport {
         return str;
     }
 
-    SMAQ2OSSSupport setTime(TransactionBuilder builder) {
+    private int getTimestamp(){
+
         Calendar c = GregorianCalendar.getInstance();
 
         long offset = (c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET));
         long ts =  (c.getTimeInMillis()+ offset)/1000 ;
-//        byte[] data = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN).put(SMAQ2OSSConstants.MSG_SET_TIME).putInt((int) (ts & 0xffffffffL)).array();
+
+        return (int)ts;
+
+    }
+
+    SMAQ2OSSSupport setTime(TransactionBuilder builder) {
 
         SMAQ2OSSProtos.SetTime.Builder settime = SMAQ2OSSProtos.SetTime.newBuilder();
-        settime.setTimestamp((int) ts);
-
-//        byte[] message=settime.build().toByteArray();
-//        ByteBuffer buf=ByteBuffer.allocate(message.length+1);
-//        buf.put(SMAQ2OSSConstants.MSG_SET_TIME);
-//        buf.put(message);
-//        builder.write(normalWriteCharacteristic,buf.array());
+        settime.setTimestamp(getTimestamp());
         builder.write(normalWriteCharacteristic,createMessage(SMAQ2OSSConstants.MSG_SET_TIME,settime.build().toByteArray()));
         return this;
     }
