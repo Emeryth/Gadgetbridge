@@ -15,8 +15,6 @@
  */
 package nodomain.freeyourgadget.gadgetbridge.daogen;
 
-import java.util.Date;
-
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Index;
@@ -45,7 +43,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(21, MAIN_PACKAGE + ".entities");
+        Schema schema = new Schema(31, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -72,7 +70,16 @@ public class GBDaoGenerator {
         addXWatchActivitySample(schema, user, device);
         addZeTimeActivitySample(schema, user, device);
         addID115ActivitySample(schema, user, device);
+        addJYouActivitySample(schema, user, device);
+        addWatchXPlusHealthActivitySample(schema, user, device);
+        addWatchXPlusHealthActivityKindOverlay(schema, user, device);
+        addTLW64ActivitySample(schema, user, device);
+        addLefunActivitySample(schema, user, device);
+        addLefunBiometricSample(schema,user,device);
+        addLefunSleepSample(schema, user, device);
+        addSonySWR12Sample(schema, user, device);
 
+        addHybridHRActivitySample(schema, user, device);
         addCalendarSyncState(schema, device);
         addAlarms(schema, user, device);
 
@@ -80,7 +87,7 @@ public class GBDaoGenerator {
 
         addNotificationFilterEntry(schema, notificationFilter);
 
-        addBipActivitySummary(schema, user, device);
+        addActivitySummary(schema, user, device);
 
         new DaoGenerator().generateAll(schema, "app/src/main/java");
     }
@@ -169,6 +176,7 @@ public class GBDaoGenerator {
         device.addStringProperty("identifier").notNull().unique().javaDocGetterAndSetter("The fixed identifier, i.e. MAC address of the device.");
         device.addIntProperty("type").notNull().javaDocGetterAndSetter("The DeviceType key, i.e. the GBDevice's type.");
         device.addStringProperty("model").javaDocGetterAndSetter("An optional model, further specifying the kind of device-");
+        device.addStringProperty("alias");
         Property deviceId = deviceAttributes.addLongProperty("deviceId").notNull().getProperty();
         // sorted by the from-date, newest first
         Property deviceAttributesSortProperty = getPropertyByName(deviceAttributes, VALID_FROM_UTC);
@@ -330,6 +338,129 @@ public class GBDaoGenerator {
         return activitySample;
     }
 
+    private static Entity addJYouActivitySample(Schema schema, Entity user, Entity device) {
+        Entity activitySample = addEntity(schema, "JYouActivitySample");
+        activitySample.implementsSerializable();
+        addCommonActivitySampleProperties("AbstractActivitySample", activitySample, user, device);
+        activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty("caloriesBurnt");
+        activitySample.addIntProperty("distanceMeters");
+        activitySample.addIntProperty("activeTimeMinutes");
+        addHeartRateProperties(activitySample);
+        return activitySample;
+    }
+
+    private static Entity addHybridHRActivitySample(Schema schema, Entity user, Entity device) {
+        Entity activitySample = addEntity(schema, "HybridHRActivitySample");
+        activitySample.implementsSerializable();
+
+        addCommonActivitySampleProperties("AbstractHybridHRActivitySample", activitySample, user, device);
+
+        activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty("calories").notNull();
+        activitySample.addIntProperty("variability").notNull();
+        activitySample.addIntProperty("max_variability").notNull();
+        activitySample.addIntProperty("heartrate_quality").notNull();
+        activitySample.addBooleanProperty("active").notNull();
+        activitySample.addByteProperty("wear_type").notNull();
+        addHeartRateProperties(activitySample);
+        return activitySample;
+    }
+
+    private static Entity addWatchXPlusHealthActivitySample(Schema schema, Entity user, Entity device) {
+        Entity activitySample = addEntity(schema, "WatchXPlusActivitySample");
+        activitySample.implementsSerializable();
+        addCommonActivitySampleProperties("AbstractActivitySample", activitySample, user, device);
+        activitySample.addByteArrayProperty("rawWatchXPlusHealthData");
+        activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().primaryKey();
+        activitySample.addIntProperty(SAMPLE_RAW_INTENSITY).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        addHeartRateProperties(activitySample);
+        activitySample.addIntProperty("distance");
+        activitySample.addIntProperty("calories");
+        return activitySample;
+    }
+
+    private static Entity addWatchXPlusHealthActivityKindOverlay(Schema schema, Entity user, Entity device) {
+        Entity activityOverlay = addEntity(schema, "WatchXPlusHealthActivityOverlay");
+
+        activityOverlay.addIntProperty(TIMESTAMP_FROM).notNull().primaryKey();
+        activityOverlay.addIntProperty(TIMESTAMP_TO).notNull().primaryKey();
+        activityOverlay.addIntProperty(SAMPLE_RAW_KIND).notNull().primaryKey();
+        Property deviceId = activityOverlay.addLongProperty("deviceId").primaryKey().notNull().getProperty();
+        activityOverlay.addToOne(device, deviceId);
+
+        Property userId = activityOverlay.addLongProperty("userId").notNull().getProperty();
+        activityOverlay.addToOne(user, userId);
+        activityOverlay.addByteArrayProperty("rawWatchXPlusHealthData");
+
+        return activityOverlay;
+    }
+
+    private static Entity addTLW64ActivitySample(Schema schema, Entity user, Entity device) {
+        Entity activitySample = addEntity(schema, "TLW64ActivitySample");
+        activitySample.implementsSerializable();
+        addCommonActivitySampleProperties("AbstractActivitySample", activitySample, user, device);
+        activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_RAW_INTENSITY).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        return activitySample;
+    }
+
+    private static Entity addSonySWR12Sample(Schema schema, Entity user, Entity device) {
+        Entity activitySample = addEntity(schema, "SonySWR12Sample");
+        activitySample.implementsSerializable();
+        addCommonActivitySampleProperties("AbstractActivitySample", activitySample, user, device);
+        addHeartRateProperties(activitySample);
+        activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_RAW_INTENSITY).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        return activitySample;
+    }
+
+    private static Entity addLefunActivitySample(Schema schema, Entity user, Entity device) {
+        Entity activitySample = addEntity(schema, "LefunActivitySample");
+        activitySample.implementsSerializable();
+        addCommonActivitySampleProperties("AbstractActivitySample", activitySample, user, device);
+        activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty("distance").notNull();
+        activitySample.addIntProperty("calories").notNull();
+        addHeartRateProperties(activitySample);
+        return activitySample;
+    }
+
+    private static Entity addLefunBiometricSample(Schema schema, Entity user, Entity device) {
+        Entity biometricSample = addEntity(schema, "LefunBiometricSample");
+        biometricSample.implementsSerializable();
+
+        biometricSample.addIntProperty("timestamp").notNull().primaryKey();
+        Property deviceId = biometricSample.addLongProperty("deviceId").primaryKey().notNull().getProperty();
+        biometricSample.addToOne(device, deviceId);
+        Property userId = biometricSample.addLongProperty("userId").notNull().getProperty();
+        biometricSample.addToOne(user, userId);
+
+        biometricSample.addIntProperty("type").notNull();
+        biometricSample.addIntProperty("value1").notNull();
+        biometricSample.addIntProperty("value2");
+        return biometricSample;
+    }
+
+    private static Entity addLefunSleepSample(Schema schema, Entity user, Entity device) {
+        Entity sleepSample = addEntity(schema, "LefunSleepSample");
+        sleepSample.implementsSerializable();
+
+        sleepSample.addIntProperty("timestamp").notNull().primaryKey();
+        Property deviceId = sleepSample.addLongProperty("deviceId").primaryKey().notNull().getProperty();
+        sleepSample.addToOne(device, deviceId);
+        Property userId = sleepSample.addLongProperty("userId").notNull().getProperty();
+        sleepSample.addToOne(user, userId);
+
+        sleepSample.addIntProperty("type").notNull();
+        return sleepSample;
+    }
+
     private static void addCommonActivitySampleProperties(String superClass, Entity activitySample, Entity user, Entity device) {
         activitySample.setSuperclass(superClass);
         activitySample.addImport(MAIN_PACKAGE + ".devices.SampleProvider");
@@ -372,12 +503,16 @@ public class GBDaoGenerator {
         alarm.addIndex(indexUnique);
         alarm.addBooleanProperty("enabled").notNull();
         alarm.addBooleanProperty("smartWakeup").notNull();
+        alarm.addBooleanProperty("snooze").notNull();
         alarm.addIntProperty("repetition").notNull().codeBeforeGetter(
                 "public boolean isRepetitive() { return getRepetition() != ALARM_ONCE; } " +
                         "public boolean getRepetition(int dow) { return (this.repetition & dow) > 0; }"
         );
         alarm.addIntProperty("hour").notNull();
         alarm.addIntProperty("minute").notNull();
+        alarm.addBooleanProperty("unused").notNull();
+        alarm.addStringProperty("title");
+        alarm.addStringProperty("description");
         alarm.addToOne(user, userId);
         alarm.addToOne(device, deviceId);
     }
@@ -406,7 +541,7 @@ public class GBDaoGenerator {
         return notificatonFilter;
     }
 
-    private static void addBipActivitySummary(Schema schema, Entity user, Entity device) {
+    private static void addActivitySummary(Schema schema, Entity user, Entity device) {
         Entity summary = addEntity(schema, "BaseActivitySummary");
         summary.implementsInterface(ACTIVITY_SUMMARY);
         summary.addIdProperty();
@@ -429,6 +564,8 @@ public class GBDaoGenerator {
         summary.addToOne(device, deviceId);
         Property userId = summary.addLongProperty("userId").notNull().codeBeforeGetter(OVERRIDE).getProperty();
         summary.addToOne(user, userId);
+        summary.addStringProperty("summaryData");
+        summary.addByteArrayProperty("rawSummaryData");
     }
 
     private static Property findProperty(Entity entity, String propertyName) {

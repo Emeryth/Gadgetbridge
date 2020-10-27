@@ -13,7 +13,7 @@
     <string name="controlcenter_connect">Anslut…</string>
     <string name="controlcenter_disconnect">Koppla ifrån</string>
     <string name="controlcenter_delete_device">Ta bort enhet</string>
-    <string name="controlcenter_delete_device_name">Tar bort %1$s</string>
+    <string name="controlcenter_delete_device_name">Ta bort %1$s</string>
     <string name="controlcenter_delete_device_dialogmessage">Detta kommer att ta bort enheten och radera all tillhörande information!</string>
     <string name="controlcenter_navigation_drawer_open">Öppna navigationspanel</string>
     <string name="controlcenter_navigation_drawer_close">Stäng navigationspanel</string>
@@ -43,4 +43,16 @@
     <string name="blacklist_all_for_notifications">Svartlista alla notifieringar</string>
     <string name="title_activity_calblacklist">Svartlistade kalendrar</string>
     <string name="title_activity_fw_app_insaller">FW/App-installerare</string>
+    <string name="pref_chart_heartrate_color_red">Röd</string>
+    <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
+    <string name="appmanager_hrm_activate">Aktivera pulsmätare</string>
+    <string name="appmanager_hrm_deactivate">Avaktivera pulsmätare</string>
+    <string name="app_configure">Konfigurera</string>
+    <string name="sonyswr12_settings_title">Inställningar Sony SWR12</string>
+    <string name="sonyswr12_settings_low_vibration">Låg vibration aktiverad</string>
+    <string name="sonyswr12_settings_stamina">Energisparläge är på</string>
+    <string name="sonyswr12_settings_alarm_interval">Smart larmintervall på några minuter</string>
+    <string name="sonyswr12_settings_low_vibration_summary">Aktivera låg vibrationsintensitet på armbandet</string>
+    <string name="sonyswr12_settings_stamina_summary">Energisparläget stänger av periodisk automatisk mätning av hjärtfrekvensen, vilket ökar arbetstiden</string>
+    <string name="sonyswr12_settings_alarm_interval_summary">Smart alarmintervall är intervall före installerat larm. I detta intervall försöker enheten att upptäcka den lättaste fasen av sömn för att vakna användare</string>
 </resources>

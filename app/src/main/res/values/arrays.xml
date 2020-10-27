@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="pref_theme_options">
+        <item>@string/pref_theme_system</item>
         <item>@string/pref_theme_light</item>
         <item>@string/pref_theme_dark</item>
     </string-array>
     <string-array name="pref_theme_values">
+        <item>@string/pref_theme_value_system</item>
         <item>@string/pref_theme_value_light</item>
         <item>@string/pref_theme_value_dark</item>
     </string-array>
+    <string name="pref_theme_value_system" translatable="false">system</string>
     <string name="pref_theme_value_light" translatable="false">light</string>
     <string name="pref_theme_value_dark" translatable="false">dark</string>
 
@@ -67,6 +70,34 @@
     <string-array name="notification_mode_values_toggle">
         <item>always</item>
         <item>never</item>
+    </string-array>
+
+    <string-array name="language_only_EN_CH">
+        <item name="0">@string/simplified_chinese</item>
+        <item name="1">@string/english</item>
+    </string-array>
+    <string-array name="language_only_EN_CH_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="sensors_bp_cal">
+        <item name="0">@string/prefs_sensors_button_bp_calibration</item>
+        <item name="1">@string/Cancel</item>
+    </string-array>
+    <string-array name="sensors_bp_cal_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="power_mode">
+        <item name="0">@string/power_mode_normal</item>
+        <item name="1">@string/power_mode_saving</item>
+        <item name="2">@string/power_mode_watch</item>
+    </string-array>
+    <string-array name="power_mode_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
     <string-array name="gender">
@@ -282,6 +313,48 @@
         <item>@string/p_heart_rate</item>
     </string-array>
 
+    <string-array name="pref_miband5_display_items">
+        <item>@string/menuitem_status</item>
+        <item>@string/menuitem_pai</item>
+        <item>@string/menuitem_hr</item>
+        <item>@string/menuitem_notifications</item>
+        <item>@string/menuitem_breathing</item>
+        <item>@string/menuitem_eventreminder</item>
+        <item>@string/menuitem_weather</item>
+        <item>@string/menuitem_workout</item>
+        <item>@string/menuitem_more</item>
+        <item>@string/menuitem_stress</item>
+        <item>@string/menuitem_cycles</item>
+    </string-array>
+
+    <string-array name="pref_miband5_display_items_values">
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_hr</item>
+        <item>@string/p_menuitem_notifications</item>
+        <item>@string/p_menuitem_breathing</item>
+        <item>@string/p_menuitem_eventreminder</item>
+        <item>@string/p_menuitem_weather</item>
+        <item>@string/p_menuitem_workout</item>
+        <item>@string/p_menuitem_more</item>
+        <item>@string/p_menuitem_stress</item>
+        <item>@string/p_menuitem_cycles</item>
+    </string-array>
+
+    <string-array name="pref_miband5_display_items_default">
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_hr</item>
+        <item>@string/p_menuitem_notifications</item>
+        <item>@string/p_menuitem_breathing</item>
+        <item>@string/p_menuitem_eventreminder</item>
+        <item>@string/p_menuitem_weather</item>
+        <item>@string/p_menuitem_workout</item>
+        <item>@string/p_menuitem_more</item>
+        <item>@string/p_menuitem_stress</item>
+        <item>@string/p_menuitem_cycles</item>
+    </string-array>
+
     <string-array name="pref_bip_display_items">
         <item>@string/menuitem_shortcut_alipay</item>
         <item>@string/menuitem_shortcut_weather</item>
@@ -353,6 +426,125 @@
         <item>@string/p_menuitem_music</item>
     </string-array>
 
+    <string-array name="pref_gts_display_items">
+        <item>@string/menuitem_status</item>
+        <item>@string/menuitem_pai</item>
+        <item>@string/menuitem_hr</item>
+        <item>@string/menuitem_workout</item>
+        <item>@string/menuitem_activity</item>
+        <item>@string/menuitem_weather</item>
+        <item>@string/menuitem_music</item>
+        <item>@string/menuitem_notifications</item>
+        <item>@string/menuitem_alarm</item>
+        <item>@string/menuitem_eventreminder</item>
+        <item>@string/menuitem_more</item>
+    </string-array>
+
+    <string-array name="pref_gts_display_items_values">
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_hr</item>
+        <item>@string/p_menuitem_workout</item>
+        <item>@string/p_menuitem_activity</item>
+        <item>@string/p_menuitem_weather</item>
+        <item>@string/p_menuitem_music</item>
+        <item>@string/p_menuitem_notifications</item>
+        <item>@string/p_menuitem_alarm</item>
+        <item>@string/p_menuitem_eventreminder</item>
+        <item>@string/p_menuitem_more</item>
+    </string-array>
+
+    <string-array name="pref_gts_display_items_default">
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_hr</item>
+        <item>@string/p_menuitem_workout</item>
+        <item>@string/p_menuitem_activity</item>
+        <item>@string/p_menuitem_weather</item>
+        <item>@string/p_menuitem_music</item>
+        <item>@string/p_menuitem_notifications</item>
+        <item>@string/p_menuitem_alarm</item>
+        <item>@string/p_menuitem_eventreminder</item>
+        <item>@string/p_menuitem_more</item>
+    </string-array>
+
+    <string-array name="pref_bips_display_items">
+        <item>@string/menuitem_status</item>
+        <item>@string/menuitem_hr</item>
+        <item>@string/menuitem_pai</item>
+        <item>@string/menuitem_workout</item>
+        <item>@string/menuitem_alipay</item>
+        <item>@string/menuitem_nfc</item>
+        <item>@string/menuitem_weather</item>
+        <item>@string/menuitem_alarm</item>
+        <item>@string/menuitem_timer</item>
+        <item>@string/menuitem_compass</item>
+        <item>@string/menuitem_worldclock</item>
+        <item>@string/menuitem_music</item>
+        <item>@string/menuitem_settings</item>
+    </string-array>
+
+    <string-array name="pref_bips_display_items_values">
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_menuitem_hr</item>
+        <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_workout</item>
+        <item>@string/p_menuitem_alipay</item>
+        <item>@string/p_menuitem_nfc</item>
+        <item>@string/p_menuitem_weather</item>
+        <item>@string/p_menuitem_alarm</item>
+        <item>@string/p_menuitem_timer</item>
+        <item>@string/p_menuitem_compass</item>
+        <item>@string/p_menuitem_worldclock</item>
+        <item>@string/p_menuitem_music</item>
+        <item>@string/p_menuitem_settings</item>
+    </string-array>
+
+    <string-array name="pref_bips_display_items_default">
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_menuitem_hr</item>
+        <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_workout</item>
+        <item>@string/p_menuitem_alipay</item>
+        <item>@string/p_menuitem_nfc</item>
+        <item>@string/p_menuitem_weather</item>
+        <item>@string/p_menuitem_alarm</item>
+        <item>@string/p_menuitem_timer</item>
+        <item>@string/p_menuitem_compass</item>
+        <item>@string/p_menuitem_worldclock</item>
+        <item>@string/p_menuitem_music</item>
+        <item>@string/p_menuitem_settings</item>
+    </string-array>
+
+    <string-array name="pref_bips_shortcuts">
+        <item>@string/menuitem_status</item>
+        <item>@string/menuitem_alipay</item>
+        <item>@string/menuitem_nfc</item>
+        <item>@string/menuitem_pai</item>
+        <item>@string/menuitem_hr</item>
+        <item>@string/menuitem_music</item>
+        <item>@string/menuitem_weather</item>
+    </string-array>
+
+    <string-array name="pref_bips_shortcuts_values">
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_menuitem_alipay</item>
+        <item>@string/p_menuitem_nfc</item>
+        <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_hr</item>
+        <item>@string/p_menuitem_music</item>
+        <item>@string/p_menuitem_weather</item>
+    </string-array>
+
+    <string-array name="pref_bips_shortcuts_default">
+        <item>@string/p_menuitem_status</item>
+        <item>@string/p_menuitem_alipay</item>
+        <item>@string/p_menuitem_nfc</item>
+        <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_hr</item>
+        <item>@string/p_menuitem_music</item>
+        <item>@string/p_menuitem_weather</item>
+    </string-array>
 
     <string-array name="pref_entries_unit_system">
         <item>@string/unit_metric</item>
@@ -365,11 +557,13 @@
     </string-array>
 
     <string-array name="pref_timeformat_entries">
+        <item>@string/automatic</item>
         <item>@string/timeformat_24h</item>
         <item>@string/timeformat_am_pm</item>
     </string-array>
 
     <string-array name="pref_timeformat_values">
+        <item>@string/p_timeformat_auto</item>
         <item>@string/p_timeformat_24h</item>
         <item>@string/p_timeformat_am_pm</item>
     </string-array>
@@ -390,33 +584,35 @@
 
     <string-array name="pref_amazfitbip_language">
         <item name="auto">@string/automatic</item>
-        <item name="zh_CH">@string/simplified_chinese</item>
+        <item name="zh_CN">@string/simplified_chinese</item>
         <item name="zh_TW">@string/traditional_chinese</item>
         <item name="en_US">@string/english</item>
         <item name="es_ES">@string/spanish</item>
         <item name="de_DE">@string/german</item>
         <item name="it_IT">@string/italian</item>
         <item name="fr_FR">@string/french</item>
+        <item name="pt_BR">@string/portuguese</item>
         <item name="tr_TR">@string/turkish</item>
         <item name="ru_RU">@string/russian</item>
     </string-array>
 
     <string-array name="pref_amazfitbip_language_values">
         <item>auto</item>
-        <item>zh_CH</item>
+        <item>zh_CN</item>
         <item>zh_TW</item>
         <item>en_US</item>
         <item>es_ES</item>
         <item>de_DE</item>
         <item>it_IT</item>
         <item>fr_FR</item>
+        <item>pt_BR</item>
         <item>tr_TR</item>
         <item>ru_RU</item>
     </string-array>
 
     <string-array name="pref_amazfitcor_language">
         <item name="auto">@string/automatic</item>
-        <item name="zh_CH">@string/simplified_chinese</item>
+        <item name="zh_CN">@string/simplified_chinese</item>
         <item name="zh_TW">@string/traditional_chinese</item>
         <item name="en_US">@string/english</item>
         <item name="es_ES">@string/spanish</item>
@@ -425,7 +621,7 @@
 
     <string-array name="pref_amazfitcor_language_values">
         <item>auto</item>
-        <item>zh_CH</item>
+        <item>zh_CN</item>
         <item>zh_TW</item>
         <item>en_US</item>
         <item>es_ES</item>
@@ -434,7 +630,7 @@
 
     <string-array name="pref_miband3_language">
         <item name="auto">@string/automatic</item>
-        <item name="zh_CH">@string/simplified_chinese</item>
+        <item name="zh_CN">@string/simplified_chinese</item>
         <item name="zh_TW">@string/traditional_chinese</item>
         <item name="en_US">@string/english</item>
         <item name="es_ES">@string/spanish</item>
@@ -457,7 +653,7 @@
 
     <string-array name="pref_miband3_language_values">
         <item>auto</item>
-        <item>zh_CH</item>
+        <item>zh_CN</item>
         <item>zh_TW</item>
         <item>en_US</item>
         <item>es_ES</item>
@@ -476,6 +672,76 @@
         <item>vi_VN</item>
         <item>ja_JP</item>
         <item>ko_KO</item>
+    </string-array>
+
+    <string-array name="pref_miband5_language">
+        <item name="auto">@string/automatic</item>
+        <item name="zh_CN">@string/simplified_chinese</item>
+        <item name="zh_TW">@string/traditional_chinese</item>
+        <item name="en_US">@string/english</item>
+        <item name="ru_RU">@string/russian</item>
+        <item name="es_ES">@string/spanish</item>
+        <item name="it_IT">@string/italian</item>
+        <item name="fr_FR">@string/french</item>
+        <item name="de_DE">@string/german</item>
+    </string-array>
+
+    <string-array name="pref_miband5_language_values">
+        <item>auto</item>
+        <item>zh_CN</item>
+        <item>zh_TW</item>
+        <item>en_US</item>
+        <item>ru_RU</item>
+        <item>es_ES</item>
+        <item>it_IT</item>
+        <item>fr_FR</item>
+        <item>de_DE</item>
+    </string-array>
+
+    <string-array name="pref_zetime_language">
+        <item name="auto">@string/automatic</item>
+        <item name="zh_CN">@string/simplified_chinese</item>
+        <item name="zh_TW">@string/traditional_chinese</item>
+        <item name="en_US">@string/english</item>
+        <item name="es_ES">@string/spanish</item>
+        <item name="de_DE">@string/german</item>
+        <item name="it_IT">@string/italian</item>
+        <item name="fr_FR">@string/french</item>
+        <item name="pt_PT">@string/portuguese</item>
+        <item name="nl_NL">@string/dutch</item>
+        <item name="sv_SE">@string/swedish</item>
+        <item name="pl_PL">@string/polish</item>
+        <item name="cs_CZ">@string/czesh</item>
+        <item name="el_GR">@string/greek</item>
+        <item name="ru_RU">@string/russian</item>
+        <item name="he_IL">@string/hebrew</item>
+        <item name="ar_SA">@string/arabic</item>
+        <item name="ja_JP">@string/japanese</item>
+        <item name="ko_KO">@string/korean</item>
+        <item name="th_TH">@string/thai</item>
+    </string-array>
+
+    <string-array name="pref_zetime_language_values">
+        <item>auto</item>
+        <item>zh_CN</item>
+        <item>zh_TW</item>
+        <item>en_US</item>
+        <item>es_ES</item>
+        <item>de_DE</item>
+        <item>it_IT</item>
+        <item>fr_FR</item>
+        <item>pt_PT</item>
+        <item>nl_NL</item>
+        <item>sv_SE</item>
+        <item>pl_PL</item>
+        <item>cs_CZ</item>
+        <item>el_GR</item>
+        <item>ru_RU</item>
+        <item>he_IL</item>
+        <item>ar_SA</item>
+        <item>ja_JP</item>
+        <item>ko_KO</item>
+        <item>th_TH</item>
     </string-array>
 
     <string-array name="prefs_heartrate_measurement_interval">
@@ -600,4 +866,142 @@
         <item>14</item>
     </string-array>
 
+    <string-array name="button_action_options">
+        <item>@string/pref_button_action_disabled</item>
+        <item>@string/pref_media_play</item>
+        <item>@string/pref_media_pause</item>
+        <item>@string/pref_media_playpause</item>
+        <item>@string/pref_media_next</item>
+        <item>@string/pref_media_previous</item>
+        <item>@string/pref_media_volumeup</item>
+        <item>@string/pref_media_volumedown</item>
+        <item>@string/pref_media_forward</item>
+        <item>@string/pref_media_rewind</item>
+        <item>@string/pref_device_action_broadcast</item>
+    </string-array>
+
+    <string name="pref_button_action_disabled">Disabled</string>
+    <string name="pref_media_play">Media Play</string>
+    <string name="pref_media_pause">Media Pause</string>
+    <string name="pref_media_playpause">Toggle playback</string>
+    <string name="pref_media_next">Next Track</string>
+    <string name="pref_media_previous">Previous Track</string>
+    <string name="pref_media_volumeup">Volume Up</string>
+    <string name="pref_media_volumedown">Volume Down</string>
+    <string name="pref_media_forward">Skip forward</string>
+    <string name="pref_media_rewind">Skip back</string>
+    <string name="pref_device_action_broadcast">Send Broadcast</string>
+
+
+    <string-array name="button_action_values">
+        <item>@string/pref_button_action_disabled_value</item>
+        <item>@string/pref_media_play_value</item>
+        <item>@string/pref_media_pause_value</item>
+        <item>@string/pref_media_playpause_value</item>
+        <item>@string/pref_media_next_value</item>
+        <item>@string/pref_media_previous_value</item>
+        <item>@string/pref_media_volumeup_value</item>
+        <item>@string/pref_media_volumedown_value</item>
+        <item>@string/pref_media_forward_value</item>
+        <item>@string/pref_media_rewind_value</item>
+        <item>@string/pref_device_action_broadcast_value</item>
+
+
+    </string-array>
+
+    <string name="pref_button_action_disabled_value" translatable="false">UNKNOWN</string>
+    <string name="pref_media_play_value" translatable="false">PLAY</string>
+    <string name="pref_media_pause_value" translatable="false">PAUSE</string>
+    <string name="pref_media_playpause_value" translatable="false">PLAYPAUSE</string>
+    <string name="pref_media_next_value" translatable="false">NEXT</string>
+    <string name="pref_media_previous_value" translatable="false">PREVIOUS</string>
+    <string name="pref_media_volumeup_value" translatable="false">VOLUMEUP</string>
+    <string name="pref_media_volumedown_value" translatable="false">VOLUMEDOWN</string>
+    <string name="pref_media_forward_value" translatable="false">FORWARD</string>
+    <string name="pref_media_rewind_value" translatable="false">REWIND</string>
+    <string name="pref_device_action_broadcast_value" translatable="false">BROADCAST</string>
+
+    <string-array name="device_action_options">
+        <item>@string/pref_button_action_disabled</item>
+        <item>@string/pref_media_play</item>
+        <item>@string/pref_media_pause</item>
+        <item>@string/pref_media_playpause</item>
+        <item>@string/pref_device_action_broadcast</item>
+    </string-array>
+
+    <string-array name="device_action_values">
+        <item>@string/pref_button_action_disabled_value</item>
+        <item>@string/pref_media_play_value</item>
+        <item>@string/pref_media_pause_value</item>
+        <item>@string/pref_media_playpause_value</item>
+        <item>@string/pref_device_action_broadcast_value</item>
+    </string-array>
+
+    <string-array name="pref_hybridhr_buttonfunctions">
+        <item name="notificationsPanelApp">@string/menuitem_notifications</item>
+        <item name="weatherApp">@string/menuitem_weather</item>
+        <item name="musicApp">@string/menuitem_music</item>
+        <item name="stopwatchApp">@string/hr_appname_stopwatch</item>
+        <item name="timerApp">@string/menuitem_timer</item>
+        <item name="commuteApp">@string/hr_appname_commute</item>
+        <item name="wellnessApp">@string/hr_appname_wellness</item>
+        <item name="workoutApp">@string/hr_appname_workout</item>
+    </string-array>
+    <string-array name="pref_hybridhr_buttonfunctions_values">
+        <item>notificationsPanelApp</item>
+        <item>weatherApp</item>
+        <item>musicApp</item>
+        <item>stopwatchApp</item>
+        <item>timerApp</item>
+        <item>commuteApp"</item>
+        <item>wellnessApp</item>
+        <item>workoutApp</item>
+    </string-array>
+
+    <string-array name="activity_filter_quick_filter_period_items">
+        <item>@string/sports_activity_quick_filter_select</item>
+        <item>@string/sports_activity_quick_filter_this_week</item>
+        <item>@string/sports_activity_quick_filter_this_month</item>
+        <item>@string/sports_activity_quick_filter_last_week</item>
+        <item>@string/sports_activity_quick_filter_last_month</item>
+        <item>@string/sports_activity_quick_filter_7days</item>
+        <item>@string/sports_activity_quick_filter_30days</item>
+    </string-array>
+    <string-array name="activity_filter_quick_filter_period_values">
+        <item>noselection</item>
+        <item>thisweek</item>
+        <item>thismonth</item>
+        <item>lastweek</item>
+        <item>lastmonth</item>
+        <item>7days</item>
+        <item>30days</item>
+    </string-array>
+
+    <string-array name="lefun_interface_language_names">
+        <item>@string/english</item>
+        <item>@string/simplified_chinese</item>
+    </string-array>
+
+    <string-array name="lefun_interface_language_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="sonyswr12_smart_alarm_intervals">
+        <item>0 minutes</item>
+        <item>10 minutes</item>
+        <item>20 minutes</item>
+        <item>30 minutes</item>
+        <item>40 minutes</item>
+        <item>50 minutes</item>
+        <item>60 minutes</item>
+    </string-array>
+    <string-array name="sonyswr12_smart_alarm_interval_values">
+        <item>0</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+    </string-array>
 </resources>

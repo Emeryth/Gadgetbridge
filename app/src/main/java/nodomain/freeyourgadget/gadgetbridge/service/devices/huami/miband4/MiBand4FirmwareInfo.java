@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2019 Andreas Shimokawa, Carsten Pfeiffer
+/*  Copyright (C) 2017-2020 Andreas Shimokawa, Daniele Gobbetti
 
     This file is part of Gadgetbridge.
 
@@ -27,11 +27,11 @@ import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 
 public class MiBand4FirmwareInfo extends HuamiFirmwareInfo {
 
-    private static final byte[] FW_HEADER = new byte[]{
+    public static final byte[] FW_HEADER = new byte[]{
             0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0x9c, (byte) 0xe3, 0x7d, 0x5c, 0x00, 0x04
     };
 
-    private static final int FW_HEADER_OFFSET = 16;
+    public static final int FW_HEADER_OFFSET = 16;
 
     private static Map<Integer, String> crcToVersion = new HashMap<>();
 
@@ -40,11 +40,17 @@ public class MiBand4FirmwareInfo extends HuamiFirmwareInfo {
         crcToVersion.put(8969, "1.0.5.22");
         crcToVersion.put(43437, "1.0.5.66");
         crcToVersion.put(31632, "1.0.6.00");
+        crcToVersion.put(6856, "1.0.7.14");
+        crcToVersion.put(50145, "1.0.7.60");
+        crcToVersion.put(22570, "1.0.9.48-58");
 
         // resources
         crcToVersion.put(27412, "1.0.5.22");
         crcToVersion.put(5466, "1.0.5.66");
         crcToVersion.put(20047, "1.0.6.00");
+        crcToVersion.put(62914, "1.0.7.14");
+        crcToVersion.put(17303, "1.0.7.60");
+        crcToVersion.put(57922, "1.0.9.58");
 
         // font
         crcToVersion.put(31978, "1");

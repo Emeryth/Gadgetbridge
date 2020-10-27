@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2016-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti, José Rebelo, Kranz, Sebastian Kranz
 
     This file is part of Gadgetbridge.
@@ -124,7 +124,7 @@ public class ZeTimeCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public boolean supportsCalendarEvents() {
-        return true;
+        return false;
     }
 
     @Override
@@ -163,8 +163,10 @@ public class ZeTimeCoordinator extends AbstractDeviceCoordinator {
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
+                R.xml.devicesettings_zetime,
                 R.xml.devicesettings_timeformat,
                 R.xml.devicesettings_wearlocation,
+                R.xml.devicesettings_sync_calendar,
         };
     }
 }

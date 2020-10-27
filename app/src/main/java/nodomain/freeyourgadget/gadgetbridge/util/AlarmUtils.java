@@ -1,4 +1,5 @@
-/*  Copyright (C) 2019 Carsten Pfeiffer, Daniele Gobbetti
+/*  Copyright (C) 2019-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti
 
     This file is part of Gadgetbridge.
 
@@ -16,6 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -24,7 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import androidx.annotation.NonNull;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
@@ -47,8 +49,8 @@ public class AlarmUtils {
      * @param calendar
      * @return
      */
-    public static nodomain.freeyourgadget.gadgetbridge.model.Alarm createSingleShot(int index, boolean smartWakeup, Calendar calendar) {
-        return new Alarm(-1, -1, index, true, smartWakeup, Alarm.ALARM_ONCE, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+    public static nodomain.freeyourgadget.gadgetbridge.model.Alarm createSingleShot(int index, boolean smartWakeup, boolean snooze, Calendar calendar) {
+        return new Alarm(-1, -1, index, true, smartWakeup, snooze, Alarm.ALARM_ONCE, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false, null, null);
     }
 
     /**
@@ -80,7 +82,7 @@ public class AlarmUtils {
      * @param sun whether the alarm shall repeat every Sunday
      * @return the created repetition mask
      */
-    public static int createRepetitionMassk(boolean mon, boolean tue, boolean wed, boolean thu, boolean fri, boolean sat, boolean sun) {
+    public static int createRepetitionMask(boolean mon, boolean tue, boolean wed, boolean thu, boolean fri, boolean sat, boolean sun) {
         int repetitionMask = (mon ? Alarm.ALARM_MON : 0) |
                 (tue ? Alarm.ALARM_TUE : 0) |
                 (wed ? Alarm.ALARM_WED : 0) |
@@ -127,7 +129,7 @@ public class AlarmUtils {
         int hour = Integer.parseInt(tokens[4]);
         int minute = Integer.parseInt(tokens[5]);
 
-        return new Alarm(device.getId(), user.getId(), index, enabled, smartWakeup, repetition, hour, minute);
+        return new Alarm(device.getId(), user.getId(), index, enabled, smartWakeup, false, repetition, hour, minute, false, null, null);
     }
 
     private static Comparator<Alarm> createComparator() {

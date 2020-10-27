@@ -1,4 +1,4 @@
-/*  Copyright (C) 2018-2019 Kranz, Sebastian Kranz
+/*  Copyright (C) 2018-2020 Andreas Shimokawa, Kranz, Sebastian Kranz
 
     This file is part of Gadgetbridge.
 
@@ -80,6 +80,7 @@ public class ZeTimeConstants {
     public static final byte CMD_REMINDERS = (byte) 0x97;
     public static final byte CMD_PUSH_CALENDAR_DAY = (byte) 0x99;
     public static final byte CMD_MUSIC_CONTROL = (byte) 0xD0;
+    public static final byte CMD_CALL_CONTROL = (byte) 0xDC;
     public static final byte CMD_TEST_SIGNALING = (byte) 0xFA;
     // here are the action commands
     public static final byte CMD_REQUEST = (byte) 0x70;

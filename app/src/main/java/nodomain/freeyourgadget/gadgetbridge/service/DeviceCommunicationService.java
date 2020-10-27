@@ -1,8 +1,8 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Avamander, Carsten Pfeiffer,
-    dakhnod, Daniele Gobbetti, Daniel Hauck, Dikay900, Frank Slezak, ivanovlev,
-    João Paulo Barraca, José Rebelo, Julien Pivotto, Kasha, Martin, Matthieu
-    Baerts, Sebastian Kranz, Sergey Trofimov, Steffen Liebergeld, Taavi Eomäe,
-    Uwe Hermann
+/*  Copyright (C) 2015-2020 Andreas Böhler, Andreas Shimokawa, Avamander,
+    Carsten Pfeiffer, Daniel Dakhno, Daniele Gobbetti, Daniel Hauck, Dikay900,
+    Frank Slezak, ivanovlev, João Paulo Barraca, José Rebelo, Julien Pivotto,
+    Kasha, keeshii, Martin, Matthieu Baerts, Nephiel, Sebastian Kranz, Sergey
+    Trofimov, Steffen Liebergeld, Taavi Eomäe, Uwe Hermann
 
     This file is part of Gadgetbridge.
 
@@ -44,14 +44,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.AlarmClockReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.AlarmReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothConnectReceiver;
@@ -65,6 +63,7 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.PebbleReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.PhoneCallReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.SMSReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.TinyWeatherForecastGermanyReceiver;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
@@ -75,13 +74,13 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.service.receivers.AutoConnectIntervalReceiver;
 import nodomain.freeyourgadget.gadgetbridge.service.receivers.GBAutoFetchReceiver;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.EmojiConverter;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
-import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceService.ACTION_ADD_CALENDAREVENT;
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceService.ACTION_APP_CONFIGURE;
@@ -193,11 +192,13 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private BluetoothPairingRequestReceiver mBlueToothPairingRequestReceiver = null;
     private AlarmClockReceiver mAlarmClockReceiver = null;
     private GBAutoFetchReceiver mGBAutoFetchReceiver = null;
+    private AutoConnectIntervalReceiver mAutoConnectInvervalReceiver= null;
 
     private AlarmReceiver mAlarmReceiver = null;
     private CalendarReceiver mCalendarReceiver = null;
     private CMWeatherReceiver mCMWeatherReceiver = null;
     private LineageOsWeatherReceiver mLineageOsWeatherReceiver = null;
+    private TinyWeatherForecastGermanyReceiver mTinyWeatherForecastGermanyReceiver = null;
     private OmniJawsObserver mOmniJawsObserver = null;
 
     private final String[] mMusicActions = {
@@ -288,7 +289,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 return START_NOT_STICKY;
             }
 
-            if (mDeviceSupport == null || (!isInitialized() && !mDeviceSupport.useAutoConnect())) {
+            if (mDeviceSupport == null || (!isInitialized() && !action.equals(ACTION_DISCONNECT) && (!mDeviceSupport.useAutoConnect() || isConnected()))) {
                 // trying to send notification without valid Bluetooth connection
                 if (mGBDevice != null) {
                     // at least send back the current device state
@@ -409,13 +410,14 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                     // I would rather like to save that as an array in SharedPreferences
                     // this would work but I dont know how to do the same in the Settings Activity's xml
                     ArrayList<String> replies = new ArrayList<>();
+                    SharedPreferences devicePrefs = GBApplication.getDeviceSpecificSharedPrefs(mGBDevice.getAddress());
                     for (int i = 1; i <= 16; i++) {
-                        String reply = prefs.getString("canned_reply_" + i, null);
+                        String reply = devicePrefs.getString("canned_reply_" + i, null);
                         if (reply != null && !reply.equals("")) {
                             replies.add(reply);
                         }
                     }
-                    notificationSpec.cannedReplies = replies.toArray(new String[replies.size()]);
+                    notificationSpec.cannedReplies = replies.toArray(new String[0]);
                 }
 
                 mDeviceSupport.onNotification(notificationSpec);
@@ -736,29 +738,43 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 filter.addAction(AlarmClockReceiver.GOOGLE_CLOCK_ALARM_DONE_ACTION);
                 registerReceiver(mAlarmClockReceiver, filter);
             }
-            if (mCMWeatherReceiver == null && coordinator != null && coordinator.supportsWeather()) {
-                mCMWeatherReceiver = new CMWeatherReceiver();
-                registerReceiver(mCMWeatherReceiver, new IntentFilter("GB_UPDATE_WEATHER"));
-            }
-            if (GBApplication.isRunningOreoOrLater()) {
-                if (mLineageOsWeatherReceiver == null && coordinator != null && coordinator.supportsWeather()) {
 
-                    mLineageOsWeatherReceiver = new LineageOsWeatherReceiver();
-                    registerReceiver(mLineageOsWeatherReceiver, new IntentFilter("GB_UPDATE_WEATHER"));
+            // Weather receivers
+            if ( coordinator != null && coordinator.supportsWeather()) {
+                if (GBApplication.isRunningOreoOrLater()) {
+                    if (mLineageOsWeatherReceiver == null) {
+                        mLineageOsWeatherReceiver = new LineageOsWeatherReceiver();
+                        registerReceiver(mLineageOsWeatherReceiver, new IntentFilter("GB_UPDATE_WEATHER"));
+                    }
+                }
+                else {
+                    if (mCMWeatherReceiver == null) {
+                        mCMWeatherReceiver = new CMWeatherReceiver();
+                        registerReceiver(mCMWeatherReceiver, new IntentFilter("GB_UPDATE_WEATHER"));
+                    }
+                }
+                if (mTinyWeatherForecastGermanyReceiver == null) {
+                    mTinyWeatherForecastGermanyReceiver = new TinyWeatherForecastGermanyReceiver();
+                    registerReceiver(mTinyWeatherForecastGermanyReceiver, new IntentFilter("de.kaffeemitkoffein.broadcast.WEATHERDATA"));
+                }
+                if (mOmniJawsObserver == null) {
+                    try {
+                        mOmniJawsObserver = new OmniJawsObserver(new Handler());
+                        getContentResolver().registerContentObserver(OmniJawsObserver.WEATHER_URI, true, mOmniJawsObserver);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        //Nothing wrong, it just means we're not running on omnirom.
+                    }
                 }
             }
-            if (mOmniJawsObserver == null && coordinator != null && coordinator.supportsWeather()) {
-                try {
-                    mOmniJawsObserver = new OmniJawsObserver(new Handler());
-                    getContentResolver().registerContentObserver(OmniJawsObserver.WEATHER_URI, true, mOmniJawsObserver);
-                } catch (PackageManager.NameNotFoundException e) {
-                    //Nothing wrong, it just means we're not running on omnirom.
-                }
-            }
+
             if (GBApplication.getPrefs().getBoolean("auto_fetch_enabled", false) &&
                     coordinator != null && coordinator.supportsActivityDataFetching() && mGBAutoFetchReceiver == null) {
                 mGBAutoFetchReceiver = new GBAutoFetchReceiver();
                 registerReceiver(mGBAutoFetchReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
+            }
+            if (mAutoConnectInvervalReceiver == null) {
+                mAutoConnectInvervalReceiver= new AutoConnectIntervalReceiver(this);
+                registerReceiver(mAutoConnectInvervalReceiver, new IntentFilter("GB_RECONNECT"));
             }
         } else {
             if (mPhoneCallReceiver != null) {
@@ -804,10 +820,20 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             }
             if (mOmniJawsObserver != null) {
                 getContentResolver().unregisterContentObserver(mOmniJawsObserver);
+                mOmniJawsObserver = null;
+            }
+            if (mTinyWeatherForecastGermanyReceiver != null) {
+                unregisterReceiver(mTinyWeatherForecastGermanyReceiver);
+                mTinyWeatherForecastGermanyReceiver = null;
             }
             if (mGBAutoFetchReceiver != null) {
                 unregisterReceiver(mGBAutoFetchReceiver);
                 mGBAutoFetchReceiver = null;
+            }
+            if (mAutoConnectInvervalReceiver != null) {
+                unregisterReceiver(mAutoConnectInvervalReceiver);
+                mAutoConnectInvervalReceiver.destroy();
+                mAutoConnectInvervalReceiver = null;
             }
         }
     }

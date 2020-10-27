@@ -1,5 +1,5 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, Felix Konstantin Maurer, Taavi Eomäe, Uwe Hermann, Yar
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniel Dakhno,
+    Daniele Gobbetti, Felix Konstantin Maurer, Taavi Eomäe, Uwe Hermann, Yar
 
     This file is part of Gadgetbridge.
 
@@ -30,6 +30,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,11 +44,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBEnvironment;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -51,14 +51,17 @@ import nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
 
 import static nodomain.freeyourgadget.gadgetbridge.GBApplication.isRunningOreoOrLater;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceService.EXTRA_RECORDED_DATA_TYPES;
 
 public class GB {
 
     public static final String NOTIFICATION_CHANNEL_ID = "gadgetbridge";
+    public static final String NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID = "gadgetbridge_high_priority";
     public static final String NOTIFICATION_CHANNEL_ID_TRANSFER = "gadgetbridge transfer";
 
     public static final int NOTIFICATION_ID = 1;
@@ -66,6 +69,7 @@ public class GB {
     public static final int NOTIFICATION_ID_LOW_BATTERY = 3;
     public static final int NOTIFICATION_ID_TRANSFER = 4;
     public static final int NOTIFICATION_ID_EXPORT_FAILED = 5;
+    public static final int NOTIFICATION_ID_PHONE_FIND = 6;
 
     private static final Logger LOG = LoggerFactory.getLogger(GB.class);
     public static final int INFO = 1;
@@ -75,6 +79,14 @@ public class GB {
     public static final String DISPLAY_MESSAGE_MESSAGE = "message";
     public static final String DISPLAY_MESSAGE_DURATION = "duration";
     public static final String DISPLAY_MESSAGE_SEVERITY = "severity";
+
+    /** Commands related to the progress (bar) on the screen */
+    public static final String ACTION_SET_PROGRESS_BAR = "GB_Set_Progress_Bar";
+    public static final String PROGRESS_BAR_INDETERMINATE = "indeterminate";
+    public static final String PROGRESS_BAR_MAX = "max";
+    public static final String PROGRESS_BAR_PROGRESS = "progress";
+    public static final String ACTION_SET_PROGRESS_TEXT = "GB_Set_Progress_Text";
+    public static final String ACTION_SET_INFO_TEXT = "GB_Set_Info_Text";
 
     private static PendingIntent getContentIntent(Context context) {
         Intent notificationIntent = new Intent(context, ControlCenterv2.class);
@@ -87,7 +99,7 @@ public class GB {
     }
 
     public static Notification createNotification(GBDevice device, Context context) {
-        String deviceName = device.getName();
+        String deviceName = device.getAliasOrName();
         String text = device.getStateString();
         if (device.getBatteryLevel() != GBDevice.BATTERY_UNKNOWN) {
             text += ": " + context.getString(R.string.battery) + " " + device.getBatteryLevel() + "%";
@@ -110,8 +122,9 @@ public class GB {
             builder.addAction(R.drawable.ic_notification_disconnected, context.getString(R.string.controlcenter_disconnect), disconnectPendingIntent);
             if (GBApplication.isRunningLollipopOrLater() && DeviceHelper.getInstance().getCoordinator(device).supportsActivityDataFetching()) { //for some reason this fails on KK
                 deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);
+                deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, ActivityKind.TYPE_ACTIVITY);
                 PendingIntent fetchPendingIntent = PendingIntent.getService(context, 1, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT);
-                builder.addAction(R.drawable.ic_action_fetch_activity_data, context.getString(R.string.controlcenter_fetch_activity_data), fetchPendingIntent);
+                builder.addAction(R.drawable.ic_refresh, context.getString(R.string.controlcenter_fetch_activity_data), fetchPendingIntent);
             }
         } else if (device.getState().equals(GBDevice.State.WAITING_FOR_RECONNECT) || device.getState().equals(GBDevice.State.NOT_CONNECTED)) {
             deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_CONNECT);
@@ -182,26 +195,35 @@ public class GB {
         return GBApplication.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
     }
 
+    public static final char[] HEX_CHARS = "0123456789ABCDEF".toCharArray();
+
     public static String hexdump(byte[] buffer, int offset, int length) {
         if (length == -1) {
             length = buffer.length - offset;
         }
-        final char[] hexArray = "0123456789ABCDEF".toCharArray();
+
         char[] hexChars = new char[length * 2];
         for (int i = 0; i < length; i++) {
             int v = buffer[i + offset] & 0xFF;
-            hexChars[i * 2] = hexArray[v >>> 4];
-            hexChars[i * 2 + 1] = hexArray[v & 0x0F];
+            hexChars[i * 2] = HEX_CHARS[v >>> 4];
+            hexChars[i * 2 + 1] = HEX_CHARS[v & 0x0F];
         }
         return new String(hexChars);
     }
 
+    public static String hexdump(byte[] buffer) {
+        return hexdump(buffer, 0, buffer.length);
+    }
+
+    /**
+     * https://stackoverflow.com/a/140861/4636860
+     */
     public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
             data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
+                    + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
     }

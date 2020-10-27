@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, atkyritsis, Carsten Pfeiffer,
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, atkyritsis, Carsten Pfeiffer,
     Christian Fischer, Daniele Gobbetti, freezed-or-frozen, JohnnySun, Julien
     Pivotto, Kasha, Sebastian Kranz, Sergey Trofimov, Steffen Liebergeld
 
@@ -24,6 +24,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,10 +39,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
-import androidx.annotation.Nullable;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
@@ -1224,22 +1226,24 @@ public class MiBandSupport extends AbstractBTLEDeviceSupport {
             TransactionBuilder builder = performInitialized("Send upcoming events");
             BluetoothGattCharacteristic characteristic = getCharacteristic(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT);
 
-            Prefs prefs = GBApplication.getPrefs();
-            int availableSlots = prefs.getInt(MiBandConst.PREF_MIBAND_RESERVE_ALARM_FOR_CALENDAR, 0);
-
+            Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
+            int availableSlots = prefs.getInt(DeviceSettingsPreferenceConst.PREF_RESERVER_ALARMS_CALENDAR, 0);
+            if (availableSlots >3) {
+                availableSlots = 3;
+            }
             if (availableSlots > 0) {
                 CalendarEvents upcomingEvents = new CalendarEvents();
                 List<CalendarEvents.CalendarEvent> mEvents = upcomingEvents.getCalendarEventList(getContext());
 
                 int iteration = 0;
                 for (CalendarEvents.CalendarEvent mEvt : mEvents) {
-                    if (iteration >= availableSlots || iteration > 2) {
+                    if (iteration >= availableSlots) {
                         break;
                     }
                     int slotToUse = 2 - iteration;
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(mEvt.getBegin());
-                    Alarm alarm = AlarmUtils.createSingleShot(slotToUse, false, calendar);
+                    Alarm alarm = AlarmUtils.createSingleShot(slotToUse, false, false, calendar);
                     queueAlarm(alarm, builder, characteristic);
                     iteration++;
                 }

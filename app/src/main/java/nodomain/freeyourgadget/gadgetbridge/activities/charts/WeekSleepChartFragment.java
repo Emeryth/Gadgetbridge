@@ -1,4 +1,5 @@
-/*  Copyright (C) 2017-2019 Andreas Shimokawa, Carsten Pfeiffer, Pavel Elagin
+/*  Copyright (C) 2017-2020 Andreas Shimokawa, Carsten Pfeiffer, Pavel
+    Elagin, vanous
 
     This file is part of Gadgetbridge.
 
@@ -75,7 +76,7 @@ public class WeekSleepChartFragment extends AbstractWeekChartFragment {
     @Override
     protected String getBalanceMessage(long balance, int targetValue) {
         if (balance > 0) {
-            final long totalBalance = balance - ((long)targetValue * TOTAL_DAYS);
+            final long totalBalance = balance - ((long)targetValue * TOTAL_DAYS_FOR_AVERAGE);
             if (totalBalance > 0)
                 return getString(R.string.overslept, getHM(totalBalance));
             else

@@ -1,5 +1,5 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, José Rebelo, Matthieu Baerts
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, José Rebelo, Matthieu Baerts, Nephiel, vanous
 
     This file is part of Gadgetbridge.
 
@@ -17,9 +17,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanFilter;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Collection;
 import java.util.Collections;
 
-import androidx.annotation.NonNull;
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
@@ -40,6 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DeviceAttributesDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+
 import static nodomain.freeyourgadget.gadgetbridge.GBApplication.getPrefs;
 
 public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
@@ -63,7 +67,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
 
     @Override
     public GBDevice createDevice(GBDeviceCandidate candidate) {
-        return new GBDevice(candidate.getDevice().getAddress(), candidate.getName(), getDeviceType());
+        return new GBDevice(candidate.getDevice().getAddress(), candidate.getName(), null, getDeviceType());
     }
 
     @Override
@@ -73,16 +77,19 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
             GBApplication.deviceService().disconnect();
         }
         Prefs prefs = getPrefs();
+
         String lastDevice = prefs.getPreferences().getString("last_device_address","");
-        if (gbDevice.getAddress() == lastDevice){
+        if (gbDevice.getAddress().equals(lastDevice)) {
             LOG.debug("#1605 removing last device");
             prefs.getPreferences().edit().remove("last_device_address").apply();
         }
+
         String macAddress = prefs.getPreferences().getString(MiBandConst.PREF_MIBAND_ADDRESS,"");
-        if (gbDevice.getAddress() == macAddress){
+        if (gbDevice.getAddress().equals(macAddress)) {
             LOG.debug("#1605 removing devel miband");
             prefs.getPreferences().edit().remove(MiBandConst.PREF_MIBAND_ADDRESS).apply();
         }
+
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             DaoSession session = dbHandler.getDaoSession();
             Device device = DBHelper.findDevice(gbDevice, session);
@@ -101,9 +108,10 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
 
     /**
      * Hook for subclasses to perform device-specific deletion logic, e.g. db cleanup.
+     *
      * @param gbDevice the GBDevice
-     * @param device the corresponding database Device
-     * @param session the session to use
+     * @param device   the corresponding database Device
+     * @param session  the session to use
      * @throws GBException
      */
     protected abstract void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException;
@@ -120,15 +128,15 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
             return false;
         }
         if (bluetoothClass.getMajorDeviceClass() == BluetoothClass.Device.Major.WEARABLE
-            || bluetoothClass.getMajorDeviceClass() == BluetoothClass.Device.Major.UNCATEGORIZED) {
+                || bluetoothClass.getMajorDeviceClass() == BluetoothClass.Device.Major.UNCATEGORIZED) {
             int deviceClasses =
                     BluetoothClass.Device.HEALTH_BLOOD_PRESSURE
-                    | BluetoothClass.Device.HEALTH_DATA_DISPLAY
-                    | BluetoothClass.Device.HEALTH_PULSE_RATE
-                    | BluetoothClass.Device.HEALTH_WEIGHING
-                    | BluetoothClass.Device.HEALTH_UNCATEGORIZED
-                    | BluetoothClass.Device.HEALTH_PULSE_OXIMETER
-                    | BluetoothClass.Device.HEALTH_GLUCOSE;
+                            | BluetoothClass.Device.HEALTH_DATA_DISPLAY
+                            | BluetoothClass.Device.HEALTH_PULSE_RATE
+                            | BluetoothClass.Device.HEALTH_WEIGHING
+                            | BluetoothClass.Device.HEALTH_UNCATEGORIZED
+                            | BluetoothClass.Device.HEALTH_PULSE_OXIMETER
+                            | BluetoothClass.Device.HEALTH_GLUCOSE;
 
             return (bluetoothClass.getDeviceClass() & deviceClasses) != 0;
         }
@@ -146,10 +154,21 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public boolean supportsAlarmSnoozing() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsAlarmDescription(GBDevice device) {
+        return false;
+    }
+
+    @Override
     public boolean supportsMusicInfo() {
         return false;
     }
 
+    @Override
     public boolean supportsLedColor() {
         return false;
     }
@@ -166,11 +185,18 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsUnicodeEmojis() { return false; }
+    public boolean supportsUnicodeEmojis() {
+        return false;
+    }
 
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return null;
     }
 
+    @Nullable
+    @Override
+    public Class<? extends Activity> getCalibrationActivity() {
+        return null;
+    }
 }

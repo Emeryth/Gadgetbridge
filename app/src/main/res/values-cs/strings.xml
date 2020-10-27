@@ -17,7 +17,7 @@
     <string name="controlcenter_snackbar_need_longpress">Podržte déle pro odpojení</string>
     <string name="controlcenter_snackbar_disconnecting">Odpojuji</string>
     <string name="controlcenter_snackbar_connecting">Připojuji…</string>
-    <string name="controlcenter_snackbar_requested_screenshot">Sejmout snímek obrazovky</string>
+    <string name="controlcenter_snackbar_requested_screenshot">Pořídit snímek obrazovky</string>
     <string name="title_activity_debug">Ladění</string>
     <!--Strings related to AppManager-->
     <string name="title_activity_appmanager">Manažer aplikací</string>
@@ -221,7 +221,7 @@
     <string name="pref_screen_notification_profile_generic_social">Sociální sítě</string>
     <string name="control_center_find_lost_device">Najit ztracené zařízení</string>
     <string name="control_center_cancel_to_stop_vibration">Zastavit vibrací.</string>
-    <string name="title_activity_charts">Vaše aktivita</string>
+    <string name="title_activity_charts">Aktivita</string>
     <string name="title_activity_set_alarm">Nastavit buzení</string>
     <string name="controlcenter_start_configure_alarms">Nastavit buzení</string>
     <string name="title_activity_alarm_details">Detail buzení</string>
@@ -253,7 +253,7 @@
     <string name="weeksleepchart_sleep_a_week">Spánek za týden</string>
     <string name="weeksleepchart_today_sleep_description">Spánek dnes, cíl: %1$s</string>
     <string name="weekstepschart_steps_a_week">Kroky za týden</string>
-    <string name="activity_sleepchart_activity_and_sleep">Vaše aktivita a spánek</string>
+    <string name="activity_sleepchart_activity_and_sleep">Aktivita a spánek</string>
     <string name="updating_firmware">Nahrávám firmvér…</string>
     <string name="fwapp_install_device_not_ready">Soubor nelze nainstalovat, zařízení není připraveno.</string>
     <string name="installhandler_firmware_name">%1$s: %2$s %3$s</string>
@@ -307,7 +307,7 @@
     <string name="activity_prefs_weight_kg">Váha v kg</string>
     <string name="authenticating">Ověřování</string>
     <string name="authentication_required">Ověřování vyžadováno</string>
-    <string name="appwidget_text">Spí…</string>
+    <string name="appwidget_text">Spí</string>
     <string name="add_widget">Přidat widget</string>
     <string name="activity_prefs_sleep_duration">Preferovaná doba spánku v hodinách</string>
     <string name="appwidget_setting_alarm">Budík nastaven na %1$02d:%2$02d</string>
@@ -356,7 +356,7 @@
     <string name="unit_metric">Metrické</string>
     <string name="unit_imperial">Imperiální</string>
     <string name="timeformat_24h">24h</string>
-    <string name="timeformat_am_pm">dop./odp.</string>
+    <string name="timeformat_am_pm">Dop./Odp.</string>
     <string name="pref_screen_notification_profile_alarm_clock">Budík</string>
     <string name="StringUtils_sender">(%1$s)</string>
     <string name="find_device_you_found_it">Nalezeno!</string>
@@ -408,37 +408,35 @@
     <string name="discovery_yes_pair">Párovat</string>
     <string name="discovery_dont_pair">Nepárovat</string>
     <string name="mi2_prefs_button_actions">Akce tlačítka</string>
-    <string name="mi2_prefs_button_actions_summary">Nastavení akcí po stisknutí tlačítka Mi Band 2</string>
+    <string name="mi2_prefs_button_actions_summary">Nastavení akcí po stisknutí tlačítka</string>
     <string name="mi2_prefs_button_press_count">Počet stisknutí tlačítka</string>
-    <string name="mi2_prefs_button_press_count_summary">Počet stisknutí tlačítka na spuštění vysílání zpráv</string>
+    <string name="mi2_prefs_button_press_count_summary">Počet stisknutí tlačítka pro vyvolání Události 1. Další stejné množství stisků vyvolá Událost 2 atd.</string>
     <string name="mi2_prefs_button_press_broadcast">Vysílání zpráv</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">Vysílání zprávy po definovaném počtu stisknutí tlačítka</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">Vysílání broadcast zprávy po při události. Parametr button_id je doplněn do každé zprávy automaticky.</string>
     <string name="mi2_prefs_button_action">Zapnout akci tlačítka</string>
     <string name="mi2_prefs_button_action_summary">Zapnout akci na zadaný počet stisknutí tlačítka</string>
     <string name="mi2_prefs_button_action_vibrate">Zapnout vibrování náramku</string>
     <string name="mi2_prefs_button_action_vibrate_summary">Zapnout vibrace náramku při stisknutí tlačítka</string>
     <string name="mi2_prefs_button_press_count_max_delay">Maximální zpoždění mezi stisky</string>
     <string name="mi2_prefs_button_press_count_max_delay_summary">Maximální zpoždění mezi stisknutím tlačítka v milisekundách</string>
-    <string name="mi2_prefs_button_press_count_match_delay">Zpoždění po provedení akce tlačítka</string>
-    <string name="mi2_prefs_button_press_count_match_delay_summary">Zpoždění po provedení akce tlačítka (číslo je v button_id) nebo 0 pro okamžitě</string>
-    <string name="fw_upgrade_notice_amazfitbip">Chystáte se nainstalovat firmvér %s na vašem Amazfit Bip. 
-\n 
-\nProsím nezapomeňte nainstalovat soubor .fw, potom soubor .res a nakonec soubor .gps. Vaše hodinky se po instalaci souboru .fw restartují. 
-\n 
-\nPoznámka: Nemusíte instalovat .res a .gps, pokud jsou tyto soubory přesně stejné jako ty, které byly nainstalovány dříve. 
-\n 
+    <string name="fw_upgrade_notice_amazfitbip">Chystáte se nainstalovat firmvér %s na vašem Amazfit Bip.
+\n
+\nProsím nezapomeňte nainstalovat soubor .fw, potom soubor .res a nakonec soubor .gps. Vaše hodinky se po instalaci souboru .fw restartují.
+\n
+\nPoznámka: Nemusíte instalovat .res a .gps, pokud jsou tyto soubory přesně stejné jako ty, které byly nainstalovány dříve.
+\n
 \nPOKRAČUJTE TO NA VLASTNÍ NEBEZPEČÍ!</string>
     <string name="controlcenter_connect">Připojit…</string>
-    <string name="fw_upgrade_notice_amazfitcor">Chystáte se nainstalovat firmvér %s do vašeho Amazfit Cor. 
-\n 
-\nProsím, ujistěte se, že jste nainstalovali soubor .fw a potom soubor .res. Váš se po instalaci souboru .fw restartuje. 
-\n 
-\nPoznámka: Nemusíte instalovat soubor .res, pokud je stejný jako nainstalován dříve. 
-\n 
+    <string name="fw_upgrade_notice_amazfitcor">Chystáte se nainstalovat firmvér %s do vašeho Amazfit Cor.
+\n
+\nProsím, ujistěte se, že jste nainstalovali soubor .fw a potom soubor .res. Váš se po instalaci souboru .fw restartuje.
+\n
+\nPoznámka: Nemusíte instalovat soubor .res, pokud je stejný jako nainstalován dříve.
+\n
 \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
     <string name="pref_title_charts_swipe">Zapnout možnost potažení mezi grafy aktivit</string>
     <string name="pref_title_weather">Počasí</string>
-    <string name="pref_title_weather_location">Poloha pro počasí (CM/LOS)</string>
+    <string name="pref_title_weather_location">Poloha pro počasí (LineageOS poskytovatel)</string>
     <string name="pref_title_pebble_enable_bgjs">Zapnout JS na pozadí</string>
     <string name="pref_summary_pebble_enable_bgjs">Pokud je zapnuto, umožňuje hodinám zobrazovat počasí, údaje o baterii atd.</string>
     <string name="pref_header_auto_export">Automatický export</string>
@@ -446,7 +444,6 @@
     <string name="pref_title_auto_export_location">Složka pro uložení</string>
     <string name="pref_title_auto_export_interval">Časový interval</string>
     <string name="pref_summary_auto_export_interval">Exportovat každou %d hodinu</string>
-    <string name="preferences_amazfitbip_settings">Nastavení Amazfit Bip</string>
     <string name="prefs_title_heartrate_measurement_interval">Celodenní měření tepu</string>
     <string name="interval_one_minute">Jednou za minutu</string>
     <string name="interval_five_minutes">Každých 5 minut</string>
@@ -520,12 +517,12 @@
     <string name="controlcenter_calibrate_device">Kalibrovat zařízení</string>
     <string name="blacklist_all_for_notifications">Zakázat všechny aplikace</string>
     <string name="whitelist_all_for_notifications">Povolit všechny aplikace</string>
-    <string name="fw_upgrade_notice_miband3">Chystáte se nainstalovat firmvér %s do vašeho Mi Band 3. 
-\n 
-\nProsím, ujistěte se, že jste nainstalovali soubor .fw a potom soubor .res. Váš pásek se po instalaci souboru .fw restartuje. 
-\n 
-\nPoznámka: Nemusíte instalovat soubor .res, pokud je stejný jako nainstalován dříve. 
-\n 
+    <string name="fw_upgrade_notice_miband3">Chystáte se nainstalovat firmvér %s do vašeho Mi Band 3.
+\n
+\nProsím, ujistěte se, že jste nainstalovali soubor .fw a potom soubor .res. Váš pásek se po instalaci souboru .fw restartuje.
+\n
+\nPoznámka: Nemusíte instalovat soubor .res, pokud je stejný jako nainstalován dříve.
+\n
 \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
     <string name="pref_title_notifications_timeout">Minimální doba mezi upozorněními</string>
     <string name="pref_title_rtl">Zprava doleva</string>
@@ -576,7 +573,7 @@
     <string name="ok">Ok</string>
     <string name="mi3_night_mode_sunset">Při západu slunce</string>
     <string name="controlcenter_start_activity_tracks">Záznamy aktivit</string>
-    <string name="activity_type_treadmill">Běh na pásu</string>
+    <string name="activity_type_treadmill">Běžecký pás</string>
     <string name="devicetype_miband3">Mi Band 3</string>
     <string name="devicetype_q8">Q8</string>
     <string name="devicetype_mykronoz_zetime">MyKronoz ZeTime</string>
@@ -681,12 +678,12 @@
     <string name="pref_title_authkey">Autorizační Klíč</string>
     <string name="pref_summary_authkey">Nastavte stejný klíč na všech Vašich zařízeních s Androidem, ze kterých se budete připojovat. Výchozí klíč pro všechna zařízení je 0123456789@ABCDE</string>
     <string name="devicetype_bfh16">BFH-16</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Chystáte se nainstalovat firmvér %s do vašeho Amazfit Cor 2. 
-\n 
-\nProsím, ujistěte se, že jste nainstalovali soubor .fw a potom soubor .res. Váš se po instalaci souboru .fw restartuje. 
-\n 
-\nPoznámka: Nemusíte instalovat soubor .res, pokud je stejný jako nainstalován dříve. 
-\n 
+    <string name="fw_upgrade_notice_amazfitcor2">Chystáte se nainstalovat firmvér %s do vašeho Amazfit Cor 2.
+\n
+\nProsím, ujistěte se, že jste nainstalovali soubor .fw a potom soubor .res. Váš se po instalaci souboru .fw restartuje.
+\n
+\nPoznámka: Nemusíte instalovat soubor .res, pokud je stejný jako nainstalován dříve.
+\n
 \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!
 \n
 \nABSOLUTNĚ NETESTOVÁNO, S VELKOU PRAVDĚPODOBNOSTÍ MUSÍTE NAINSTALOVAT BEATS_W FIRMVÉR, JMENUJE-LI SE VAŠE ZAŘÍZENÍ \"Amazfit Band 2\"</string>
@@ -700,12 +697,12 @@
     <string name="portuguese">Portugalsky</string>
     <string name="devicetype_amazfit_cor2">Amazfit Cor 2</string>
     <string name="devicetype_miband4">Mi Band 4</string>
-    <string name="fw_upgrade_notice_miband4">Chystáte se nainstalovat firmvér %s do vašeho Mi Band 4. 
-\n 
-\nProsím, ujistěte se, že jste nainstalovali soubor .fw a potom soubor .res. Váš pásek se po instalaci souboru .fw restartuje. 
-\n 
-\nPoznámka: Nemusíte instalovat soubor .res, pokud je stejný jako nainstalován dříve. 
-\n 
+    <string name="fw_upgrade_notice_miband4">Chystáte se nainstalovat firmvér %s do vašeho Mi Band 4.
+\n
+\nProsím, ujistěte se, že jste nainstalovali soubor .fw a potom soubor .res. Váš pásek se po instalaci souboru .fw restartuje.
+\n
+\nPoznámka: Nemusíte instalovat soubor .res, pokud je stejný jako nainstalován dříve.
+\n
 \nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
     <string name="prefs_hr_alarm_activity">Alarm měření tepu při sportovní aktivitě</string>
     <string name="prefs_hr_alarm_low">Spodní hodnota</string>
@@ -720,12 +717,12 @@
     <string name="weeksleepchart_sleep_a_month">Spánek za měsíc</string>
     <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
     <string name="menuitem_nfc">NFC</string>
-    <string name="pref_summary_expose_hr">"Umožní ostatním aplikacím přistupovat  k datům čidla srdečního tepu dokud Gadgetbridge běží"</string>
+    <string name="pref_summary_expose_hr">Umožní ostatním aplikacím přistupovat k datům čidla srdečního tepu dokud Gadgetbridge běží</string>
     <string name="pref_title_expose_hr">Přístup cizích aplikací k čidlu tepu</string>
     <string name="pref_title_use_custom_font">Využít vlastní font</string>
     <string name="pref_summary_use_custom_font">Vaše zařízení má vlastní font s podporou emoji</string>
     <string name="activity_db_management_autoexport_explanation">Cesta autoexportu databáze je nastaveno na:</string>
-    <string name="activity_db_management_autoexport_label">AutoExport</string>
+    <string name="activity_db_management_autoexport_label">Automatický export</string>
     <string name="activity_DB_ExportButton">Exportovat Databázi</string>
     <string name="activity_DB_import_button">Importovat Databázi</string>
     <string name="activity_DB_test_export_button">Spustit AutoExport Teď</string>
@@ -757,8 +754,334 @@
     <string name="devicetype_makibes_hr3">Makibes HR3</string>
     <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="prefs_find_phone">Vyhledat telefon</string>
-    <string name="prefs_enable_find_phone">Povolit vyhledání telefonu</string>
+    <string name="prefs_enable_find_phone">Zapnout \'Vyhledání telefonu\'</string>
     <string name="prefs_find_phone_summary">Použijte náramek/hodinky k prozvonění telefonu.</string>
     <string name="prefs_find_phone_duration">Délka zvonění ve vteřinách</string>
     <string name="maximum_duration">Délka</string>
+    <string name="discovery_need_to_enter_authkey">Toto zařízení vyžaduje tajný klíč, podržte dlouze na jménu zařízení pro jeho vložení. pro více detailů čtěte wiki.</string>
+    <string name="fw_upgrade_notice_amazfitbip_lite">Chystáte se nainstalovat firmvér %s na vašem Amazfit Bip Lite.
+\n
+\nProsím nezapomeňte nainstalovat soubor .fw, a poté soubor .res . Vaše hodinky se po instalaci souboru .fw restartují.
+\n
+\nPoznámka: Nemusíte instalovat soubory .res , pokud je tento soubor přesně stejný jako ten, který byl nainstalován dříve.
+\n
+\nPOKRAČUJTE TO NA VLASTNÍ NEBEZPEČÍ!</string>
+    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
+    <string name="fw_upgrade_notice_amazfitgtr">Chystáte se nainstalovat firmvér %s na vašem Amazfit GTR. 
+\n 
+\nProsím nezapomeňte nainstalovat soubor .fw, potom soubor .res a nakonec soubor .gps. Vaše hodinky se po instalaci souboru .fw restartují. 
+\n 
+\nPoznámka: Nemusíte instalovat .res a .gps, pokud jsou tyto soubory přesně stejné jako ty, které byly nainstalovány dříve. 
+\n 
+\nPOKRAČUJTE TO NA VLASTNÍ NEBEZPEČÍ!</string>
+    <string name="pref_chart_heartrate_color_red">Červená</string>
+    <string name="pref_chart_heartrate_color_orange">Oranžová</string>
+    <string name="pref_title_chart_heartrate_color">Barva tepové frekvence</string>
+    <string name="pref_title_chart_sleep_rolling_24_hour">Rozsah pro spánek</string>
+    <string name="pref_chart_sleep_rolling_24_on">Předchozích 24 hodin</string>
+    <string name="pref_chart_sleep_rolling_24_off">Od poledne k poledni</string>
+    <string name="devicetype_amazfit_gts">Amazfit GTS</string>
+    <string name="fw_upgrade_notice_amazfitgts">Chystáte se nainstalovat firmvér %s do vašeho Amazfit GTS.
+\n
+\nProsím, ujistěte se, že jste nainstalovali soubor .fw a potom soubor .res. Váš se po instalaci souboru .fw restartuje.
+\n
+\nPoznámka: Nemusíte instalovat soubor .res a .gps, pokud jsou stejné jako soubory nainstalovány dříve.
+\n
+\nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
+    <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
+    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
+    <string name="preferences_qhybrid_settings">Q hybrid nastavení</string>
+    <string name="watch_not_connected">Hodinky nejsou připojeny</string>
+    <string name="qhybrid_vibration_strength">síla vibrace:</string>
+    <string name="qhybrid_goal_in_steps">Cíl v krocích</string>
+    <string name="qhybrid_time_shift">časový posun</string>
+    <string name="qhybrid_second_timezone_offset_relative_to_utc">posun dalšího časového pásma vzhledem k UTC</string>
+    <string name="qhybrid_overwrite_buttons">přepsat tlačítka</string>
+    <string name="qhybrid_use_activity_hand_as_notification_counter">použít čítač aktivity jako čítač oznámení</string>
+    <string name="qhybrid_prompt_million_steps">Chcete-li aktivovat počítadlo, nastavte počet kroků na milion.</string>
+    <string name="qhybrid_buttons_overwrite_success">Tlačítka přepsána</string>
+    <string name="qhybrid_buttons_overwrite_error">Chyba při přepisování tlačítek</string>
+    <string name="qhybrid_offset_timezone">posun časového pásma podle</string>
+    <string name="qhybrid_changes_delay_prompt">změna může trvat několik sekund…</string>
+    <string name="qhybrid_offset_time_by">posun času o</string>
+    <string name="pref_disable_new_ble_scanning">Zakázat nové BLE skenování</string>
+    <string name="pref_summary_disable_new_ble_scanning">Tuto možnost zaškrtněte pokud Vaše zařízení nelze najít během vyhledávání</string>
+    <string name="devicetype_banglejs">Bangle.js</string>
+    <string name="devicetype_y5">Y5</string>
+    <string name="prefs_button_single_press_action_selection_title">Akce události 1</string>
+    <string name="prefs_button_double_press_action_selection_title">Akce události 2</string>
+    <string name="prefs_button_triple_press_action_selection_title">Akce události 3</string>
+    <string name="prefs_button_variable_actions">Detailní nastavení stisku tlačítka</string>
+    <string name="prefs_button_long_press_action_selection_title">Akce pro dlouhý stisk</string>
+    <string name="alarm_snooze">Odložit</string>
+    <string name="error_no_location_access">Přístup k poloze musí být díky systému Android přístupů povolen a zapnut, aby bylo možno správně naskenovat zařízení</string>
+    <string name="devicetype_itag">iTag</string>
+    <string name="pref_title_allow_high_mtu">Povolit vyšší MTU</string>
+    <string name="pref_summary_allow_high_mtu">Zrychluje přenosovou rychlost, ale na některých Android zařízení nemusí pracovat správně.</string>
+    <string name="pref_summary_sync_calendar">Umožňuje upozornění kalendáře, i při odpojeném zařízení</string>
+    <string name="pref_title_sync_caldendar">Synchronizace události kalendáře</string>
+    <string name="hr_widget_heart_rate">Tepová frekvence</string>
+    <string name="hr_widget_steps">Kroky</string>
+    <string name="hr_widget_date">Datum</string>
+    <string name="hr_widget_active_minutes">Minuty aktivity</string>
+    <string name="hr_widget_calories">Kalorie</string>
+    <string name="hr_widget_battery">Baterie</string>
+    <string name="hr_widget_weather">Počasí</string>
+    <string name="hr_widget_nothing">Nic</string>
+    <string name="find_lost_device_you_found_it">Nalezeno!</string>
+    <string name="pref_title_force_white_color_scheme">Vynutit barevné schéma Černá na bílé</string>
+    <string name="pref_summary_force_white_color_scheme">Užitečné, pokud máte hodinky s tmavými ručičkami</string>
+    <string name="find_my_phone_notification">Najít telefon</string>
+    <string name="notification_channel_high_priority_name">Gadgetbridge oznámení s vysokou prioritou</string>
+    <string name="pref_title_custom_deviceicon">Zobrazit v oznámení ikonu připojeného zařízení</string>
+    <string name="pref_summary_custom_deviceicon">Zobrazit ikonu konkrétního připojeného zařízení v oznámení Androidu namísto ikony Gadgetbridge</string>
+    <string name="hr_appname_wellness">Wellness</string>
+    <string name="hr_appname_workout">Cvičení</string>
+    <string name="hr_appname_stopwatch">Stopky</string>
+    <string name="hr_appname_commute">Dojíždění</string>
+    <string name="pref_title_upper_button_function">Horní Tlačítko</string>
+    <string name="pref_title_middle_button_function">Prostřední Tlačítko</string>
+    <string name="pref_title_lower_button_function">Dolní Tlačítko</string>
+    <string name="pref_title_vibration_strength">Síla vibrací</string>
+    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
+    <string name="pref_title_relax_firmware_checks">Aktivujte tuto možnost, pokud chcete flashovat firmware, který není určen pro vaše zařízení (na vlastní nebezpečí)</string>
+    <string name="pref_summary_relax_firmware_checks">Uvolněte kontroly firmwaru</string>
+    <string name="pref_qhybrid_title_widget_draw_circles">Nakreslete kruhy widgetu</string>
+    <string name="pref_header_auto_fetch">Stahovat automaticky</string>
+    <string name="menuitem_pai">PAI</string>
+    <string name="pref_qhybrid_save_raw_activity_files">Uložit soubory nezpracovaných dat aktivit</string>
+    <string name="menuitem_workout">Cvičení</string>
+    <string name="menuitem_eventreminder">Připomenutí události</string>
+    <string name="menuitem_hr">Tepová frekvence</string>
+    <string name="devicetype_watchxplus">Watch X Plus</string>
+    <string name="devicetype_watchx">Watch X</string>
+    <string name="power_mode_watch">Pouze hodinky</string>
+    <string name="power_mode_saving">Úspora energie</string>
+    <string name="power_mode_normal">Normální</string>
+    <string name="power_mode_title">Režim napájení hodinek</string>
+    <string name="prefs_sensors_button_bp_calibration_sum">Stisknutím zde zahájíte kalibraci</string>
+    <string name="prefs_sensors_button_bp_calibration">Kalibrace</string>
+    <string name="pref_sensors_bp_calibration_high">Krevní tlak SYSTOLIC (vysoký)</string>
+    <string name="pref_sensors_bp_calibration_low">Krevní tlak DIASTOLIC (nízký)</string>
+    <string name="pref_sensors_bp_calibration">Kalibrace krevního tlaku</string>
+    <string name="pref_title_sensors_altitude">Kalibrace nadmořské výšky</string>
+    <string name="pref_header_sensors_calibration">Kalibrace senzoru</string>
+    <string name="pref_title_device_spec_settings_show_raw_graph">Zobrazit nezpracovaná data v grafu aktivity</string>
+    <string name="pref_summary_device_spec_settings_title_force_time">Vynutit automatickou synchronizaci času při opětovném připojení. Analogové ručičky mohou ukazovat nesprávný čas!</string>
+    <string name="pref_title_device_spec_settings_force_time">Vynutit synchronizaci času</string>
+    <string name="pref_header_device_spec_settings">Nastavení zařízení</string>
+    <string name="pref_summary_notifications_and_calls_title_shake_reject">Duplikuje akce tlačítka hodinek</string>
+    <string name="prefs_notifications_and_calls_shake_reject">Potřást zápěstí pro ignorování/odmítnutí hovoru</string>
+    <string name="pref_summary_notifications_and_calls_title_reject">Vypnuto - ignorovat, Zapnuto - odmítnout</string>
+    <string name="prefs_notifications_and_calls_reject">Tlačítko ignorovat / odmítnout hovor</string>
+    <string name="pref_header_notifications_and_calls_callhandling">Zpracování hovorů</string>
+    <string name="pref_title_notifications_and_calls_repeat_on_misscall">Opakuje se po dobu X minut</string>
+    <string name="pref_summary_notifications_and_calls_enable_misscall">Opakuje se každou minutu</string>
+    <string name="pref_notifications_and_calls_enable_misscall">Upozornit na zmeškaný hovor</string>
+    <string name="prefs_notifications_and_calls_continious_ring">Oznámení během vyzvánění telefonu</string>
+    <string name="pref_title_notifications_and_calls_repeat_on_call">Opakování oznámení o volání</string>
+    <string name="pref_header_notifications_and_calls">Oznámení a volání</string>
+    <string name="title_activity_LenovoWatch_calibration">Kalibrace Watch X Plus</string>
+    <string name="czesh">Česky</string>
+    <string name="swedish">Švédsky</string>
+    <string name="hebrew">Hebrejsky</string>
+    <string name="greek">Řecky</string>
+    <string name="hungarian">Maďarsky</string>
+    <string name="romanian">Rumunsky</string>
+    <string name="pref_theme_system">Systém</string>
+    <string name="fw_upgrade_notice_amazfit_trex">Chystáte se nainstalovat firmvér %s na vašem Amazfit T-Rex. 
+\n 
+\nProsím nezapomeňte nainstalovat soubor .fw, potom soubor .res a nakonec soubor .gps. Vaše hodinky se po instalaci souboru .fw restartují. 
+\n 
+\nPoznámka: Nemusíte instalovat .res a .gps, pokud jsou tyto soubory přesně stejné jako ty, které byly nainstalovány dříve. 
+\n 
+\nPOKRAČUJTE TO NA VLASTNÍ NEBEZPEČÍ!</string>
+    <string name="hr_widget_last_notification">Poslední oznámení</string>
+    <string name="menuitem_unknown">Neznámé</string>
+    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
+    <string name="bip_prefs_shotcuts_summary">Vyberte odkazy na displeji</string>
+    <string name="bip_prefs_shortcuts">Zkratky</string>
+    <string name="controlcenter_set_alias">Nastavit Alias</string>
+    <string name="about_additional_contributions">Děkujeme všem výše nezmíněným přispívatelům za kód, překlady, podporu, nápady, motivaci, hlášení o chybách, peníze… ✊</string>
+    <string name="about_additional_device_support">Podpora dalších zařízení</string>
+    <string name="about_contributors">Přispěvatelé</string>
+    <string name="about_core_team_title">Centrální tým (v pořadí příspěvku prvního kódu)</string>
+    <string name="about_description">Svobodná a lokální náhrada za uzavřenou aplikaci vašich hodinek/náramku.</string>
+    <string name="about_activity_title">O aplikaci Gadgetbridge</string>
+    <string name="about_title">O aplikaci</string>
+    <string name="menuitem_worldclock">Světový Čas</string>
+    <string name="pref_title_weather_summary">Použito s poskytovatelem počasí LineageOS. Ostatní verze Androidu vyžadují \"Weather Notification\" app. Více informací naleznete na Gadgetbridge wiki.</string>
+    <string name="error_version_check_extreme_caution">POZOR: Chyba při kontrole verze! Neměli byste pokračovat! Verze má název \"%s\"</string>
+    <string name="permission_granting_mandatory">Všechna tato oprávnění jsou vyžadována a může nastat nestabilita, pokud nebudou udělena</string>
+    <string name="activity_detail_show_gps_label">Zobrazit trasu GPS</string>
+    <string name="activity_detail_duration_label">Doba trvání</string>
+    <string name="activity_detail_end_label">Konec</string>
+    <string name="activity_detail_start_label">Začátek</string>
+    <string name="Steps">Kroky</string>
+    <string name="Activity">Aktivita</string>
+    <string name="Speed">Rychlost</string>
+    <string name="Elevation">Elevace</string>
+    <string name="Distance">Vzdálenost</string>
+    <string name="Swimming">Plavání</string>
+    <string name="Strokes">Záběry</string>
+    <string name="bpm">tepů/min</string>
+    <string name="minutes_km">min/km</string>
+    <string name="seconds_km">sec/km</string>
+    <string name="calories_unit">kcal</string>
+    <string name="laps_unit">bazénů</string>
+    <string name="swim_style">plavecký styl</string>
+    <string name="swolf_index">swolf index</string>
+    <string name="seconds">sec</string>
+    <string name="strokes_unit">záb</string>
+    <string name="strokes_second">záb/s</string>
+    <string name="km_h">km/h</string>
+    <string name="meters_second">m/s</string>
+    <string name="steps_unit">kroků</string>
+    <string name="cm">cm</string>
+    <string name="meters">m</string>
+    <string name="flatSeconds">V rovině</string>
+    <string name="ascentSeconds">Stoupající</string>
+    <string name="laps">Bazénů</string>
+    <string name="swimStyle">Plavecký styl</string>
+    <string name="swolfIndex">Hodnocení swolf</string>
+    <string name="averageLapPace">Průměrné Tempo Bazénu</string>
+    <string name="averageStrokesPerSecond">Průměrné Záběry</string>
+    <string name="averageStrokeDistance">Průměrná Délka Záběru</string>
+    <string name="averageStride">Průměrný Krok</string>
+    <string name="averageKMPaceSeconds">Tempo</string>
+    <string name="averageHR">Tepová frekvence</string>
+    <string name="totalStride">Celkově ujito</string>
+    <string name="maxPace">Nejrychlejší Tempo</string>
+    <string name="minPace">Nejpomalejší Tempo</string>
+    <string name="maxSpeed">Maximální</string>
+    <string name="caloriesBurnt">Kalorie</string>
+    <string name="activeSeconds">Aktivní</string>
+    <string name="steps">Kroky</string>
+    <string name="minAltitude">Nejníže</string>
+    <string name="maxAltitude">Nejvýše</string>
+    <string name="descentMeters">Z kopce</string>
+    <string name="ascentMeters">Do kopce</string>
+    <string name="distanceMeters">Vzdálenost</string>
+    <string name="error_location_enabled_mandatory">Chcete-li vyhledat zařízení, Poloha musí být zapnutá</string>
+    <string name="ignore_bonded_devices_description">Povolením této možnosti se budou ignorovat zařízení, která byla při skenování již spojena/spárována</string>
+    <string name="ignore_bonded_devices">Ignorovat připojená zařízení</string>
+    <string name="error_retrieving_devices_database">Při načítání zařízení z databáze došlo k chybě</string>
+    <string name="error_setting_alias">Chyba při nastavování aliasu:</string>
+    <string name="error_exporting_device_preferences">Při exportu předvoleb specifických pro zařízení došlo k chybě</string>
+    <string name="pref_check_permission_status_summary">Provádí kontrolu chybějících oprávnění i když tato nemusí být momentálně vyžadována. Zakažte, pokud vaše zařízení nepodporuje některé z těchto funkcí. Neudělení oprávnění může způsobovat problémy!</string>
+    <string name="pref_check_permission_status">Ověřovat stav oprávnění</string>
+    <string name="error_background_service_reason">Spuštění služby na pozadí selhalo díky chybě:</string>
+    <string name="device_requires_key">VYŽADOVÁN KLÍČ</string>
+    <string name="device_is_currently_bonded">JIŽ NAPÁROVÁNO</string>
+    <string name="error_background_service_reason_truncated">Službu na pozadí se nepodařilo spustit kvůli…</string>
+    <string name="error_background_service">Nepodařilo se spustit službu na pozadí</string>
+    <string name="companiondevice_pairing_details">Povoluje nové rozhraní Doprovodného Zařízení (CompanionDevice API, toto existuje pouze v Android 8 a novějším), které zlepšuje spolehlivost připojení. Pro využití tohoto rozhraní je nutné znovu-napárování za použití Gadgetbridge</string>
+    <string name="companiondevice_pairing">Párování systémem Doprovodného Zařízení</string>
+    <string name="require_location_provider">Poloha musí být povolena</string>
+    <string name="menuitem_stress">Stres</string>
+    <string name="menuitem_cycles">Cykly</string>
+    <string name="menuitem_breathing">Dýchání</string>
+    <string name="devicetype_pinetime_jf">PineTime (JF Firmware)</string>
+    <string name="devicetype_tlw64">TLW64</string>
+    <string name="devicetype_miband5">Mi Band 5</string>
+    <string name="activity_summary_detail">Detaily Sportovní Aktivity</string>
+    <string name="fw_upgrade_notice_miband5">Chystáte se nainstalovat firmvér %s do vašeho Mi Band 5.
+\n
+\nProsím, ujistěte se, že jste nainstalovali soubor .fw a potom soubor .res. Váš pásek se po instalaci souboru .fw restartuje.
+\n
+\nPoznámka: Nemusíte instalovat soubor .res, pokud je stejný jako nainstalován dříve.
+\n
+\nPOKRAČUJTE NA VLASTNÍ NEBEZPEČÍ!</string>
+    <string name="medley">Polohový závod</string>
+    <string name="backstroke">Znak</string>
+    <string name="freestyle">Volný styl</string>
+    <string name="breaststroke">Prsa</string>
+    <string name="activity_summaries_statistics">Statistiky</string>
+    <string name="activity_filter_apply_filter">Použít Filtr</string>
+    <string name="activity_filter_filter_title">Filtr</string>
+    <string name="activity_filter_reset_filter">Zresetovat Filtr</string>
+    <string name="activity_filter_date_to">Do</string>
+    <string name="activity_filter_date_from">Od</string>
+    <string name="pref_header_statistics">Statistiky Sportovních Aktivit</string>
+    <string name="pref_header_filter">Filtr Sportovních Aktivit</string>
+    <string name="prefs_events_forwarding_action_title">Spustit akci</string>
+    <string name="prefs_events_forwarding_broadcast_title">Vysílací broadcast zpráva</string>
+    <string name="prefs_events_forwarding_startnonwear">Při nenošení</string>
+    <string name="prefs_events_forwarding_wokeup">Při probuzení</string>
+    <string name="prefs_events_forwarding_fellsleep">Při usnutí</string>
+    <string name="prefs_events_forwarding_title">Akce zařízení</string>
+    <string name="prefs_events_forwarding_summary">Pomocí událostí náramkového zařízení spusťte akce a Android broadcast vysílání</string>
+    <string name="km">km</string>
+    <string name="seconds_m">sec/m</string>
+    <string name="activity_type_yoga">Jóga</string>
+    <string name="activity_type_jump_roping">Skákací lano</string>
+    <string name="activity_type_elliptical_trainer">Eliptický trenažér</string>
+    <string name="activity_type_indoor_cycling">Sálová Cyklistika</string>
+    <string name="activity_type_swimming_openwater">Plavání (otevřená voda)</string>
+    <string name="activity_filter_name_contains">Štítek</string>
+    <string name="activity_summary_edit_name_title">Editovat štítek</string>
+    <string name="activity_summaries_all_activities">Všechny aktivity</string>
+    <string name="activity_summary_yesterday">Včera</string>
+    <string name="activity_summary_today">Dnes</string>
+    <string name="devicetype_sg2">Lemfo SG2</string>
+    <string name="activity_filter_to_placeholder">dnes</string>
+    <string name="activity_filter_from_placeholder">vzdálená minulost</string>
+    <string name="activity_summaries_all_devices">Všechna zařízení</string>
+    <string name="sports_activity_quick_filter_select">Časové období</string>
+    <string name="sports_activity_quick_filter_30days">30 dní</string>
+    <string name="sports_activity_quick_filter_7days">7 dní</string>
+    <string name="sports_activity_quick_filter_last_month">Minulý měsíc</string>
+    <string name="sports_activity_quick_filter_this_month">Tento měsíc</string>
+    <string name="sports_activity_quick_filter_last_week">Minulý týden</string>
+    <string name="sports_activity_quick_filter_this_week">Tento týden</string>
+    <string name="no">Ne</string>
+    <string name="yes">Ano</string>
+    <string name="activity_filter_individual_items">Jednotlivě vybrané položky</string>
+    <string name="addto_filter">Přidat do filtru</string>
+    <string name="averageSpeed">Průměrná rychlost</string>
+    <string name="baseAltitude">Základní nadmořská výška</string>
+    <string name="about_links">Odkazy</string>
+    <string name="activity_type_badminton">Badminton</string>
+    <string name="activity_type_pingpong">Stolní tenis</string>
+    <string name="activity_type_basketball">Basketbal</string>
+    <string name="activity_type_cricket">Kriket</string>
+    <string name="activity_type_rowing_machine">Veslovací trenažér</string>
+    <string name="activity_type_soccer">Fotbal</string>
+    <string name="sonyswr12_settings_title">Sony SWR12 nastavení</string>
+    <string name="sonyswr12_settings_low_vibration">Nízké vibrace povoleny</string>
+    <string name="sonyswr12_settings_stamina">Režim úspory energie je zapnutý</string>
+    <string name="sonyswr12_settings_alarm_interval">Interval inteligentního alarmu v minutách</string>
+    <string name="sonyswr12_settings_low_vibration_summary">Povolit nízkou intenzitu vibrací na pásmu</string>
+    <string name="sonyswr12_settings_stamina_summary">Režim úspory energie vypíná periodické automatické měření srdeční frekvence a tím prodlužuje pracovní dobu</string>
+    <string name="sonyswr12_settings_alarm_interval_summary">Interval inteligentního alarmu je interval před nainstalovaným alarmem. V tomto intervalu se zařízení pokouší detekovat nejlehčí fázi spánku, aby probudil uživatele</string>
+    <string name="devicetype_nut_mini">Nut Mini</string>
+    <string name="chart_get_active_and_synchronize">Vykonejte nějakou aktivitu a synchronizujte zařízení.</string>
+    <string name="chart_no_active_data">Nedetekovány žádné aktivity.</string>
+    <string name="descentSeconds">Doba sestupu</string>
+    <string name="devicetype_lefun">Lefun</string>
+    <string name="activity_error_no_app_for_png">Chcete-li sdílet tento snímek obrazovky, nainstalujte si aplikaci, která dokáže zpracovávat nebo přijímat obrázky.</string>
+    <string name="activity_prefs_chart_min_session_length">Minimální délka aktivity (minut)</string>
+    <string name="activity_prefs_chart_max_idle_phase_length">Délka pauzy k oddělení aktivit (minut)</string>
+    <string name="activity_prefs_chart_min_steps_per_minute">Minimální počet kroků za minutu k detekci aktivity</string>
+    <string name="activity_prefs_chart_min_steps_per_minute_for_run">Minimální počet kroků za minutu k detekci běhu</string>
+    <string name="lefun_prefs_interface_language_title">Jazyk rozhraní</string>
+    <string name="lefun_prefs_antilost_summary">Řemínek zavibruje při odpojení od telefonu</string>
+    <string name="lefun_prefs_antilost_title">Ochrana proti ztrátě</string>
+    <string name="lefun_prefs_hydration_reminder_interval_title">Interval připomenutí hydratace (v minutách)</string>
+    <string name="lefun_prefs_hydration_reminder_summary">Pásek zavibruje pro připomenutí se napít</string>
+    <string name="lefun_prefs_hydration_reminder_title">Připomenutí hydratace</string>
+    <string name="firmware_update_progress">Průběh nahrávání
+\n%1d%% při %.2fkbps (průměr %.2fkbps)
+\nČást %1d z %1d</string>
+    <string name="devicestatus_upload_failed">Došlo k chybě nahrávání</string>
+    <string name="devicestatus_upload_aborted">Nahrávání přerušeno!</string>
+    <string name="devicestatus_upload_validating">Kontrola nahraných dat</string>
+    <string name="devicestatus_upload_completed">Nahrávání dokončeno</string>
+    <string name="devicestatus_disconnected">Zařízení odpojeno!</string>
+    <string name="devicestatus_disconnecting">Zařízení se odpojuje!</string>
+    <string name="devicestatus_upload_started">Nahrávání začalo</string>
+    <string name="devicestatus_upload_starting">Počátek nahrávání</string>
+    <string name="devicestatus_connected">Zařízení připojeno</string>
+    <string name="devicestatus_connecting">Připojování zařízení</string>
+    <string name="charts_activity_list">Seznam Aktivit</string>
 </resources>

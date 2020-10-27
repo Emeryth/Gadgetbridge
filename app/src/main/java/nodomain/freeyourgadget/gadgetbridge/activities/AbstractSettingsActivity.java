@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Christian
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Christian
     Fischer, Daniele Gobbetti, Lem Dulfo
 
     This file is part of Gadgetbridge.
@@ -29,13 +29,14 @@ import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.view.MenuItem;
 
+import androidx.core.app.NavUtils;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Locale;
 
-import androidx.core.app.NavUtils;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 
@@ -189,7 +190,7 @@ public abstract class AbstractSettingsActivity extends AppCompatPreferenceActivi
      */
     private static void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
-        SimpleSetSummaryOnChangeListener listener = null;
+        SimpleSetSummaryOnChangeListener listener;
         Preference.OnPreferenceChangeListener existingListener = preference.getOnPreferenceChangeListener();
         if (existingListener != null) {
             listener = new ExtraSetSummaryOnChangeListener(existingListener);

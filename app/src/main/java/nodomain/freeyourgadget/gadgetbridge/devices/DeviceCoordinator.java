@@ -1,5 +1,5 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, JohnnySun, José Rebelo, Matthieu Baerts, Uwe Hermann
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, JohnnySun, José Rebelo, Matthieu Baerts, Nephiel, Uwe Hermann
 
     This file is part of Gadgetbridge.
 
@@ -128,6 +128,9 @@ public interface DeviceCoordinator {
     @Nullable
     Class<? extends Activity> getPairingActivity();
 
+    @Nullable
+    Class<? extends Activity> getCalibrationActivity();
+
     /**
      * Returns true if activity data fetching is supported by the device
      * (with this coordinator).
@@ -200,6 +203,18 @@ public interface DeviceCoordinator {
      * @return
      */
     boolean supportsSmartWakeup(GBDevice device);
+
+    /**
+     * Returns true if this device/coordinator supports alarm snoozing
+     * @return
+     */
+    boolean supportsAlarmSnoozing();
+
+    /**
+     * Returns true if this device/coordinator supports alarm descriptions
+     * @return
+     */
+    boolean supportsAlarmDescription(GBDevice device);
 
     /**
      * Returns true if the given device supports heart rate measurements.

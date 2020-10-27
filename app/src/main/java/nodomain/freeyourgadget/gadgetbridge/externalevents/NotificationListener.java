@@ -1,7 +1,7 @@
-/*  Copyright (C) 2015-2019 abettenburg, Andreas Shimokawa, AndrewBedscastle,
-    Carsten Pfeiffer, Daniele Gobbetti, Frank Slezak, Hasan Ammar, José Rebelo,
-    Julien Pivotto, Kevin Richter, Matthieu Baerts, Normano64, Steffen Liebergeld,
-    Taavi Eomäe, veecue, Zhong Jianxin
+/*  Copyright (C) 2015-2020 abettenburg, Andreas Shimokawa, AndrewBedscastle,
+    Carsten Pfeiffer, Daniel Dakhno, Daniele Gobbetti, Frank Slezak, Hasan Ammar,
+    José Rebelo, Julien Pivotto, Kevin Richter, Matthieu Baerts, Normano64,
+    Steffen Liebergeld, Taavi Eomäe, veecue, Zhong Jianxin
 
     This file is part of Gadgetbridge.
 
@@ -33,6 +33,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadata;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.service.notification.NotificationListenerService;
@@ -53,9 +54,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.dao.query.Query;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
@@ -99,14 +103,25 @@ public class NotificationListener extends NotificationListenerService {
     public static final String ACTION_REPLY
             = "nodomain.freeyourgadget.gadgetbridge.notificationlistener.action.reply";
 
-    private LimitedQueue mActionLookup = new LimitedQueue(32);
-    private LimitedQueue mPackageLookup = new LimitedQueue(64);
-    private LimitedQueue mNotificationHandleLookup = new LimitedQueue(128);
+    private final LimitedQueue mActionLookup = new LimitedQueue(32);
+    private final LimitedQueue mPackageLookup = new LimitedQueue(64);
+    private final LimitedQueue mNotificationHandleLookup = new LimitedQueue(128);
 
-    private HashMap<String, Long> notificationBurstPrevention = new HashMap<>();
-    private HashMap<String, Long> notificationOldRepeatPrevention = new HashMap<>();
+    private final HashMap<String, Long> notificationBurstPrevention = new HashMap<>();
+    private final HashMap<String, Long> notificationOldRepeatPrevention = new HashMap<>();
+
+    private static final Set<String> GROUP_SUMMARY_WHITELIST = Collections.singleton(
+            "mikado.bizcalpro"
+    );
+
+    public static ArrayList<String> notificationStack = new ArrayList<>();
 
     private long activeCallPostTime;
+    private int mLastCallCommand = CallSpec.CALL_UNDEFINED;
+
+    private final Handler mHandler = new Handler();
+    private Runnable mSetMusicInfoRunnable = null;
+    private Runnable mSetMusicStateRunnable = null;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
@@ -223,6 +238,7 @@ public class NotificationListener extends NotificationListenerService {
     @Override
     public void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+        notificationStack.clear();
         super.onDestroy();
     }
 
@@ -239,22 +255,21 @@ public class NotificationListener extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        Prefs prefs = GBApplication.getPrefs();
+        logNotification(sbn, true);
 
-        if (GBApplication.isRunningLollipopOrLater()) {
-            if ("call".equals(sbn.getNotification().category) && prefs.getBoolean("notification_support_voip_calls", false)) {
-                handleCallNotification(sbn);
-                return;
-            }
-        }
-        if (shouldIgnore(sbn)) {
-            LOG.info("Ignore notification");
+        notificationStack.remove(sbn.getPackageName());
+        notificationStack.add(sbn.getPackageName());
+
+        if (shouldIgnoreNotifications()) return;
+
+        if (shouldIgnoreSource(sbn)) {
+            LOG.debug("Ignoring notification source");
             return;
         }
 
+        if (handleMediaSessionNotification(sbn)) return;
+
         switch (GBApplication.getGrantedInterruptionFilter()) {
-            case NotificationManager.INTERRUPTION_FILTER_ALL:
-                break;
             case NotificationManager.INTERRUPTION_FILTER_ALARMS:
             case NotificationManager.INTERRUPTION_FILTER_NONE:
                 return;
@@ -263,22 +278,41 @@ public class NotificationListener extends NotificationListenerService {
                 return;
         }
 
-        String source = sbn.getPackageName().toLowerCase();
-        Notification notification = sbn.getNotification();
-        if (notificationOldRepeatPrevention.containsKey(source)) {
-            if (notification.when <= notificationOldRepeatPrevention.get(source)) {
-                LOG.info("NOT processing notification, already sent newer notifications from this source.");
+        Prefs prefs = GBApplication.getPrefs();
+        if (GBApplication.isRunningLollipopOrLater()) {
+            if (NotificationCompat.CATEGORY_CALL.equals(sbn.getNotification().category)
+                    && prefs.getBoolean("notification_support_voip_calls", false)
+                    && sbn.isOngoing()) {
+                handleCallNotification(sbn);
                 return;
             }
         }
 
+        if (shouldIgnoreNotification(sbn)) {
+            if (!"com.sec.android.app.clockpackage".equals(sbn.getPackageName())) {     // workaround to allow phone alarm notification
+                LOG.info("Ignore notification: " + sbn.getPackageName());               // need to fix
+                return;
+            }
+        }
+
+        String source = sbn.getPackageName();
+        Notification notification = sbn.getNotification();
+
+        Long notificationOldRepeatPreventionValue = notificationOldRepeatPrevention.get(source);
+        if (notificationOldRepeatPreventionValue != null
+                && notification.when <= notificationOldRepeatPreventionValue) {
+            LOG.info("NOT processing notification, already sent newer notifications from this source.");
+            return;
+        }
+
         // Ignore too frequent notifications, according to user preference
-        long min_timeout = (long)prefs.getInt("notifications_timeout", 0) * 1000L;
-        long cur_time = System.currentTimeMillis();
-        if (notificationBurstPrevention.containsKey(source)) {
-            long last_time = notificationBurstPrevention.get(source);
-            if (cur_time - last_time < min_timeout) {
-                LOG.info("Ignoring frequent notification, last one was " + (cur_time - last_time) + "ms ago");
+        long curTime = System.nanoTime();
+        Long notificationBurstPreventionValue = notificationBurstPrevention.get(source);
+        if (notificationBurstPreventionValue != null) {
+            long diff = curTime - notificationBurstPreventionValue;
+            if (diff < TimeUnit.SECONDS.toNanos(prefs.getInt("notifications_timeout", 0))) {
+                LOG.info("Ignoring frequent notification, last one was "
+                        + TimeUnit.NANOSECONDS.toMillis(diff) + "ms ago");
                 return;
             }
         }
@@ -318,10 +352,11 @@ public class NotificationListener extends NotificationListenerService {
 
         dissectNotificationTo(notification, notificationSpec, preferBigText);
 
-        if (!checkNotificationContentForWhiteAndBlackList(sbn.getPackageName().toLowerCase(), notificationSpec.body)) {
-            return;
+        if (notificationSpec.body != null) {
+            if (!checkNotificationContentForWhiteAndBlackList(sbn.getPackageName().toLowerCase(), notificationSpec.body)) {
+                return;
+            }
         }
-
 
         // ignore Gadgetbridge's very own notifications, except for those from the debug screen
         if (getApplicationContext().getPackageName().equals(source)) {
@@ -334,7 +369,8 @@ public class NotificationListener extends NotificationListenerService {
         List<NotificationCompat.Action> actions = wearableExtender.getActions();
 
 
-        if (actions.size() == 0 && NotificationCompat.isGroupSummary(notification)) { //this could cause #395 to come back
+        if (actions.isEmpty() && NotificationCompat.isGroupSummary(notification)
+                && !GROUP_SUMMARY_WHITELIST.contains(source)) { //this could cause #395 to come back
             LOG.info("Not forwarding notification, FLAG_GROUP_SUMMARY is set and no wearable action present. Notification flags: " + notification.flags);
             return;
         }
@@ -378,13 +414,12 @@ public class NotificationListener extends NotificationListenerService {
         mNotificationHandleLookup.add(notificationSpec.getId(), sbn.getPostTime()); // for both DISMISS and OPEN
         mPackageLookup.add(notificationSpec.getId(), sbn.getPackageName()); // for MUTE
 
-        notificationBurstPrevention.put(source, cur_time);
+        notificationBurstPrevention.put(source, curTime);
         if(0 != notification.when) {
             notificationOldRepeatPrevention.put(source, notification.when);
         }else {
             LOG.info("This app might show old/duplicate notifications. notification.when is 0 for " + source);
         }
-
         GBApplication.deviceService().onNotification(notificationSpec);
     }
 
@@ -434,15 +469,26 @@ public class NotificationListener extends NotificationListenerService {
     private void handleCallNotification(StatusBarNotification sbn) {
         String app = sbn.getPackageName();
         LOG.debug("got call from: " + app);
-        if(app.equals("com.android.dialer")) {
+        if (app.equals("com.android.dialer") || app.equals("com.android.incallui")) {
             LOG.debug("Ignoring non-voip call");
             return;
         }
         Notification noti = sbn.getNotification();
         dumpExtras(noti.extras);
+        boolean callStarted = false;
         if(noti.actions != null && noti.actions.length > 0) {
             for (Notification.Action action : noti.actions) {
                 LOG.info("Found call action: " + action.title);
+            }
+            if (noti.actions.length == 1) {
+                if (mLastCallCommand == CallSpec.CALL_INCOMING) {
+                    LOG.info("There is only one call action and previous state was CALL_INCOMING, assuming call started");
+                    callStarted = true;
+                } else {
+                    LOG.info("There is only one call action and previous state was not CALL_INCOMING, assuming outgoing call / duplicate notification and ignoring");
+                    // FIXME: is there a way to detect transition CALL_OUTGOING -> CALL_START for more complete VoIP call state tracking?
+                    return;
+                }
             }
             /*try {
                 LOG.info("Executing first action");
@@ -465,12 +511,12 @@ public class NotificationListener extends NotificationListenerService {
         activeCallPostTime = sbn.getPostTime();
         CallSpec callSpec = new CallSpec();
         callSpec.number = number;
-        callSpec.command = CallSpec.CALL_INCOMING;
+        callSpec.command = callStarted ? CallSpec.CALL_START : CallSpec.CALL_INCOMING;
+        mLastCallCommand = callSpec.command;
         GBApplication.deviceService().onSetCallState(callSpec);
     }
 
-    boolean shouldContinueAfterFilter(@NonNull String body, @NonNull List<String> wordsList, @NonNull NotificationFilter notificationFilter) {
-
+    boolean shouldContinueAfterFilter(String body, @NonNull List<String> wordsList, @NonNull NotificationFilter notificationFilter) {
         LOG.debug("Mode: '{}' Submode: '{}' WordsList: '{}'", notificationFilter.getNotificationFilterMode(), notificationFilter.getNotificationFilterSubMode(), wordsList);
 
         boolean allMode = notificationFilter.getNotificationFilterSubMode() == NOTIFICATION_FILTER_SUBMODE_ALL;
@@ -566,6 +612,11 @@ public class NotificationListener extends NotificationListenerService {
         return false;
     }
 
+    private boolean handleMediaSessionNotification(StatusBarNotification sbn) {
+        MediaSessionCompat.Token mediaSession = getMediaSession(sbn.getNotification());
+        return mediaSession != null && handleMediaSessionNotification(mediaSession);
+    }
+
     /**
      * Try to handle media session notifications that tell info about the current play state.
      *
@@ -573,8 +624,8 @@ public class NotificationListener extends NotificationListenerService {
      * @return true if notification was handled, false otherwise
      */
     public boolean handleMediaSessionNotification(MediaSessionCompat.Token mediaSession) {
-        MusicSpec musicSpec = new MusicSpec();
-        MusicStateSpec stateSpec = new MusicStateSpec();
+        final MusicSpec musicSpec = new MusicSpec();
+        final MusicStateSpec stateSpec = new MusicStateSpec();
 
         MediaControllerCompat c;
         try {
@@ -617,40 +668,77 @@ public class NotificationListener extends NotificationListenerService {
                 musicSpec.trackNr = (int) d.getLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER);
 
             // finally, tell the device about it
-            GBApplication.deviceService().onSetMusicInfo(musicSpec);
-            GBApplication.deviceService().onSetMusicState(stateSpec);
+            if (mSetMusicInfoRunnable != null) {
+                mHandler.removeCallbacks(mSetMusicInfoRunnable);
+            }
+            mSetMusicInfoRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    GBApplication.deviceService().onSetMusicInfo(musicSpec);
+                }
+            };
+            mHandler.postDelayed(mSetMusicInfoRunnable, 100);
+
+            if (mSetMusicStateRunnable != null) {
+                mHandler.removeCallbacks(mSetMusicStateRunnable);
+            }
+            mSetMusicStateRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    GBApplication.deviceService().onSetMusicState(stateSpec);
+                }
+            };
+            mHandler.postDelayed(mSetMusicStateRunnable, 100);
 
             return true;
-        } catch (NullPointerException | RemoteException e) {
+        } catch (NullPointerException | RemoteException | SecurityException e) {
             return false;
         }
     }
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        LOG.info("Notification removed: " + sbn.getPackageName());
+        logNotification(sbn, false);
+
+        notificationStack.remove(sbn.getPackageName());
+
+        if (shouldIgnoreNotifications()) return;
+        if (shouldIgnoreSource(sbn)) return;
+
+        if (handleMediaSessionNotification(sbn)) return;
+
         if (GBApplication.isRunningLollipopOrLater()) {
-            LOG.info("Notification removed: " + sbn.getPackageName() + ", category: " + sbn.getNotification().category);
-            if (Notification.CATEGORY_CALL.equals(sbn.getNotification().category) && activeCallPostTime == sbn.getPostTime()) {
+            if(Notification.CATEGORY_CALL.equals(sbn.getNotification().category)
+                    && activeCallPostTime == sbn.getPostTime()) {
                 activeCallPostTime = 0;
                 CallSpec callSpec = new CallSpec();
                 callSpec.command = CallSpec.CALL_END;
+                mLastCallCommand = callSpec.command;
                 GBApplication.deviceService().onSetCallState(callSpec);
             }
         }
         // FIXME: DISABLED for now
-        /*
-        if (shouldIgnore(sbn))
-            return;
+
+        if (shouldIgnoreNotification(sbn)) return;
 
         Prefs prefs = GBApplication.getPrefs();
-        if (prefs.getBoolean("autoremove_notifications", false)) {
+        if (prefs.getBoolean("autoremove_notifications", true)) {
             LOG.info("notification removed, will ask device to delete it");
             GBApplication.deviceService().onDeleteNotification((int) sbn.getPostTime());
         }
-        */
+
     }
 
+    private void logNotification(StatusBarNotification sbn, boolean posted) {
+        String infoMsg = (posted ? "Notification posted" : "Notification removed")
+                + ": " + sbn.getPackageName();
+
+        if (GBApplication.isRunningLollipopOrLater()) {
+            infoMsg += ": " + sbn.getNotification().category;
+        }
+
+        LOG.debug(infoMsg);
+    }
 
     private void dumpExtras(Bundle bundle) {
         for (String key : bundle.keySet()) {
@@ -663,7 +751,7 @@ public class NotificationListener extends NotificationListenerService {
     }
 
 
-    private boolean shouldIgnore(StatusBarNotification sbn) {
+    private boolean shouldIgnoreNotifications() {
         /*
          * return early if DeviceCommunicationService is not running,
          * else the service would get started every time we get a notification.
@@ -671,16 +759,16 @@ public class NotificationListener extends NotificationListenerService {
          * broadcast receivers because it seems to invalidate the permissions that are
          * necessary for NotificationListenerService
          */
-        if (!isServiceRunning() || sbn == null) {
+        if (!isServiceRunning()) {
+            LOG.trace("Service is not running, ignoring notification");
             return true;
         }
-
-        return shouldIgnoreSource(sbn.getPackageName()) || shouldIgnoreNotification(
-                sbn.getNotification(), sbn.getPackageName());
-
+        return false;
     }
 
-    private boolean shouldIgnoreSource(String source) {
+    private boolean shouldIgnoreSource(StatusBarNotification sbn) {
+        String source = sbn.getPackageName();
+
         Prefs prefs = GBApplication.getPrefs();
 
         /* do not display messages from "android"
@@ -714,12 +802,9 @@ public class NotificationListener extends NotificationListenerService {
         return false;
     }
 
-    private boolean shouldIgnoreNotification(Notification notification, String source) {
-
-        MediaSessionCompat.Token mediaSession = getMediaSession(notification);
-        //try to handle media session notifications
-        if (mediaSession != null && handleMediaSessionNotification(mediaSession))
-            return true;
+    private boolean shouldIgnoreNotification(StatusBarNotification sbn) {
+        Notification notification = sbn.getNotification();
+        String source = sbn.getPackageName();
 
         NotificationType type = AppNotificationType.getInstance().get(source);
         //ignore notifications marked as LocalOnly https://developer.android.com/reference/android/app/Notification.html#FLAG_LOCAL_ONLY
@@ -736,7 +821,7 @@ public class NotificationListener extends NotificationListenerService {
         if (!prefs.getBoolean("notifications_generic_whenscreenon", false)) {
             PowerManager powermanager = (PowerManager) getSystemService(POWER_SERVICE);
             if (powermanager != null && powermanager.isScreenOn()) {
-//                LOG.info("Not forwarding notification, screen seems to be on and settings do not allow this");
+                LOG.info("Not forwarding notification, screen seems to be on and settings do not allow this");
                 return true;
             }
         }

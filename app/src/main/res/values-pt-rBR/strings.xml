@@ -204,7 +204,7 @@
     <string name="vibration_profile_medium">Médio</string>
     <string name="vibration_profile_long">Longo</string>
     <string name="vibration_profile_waterdrop">Pingo d\'água</string>
-    <string name="vibration_profile_ring">Anel</string>
+    <string name="vibration_profile_ring">Toque</string>
     <string name="vibration_profile_alarm_clock">Alarme</string>
     <string name="miband_prefs_vibration">Vibração</string>
     <string name="vibration_try">Experimente</string>
@@ -218,7 +218,7 @@
     <string name="pref_screen_notification_profile_generic_social">Rede social</string>
     <string name="control_center_find_lost_device">Encontrar dispositivo perdido</string>
     <string name="control_center_cancel_to_stop_vibration">Cancele para parar a vibração.</string>
-    <string name="title_activity_charts">Sua atividade</string>
+    <string name="title_activity_charts">Atividade e sono</string>
     <string name="title_activity_set_alarm">Configurar alarmes</string>
     <string name="controlcenter_start_configure_alarms">Configurar alarmes</string>
     <string name="title_activity_alarm_details">Detalhes do alarme</string>
@@ -246,9 +246,9 @@
     <string name="notif_battery_low_percent">%1$s bateria a: %2$s%%</string>
     <string name="notif_battery_low_bigtext_last_charge_time">Última carga: %s \n</string>
     <string name="notif_battery_low_bigtext_number_of_charges">Número de cargas: %s</string>
-    <string name="sleepchart_your_sleep">Seu sono</string>
+    <string name="sleepchart_your_sleep">Sono</string>
     <string name="weekstepschart_steps_a_week">Passos por semana</string>
-    <string name="activity_sleepchart_activity_and_sleep">Sua atividade e sono</string>
+    <string name="activity_sleepchart_activity_and_sleep">Atividade</string>
     <string name="updating_firmware">Instalando firmware…</string>
     <string name="fwapp_install_device_not_ready">Arquivo não pode ser instalado, o dispositivo não está pronto.</string>
     <string name="installhandler_firmware_name">%1$s: %2$s %3$s</string>
@@ -268,7 +268,7 @@
     <string name="liveactivity_live_activity">Atividade ao vivo</string>
     <string name="weeksteps_today_steps_description">Passos hoje, meta: %1$s</string>
     <string name="pref_title_dont_ack_transfer">Não reconhecer transferência de dados da atividade</string>
-    <string name="pref_summary_dont_ack_transfers">Se os dados da atividade não forem reconhecidos para a pulseira, eles não serão apagados. Útil se GB for usado em conjunto com outros aplicativos.</string>
+    <string name="pref_summary_dont_ack_transfers">Se não reconhecido para a pulseira, dados de atividade não serão apagados. Útil se GB for usado em conjunto com outros aplicativos.</string>
     <string name="pref_summary_keep_data_on_device">Vai manter os dados de atividade no Mi Band mesmo após a sincronização. Útil se GB for usado em conjunto com outros aplicativos.</string>
     <string name="pref_title_low_latency_fw_update">Usar o modo de baixa latência para instalação de firmware</string>
     <string name="pref_summary_low_latency_fw_update">Isso pode ajudar em dispositivos no caso de eventual falha na instalação de firmware.</string>
@@ -367,16 +367,16 @@
     <string name="controlcenter_snackbar_connecting">Conectando…</string>
     <string name="controlcenter_snackbar_requested_screenshot">Tirar captura de tela do dispositivo</string>
     <string name="title_activity_calblacklist">Blacklist do Calendário</string>
-    <string name="fw_upgrade_notice_amazfitbip">Você está prestes a instalar o firmware %s no seu Amazip Bip.
+    <string name="fw_upgrade_notice_amazfitbip">Você está prestes a instalar o firmware %s no seu Amazfit Bip.
 \n
-\nCertifique-se de instalar o firmware .gps, depois o arquivo .res e, finalmente, o arquivo .fw. Seu relógio será reiniciado após a instalação do arquivo .fw.
+\nCertifique-se de instalar o firmware .fw, depois o arquivo .res e finalmente o arquivo .gps. Seu relógio será reiniciado após a instalação do arquivo .fw.
 \n
 \nNota: você não precisa instalar .res e .gps se esses arquivos forem exatamente os mesmos que os instalados anteriormente.
 \n
 \nPROSSIGA POR SUA CONTA E RISCO!</string>
     <string name="fw_upgrade_notice_amazfitcor">Você está prestes a instalar o firmware %s no seu Amazfit Cor.
 \n
-\nCertifique-se de instalar o arquivo .fw, e depois disso o arquivo .res. Sua pulseira será reiniciado após a instalação do arquivo .fw.
+\nCertifique-se de instalar o arquivo .fw, e depois disso o arquivo .res. Sua pulseira será reiniciada após a instalação do arquivo .fw.
 \n
 \nNota: você não precisa instalar .res se for exatamente o mesmo que o instalado anteriormente.
 \n
@@ -385,7 +385,7 @@
     <string name="pref_call_privacy_mode_number">Ocultar número, mas exibir nome</string>
     <string name="pref_blacklist_calendars">Calendários na lista negra</string>
     <string name="pref_title_weather">Clima</string>
-    <string name="pref_title_weather_location">Localização climática (CM/LOS)</string>
+    <string name="pref_title_weather_location">Localização climática (para provedor de clina do LineageOS)</string>
     <string name="pref_title_enable_calendar_sync">Sincronizar calendário</string>
     <string name="pref_title_pebble_enable_bgjs">Habilitar JS em segundo plano</string>
     <string name="pref_summary_pebble_enable_bgjs">Quando habilitado, permite que os watchfaces mostrem o clima, informações da bateria, etc.</string>
@@ -413,11 +413,11 @@
     <string name="heart_rate">Frequência cardíaca</string>
     <string name="battery">Bateria</string>
     <string name="mi2_prefs_button_actions">Ações do botão</string>
-    <string name="mi2_prefs_button_actions_summary">Especifica as ações quando pressionado o botão da Mi Band 2</string>
+    <string name="mi2_prefs_button_actions_summary">Especifica ações no pressionamento do botão</string>
     <string name="mi2_prefs_button_press_count">Contagem de acionamento do botão</string>
-    <string name="mi2_prefs_button_press_count_summary">Número de toques no botão para enviar a mensagem</string>
+    <string name="mi2_prefs_button_press_count_summary">Número de pressionamentos de botão para acionar um Evento 1. A mesma quantidade de pressionamentos subsequentes cria o Evento 2 e assim por diante.</string>
     <string name="mi2_prefs_button_press_broadcast">Mensagem para enviar</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">Enviar mensagem após um número definido de toques no botão</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">Mensagem de transmissão enviada com o evento. O parâmetro `button_id` é adicionado automaticamente a cada mensagem.</string>
     <string name="pref_summary_enable_calendar_sync">Envia eventos do calendário para linha do tempo</string>
     <string name="mi2_prefs_button_action">Ativar botão de ação</string>
     <string name="mi2_prefs_button_action_vibrate">Ativar vibração da pulseira</string>
@@ -431,7 +431,7 @@
 \n 
 \nCertifique-se de instalar o arquivo .fw, e depois o arquivo .res. Sua pulseira será reiniciada após instalar o arquivo .fw. 
 \n 
-\nNota:Vvocê não precisa instalar .res se esse arquivo é exatamente o mesmo instalado anteriormente. 
+\nNota: Você não precisa instalar .res se esse arquivo é exatamente o mesmo instalado anteriormente. 
 \n 
 \nPROSSIGA POR SUA CONTA E RISCO!</string>
     <string name="pref_title_notifications_timeout">Tempo mínimo entre notificações</string>
@@ -481,8 +481,6 @@
     <string name="_pebble_watch_open_on_phone">Abrir no Android</string>
     <string name="_pebble_watch_mute">Sem som</string>
     <string name="_pebble_watch_reply">Responder</string>
-    <string name="mi2_prefs_button_press_count_match_delay">Atrasar após ação do botão</string>
-    <string name="mi2_prefs_button_press_count_match_delay_summary">Atraso após uma ação do botão ser considerada válida (número está em button_id intent extra) ou 0 para imediatamente</string>
     <string name="activity_web_view">Web View Atividades</string>
     <string name="automatic">Automático</string>
     <string name="simplified_chinese">Chinês simplificado</string>
@@ -524,7 +522,7 @@
     <string name="activity_type_walking">Caminhada</string>
     <string name="activity_type_swimming">Natação</string>
     <string name="activity_type_unknown">Atividade desconhecida</string>
-    <string name="activity_summaries">Atividades</string>
+    <string name="activity_summaries">Atividades de esporte</string>
     <string name="activity_type_biking">Ciclismo</string>
     <string name="activity_type_treadmill">Esteira</string>
     <string name="select_all">Selecionar todos</string>
@@ -616,7 +614,7 @@
     <string name="overstep">Passos excedentes: %1$d</string>
     <string name="no_data">Nenhum dado</string>
     <string name="live_activity_max_heart_rate">Frequência cardíaca atual / máx: %1$d / %2$d</string>
-    <string name="debugactivity_really_factoryreset">Restaurar as configurações de fábrica vai excluir todos os dados do dispositivo conectado (se houver suporte). Dispositivos Xiami/Huami também mudam o endereço MAC do Bluetooth, então eles aparecem como novos dispositivos no Gadgetbrige.</string>
+    <string name="debugactivity_really_factoryreset">Restaurar as configurações de fábrica vai excluir todos os dados do dispositivo conectado (se houver suporte). Dispositivos Xiami/Huami também mudam o endereço MAC do Bluetooth, então eles aparecem como novos dispositivos no Gadgetbridge.</string>
     <string name="devicetype_casiogb6900">Casio GB-6900</string>
     <string name="title_activity_notification_filter">Filtro de notificação</string>
     <string name="toast_app_must_not_be_blacklisted">Para ser configurado, o aplicativo não pode estar na lista negra</string>
@@ -692,7 +690,7 @@
     <string name="devicetype_bfh16">BFH-16</string>
     <string name="fw_upgrade_notice_amazfitcor2">Você está prestes a instalar o firmware %s no seu Amazfit Cor 2.
 \n
-\nCertifique-se de instalar o arquivo .fw, e depois disso o arquivo .res. Sua pulseira será reiniciado após a instalação do arquivo .fw.
+\nCertifique-se de instalar o arquivo .fw, e depois disso o arquivo .res. Sua pulseira será reiniciada após a instalação do arquivo .fw.
 \n
 \nNota: você não precisa instalar .res se for exatamente o mesmo que o instalado anteriormente.
 \n
@@ -765,8 +763,304 @@
     <string name="devicetype_makibes_hr3">Makibes HR3</string>
     <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="prefs_find_phone">Encontrar telefone</string>
-    <string name="prefs_enable_find_phone">Ativar encontrar telefone</string>
+    <string name="prefs_enable_find_phone">Ativar \"Encontrar telefone\"</string>
     <string name="prefs_find_phone_summary">Use sua pulseira para reproduzir o toque sonoro do seu celular.</string>
     <string name="prefs_find_phone_duration">Duração do toque sonoro em segundos</string>
     <string name="maximum_duration">Duração</string>
+    <string name="discovery_need_to_enter_authkey">Esse dispositivo precisa de sua chave de autenticação secreta, realize pressionamento longo no dispositivo para inseri-lo. Leia o wiki.</string>
+    <string name="fw_upgrade_notice_amazfitbip_lite">Você está prestes a instalar o firmware %s no seu Amazit Bip Lite.
+\n
+\nCertifique-se de instalar o arquivo .fw, e depois o arquivo .res. Seu relógio será reiniciado após a instalação do arquivo .fw.
+\n
+\nNota: você não precisa instalar .res se esse arquivo for exatamente o mesmo que os instalados anteriormente.
+\n
+\nPROSSIGA POR SUA CONTA E RISCO!</string>
+    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
+    <string name="fw_upgrade_notice_amazfitgtr">Você está prestes a instalar o firmware %s no seu Amazfit GTR.
+\n
+\nCertifique-se de instalar o arquivo .fw, depois disso o arquivo .res e finalmente o arquivo .gps. Seu relógio será reiniciado após a instalação do arquivo .fw.
+\n
+\nNota: você não precisa instalar .res e .gps se esses arquivos forem exatamente os mesmos que os instalados anteriormente.
+\n
+\nPROSSIGA AO SEU PRÓPRIO RISCO!</string>
+    <string name="pref_chart_heartrate_color_red">Vermelho</string>
+    <string name="pref_chart_heartrate_color_orange">Laranja</string>
+    <string name="pref_title_chart_heartrate_color">Cor da frequência cardíaca</string>
+    <string name="pref_title_chart_sleep_rolling_24_hour">Intervalo de sono</string>
+    <string name="pref_chart_sleep_rolling_24_on">Últimas 24 horas</string>
+    <string name="pref_chart_sleep_rolling_24_off">Meio-dia ao meio-dia</string>
+    <string name="devicetype_amazfit_gts">Amazfit GTS</string>
+    <string name="fw_upgrade_notice_amazfitgts">Você está prestes a instalar o firmware %s no seu Amazfit GTS.
+\n
+\nCertifique-se de instalar o arquivo .fw, depois disso o arquivo .res e finalmente o arquivo .gps. Seu relógio será reiniciado após a instalação do arquivo .fw.
+\n
+\nNota: você não precisa instalar .res e .gps se esses arquivos forem exatamente os mesmos que os instalados anteriormente.
+\n
+\nPROSSIGA AO SEU PRÓPRIO RISCO!</string>
+    <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
+    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
+    <string name="preferences_qhybrid_settings">Configurações de Q Hybrid</string>
+    <string name="watch_not_connected">Relógio não conectado</string>
+    <string name="qhybrid_vibration_strength">força da vibração:</string>
+    <string name="qhybrid_goal_in_steps">Meta em passos</string>
+    <string name="qhybrid_time_shift">deslocamento de tempo</string>
+    <string name="qhybrid_second_timezone_offset_relative_to_utc">segundo deslocamento de fuso horário relativo a UTC</string>
+    <string name="qhybrid_overwrite_buttons">sobrescrever botões</string>
+    <string name="qhybrid_use_activity_hand_as_notification_counter">usar mão de atividade como contador da notificação</string>
+    <string name="qhybrid_prompt_million_steps">Defina a contagem de passos para um milhão para ativá-lo.</string>
+    <string name="qhybrid_buttons_overwrite_success">Botões sobrescritos</string>
+    <string name="qhybrid_buttons_overwrite_error">Erro ao sobrescrever botões</string>
+    <string name="qhybrid_offset_timezone">deslocar fuso horário por</string>
+    <string name="qhybrid_changes_delay_prompt">a alteração pode levar alguns segundos…</string>
+    <string name="qhybrid_offset_time_by">deslocar tempo por</string>
+    <string name="pref_disable_new_ble_scanning">Desabilitar nova varredura de BLE</string>
+    <string name="pref_summary_disable_new_ble_scanning">Marque essa opção se seu dispositivo não pode ser encontrado durante descobertas</string>
+    <string name="devicetype_banglejs">Bangle.js</string>
+    <string name="devicetype_y5">Y5</string>
+    <string name="prefs_button_single_press_action_selection_title">Ação do Evento 1</string>
+    <string name="prefs_button_double_press_action_selection_title">Ação do Evento 2</string>
+    <string name="prefs_button_triple_press_action_selection_title">Ação do Evento 3</string>
+    <string name="prefs_button_variable_actions">Configurações detalhado de pressionamento de botão</string>
+    <string name="prefs_button_long_press_action_selection_title">Ação do botão de pressionamento longo</string>
+    <string name="alarm_snooze">Adiar</string>
+    <string name="error_no_location_access">Acesso a localização deve ser concedido e habilitado para varredura funcionar adequadamente</string>
+    <string name="devicetype_itag">iTag</string>
+    <string name="pref_title_allow_high_mtu">Permitir MTU alto</string>
+    <string name="pref_summary_allow_high_mtu">Aumenta velocidade de transferência, mas pode não funcionar em alguns dispositivos Android.</string>
+    <string name="pref_summary_sync_calendar">Possibilita alertas de calendário, mesmo quando desconectado</string>
+    <string name="pref_title_sync_caldendar">Sincronizar eventos de calendário</string>
+    <string name="hr_widget_heart_rate">Frequência cardíaca</string>
+    <string name="hr_widget_steps">Passos</string>
+    <string name="hr_widget_date">Data</string>
+    <string name="hr_widget_active_minutes">Minutos ativo</string>
+    <string name="hr_widget_calories">Calorias</string>
+    <string name="hr_widget_battery">Bateria</string>
+    <string name="hr_widget_weather">Clima</string>
+    <string name="hr_widget_nothing">Nada</string>
+    <string name="find_lost_device_you_found_it">Encontrei!</string>
+    <string name="pref_title_force_white_color_scheme">Forçar preto no esquema de cores branco</string>
+    <string name="pref_summary_force_white_color_scheme">Útil se seu relógio possui ponteiros escuros</string>
+    <string name="find_my_phone_notification">Localizar meu telefone</string>
+    <string name="notification_channel_high_priority_name">Notificações de Gadgetbridge de alta prioridade</string>
+    <string name="pref_title_custom_deviceicon">Mostrar ícone de notificação específica do dispositivo</string>
+    <string name="pref_summary_custom_deviceicon">Mostra o ícone de notificação Android específico de um dispositivo em vez do ícone do Gadgetbridge quando conectado</string>
+    <string name="hr_appname_wellness">Bem-estar</string>
+    <string name="hr_appname_workout">Treino</string>
+    <string name="hr_appname_stopwatch">Cronômetro</string>
+    <string name="hr_appname_commute">Comutar</string>
+    <string name="pref_title_upper_button_function">Botão superior</string>
+    <string name="pref_title_middle_button_function">Botão do meio</string>
+    <string name="pref_title_lower_button_function">Botão inferior</string>
+    <string name="pref_title_vibration_strength">Intensidade da vibração</string>
+    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
+    <string name="pref_title_relax_firmware_checks">Habilite isso se você deseja instalar um firmware não destinado para seu dispositivo (a seu próprio risco)</string>
+    <string name="pref_summary_relax_firmware_checks">Verificações de firmware relaxadas</string>
+    <string name="pref_header_auto_fetch">Coletar automaticamente</string>
+    <string name="pref_qhybrid_title_widget_draw_circles">Desenhar círculos de widget</string>
+    <string name="pref_qhybrid_save_raw_activity_files">Salvar arquivos não tratados de atividade</string>
+    <string name="menuitem_workout">Treino</string>
+    <string name="menuitem_eventreminder">Lembrete de eventos</string>
+    <string name="menuitem_hr">Frequência cardíaca</string>
+    <string name="menuitem_pai">PAI</string>
+    <string name="devicetype_watchxplus">Watch X Plus</string>
+    <string name="power_mode_watch">Somente o relógio</string>
+    <string name="devicetype_watchx">Watch X</string>
+    <string name="power_mode_saving">Economia de energia</string>
+    <string name="power_mode_normal">Normal</string>
+    <string name="power_mode_title">Modo de energia do relógio</string>
+    <string name="prefs_sensors_button_bp_calibration_sum">Pressione aqui para iniciar a calibração</string>
+    <string name="prefs_sensors_button_bp_calibration">Calibração</string>
+    <string name="pref_sensors_bp_calibration_high">Pressão arterial SISTÓLICA (alta)</string>
+    <string name="pref_sensors_bp_calibration_low">Pressão arterial DIASTÓLICA (baixa)</string>
+    <string name="pref_sensors_bp_calibration">Calibração da pressão arterial</string>
+    <string name="pref_title_sensors_altitude">Calibração de altitude</string>
+    <string name="pref_header_sensors_calibration">Calibração do sensor</string>
+    <string name="pref_title_device_spec_settings_show_raw_graph">Mostrar dados RAW no gráfico de atividade</string>
+    <string name="pref_summary_device_spec_settings_title_force_time">Força a sincronização automática do tempo na reconexão. Os ponteiros analógicos podem mostrar tempo incorreto!</string>
+    <string name="pref_title_device_spec_settings_force_time">Forçar sincronizar o tempo</string>
+    <string name="pref_header_device_spec_settings">Configurações do dispositivo</string>
+    <string name="pref_summary_notifications_and_calls_title_shake_reject">Duplica a ação do botão do relógio</string>
+    <string name="prefs_notifications_and_calls_shake_reject">Sacudir pulso ignorar/rejeitar chamada</string>
+    <string name="pref_summary_notifications_and_calls_title_reject">Desligado - ignorar, Ligado - rejeitar</string>
+    <string name="prefs_notifications_and_calls_reject">Botão ignorar/rejeitar chamada</string>
+    <string name="pref_header_notifications_and_calls_callhandling">Tratamento de chamadas</string>
+    <string name="pref_title_notifications_and_calls_repeat_on_misscall">Repetir por X minutos</string>
+    <string name="pref_summary_notifications_and_calls_enable_misscall">Repete a cada minuto</string>
+    <string name="pref_notifications_and_calls_enable_misscall">Notificar chamada perdida</string>
+    <string name="prefs_notifications_and_calls_continious_ring">Notificação durante o toque do telefone</string>
+    <string name="pref_title_notifications_and_calls_repeat_on_call">Repetir notificação de chamadas</string>
+    <string name="pref_header_notifications_and_calls">Notificações e chamadas</string>
+    <string name="title_activity_LenovoWatch_calibration">Calibração de Watch X Plus</string>
+    <string name="hungarian">Húngaro</string>
+    <string name="romanian">Romeno</string>
+    <string name="pref_theme_system">Sistemas</string>
+    <string name="czesh">Tcheco</string>
+    <string name="swedish">Sueco</string>
+    <string name="hebrew">Hebreu</string>
+    <string name="greek">Grego</string>
+    <string name="menuitem_unknown">Desconhecido</string>
+    <string name="bip_prefs_shotcuts_summary">Escolha os atalhos na tela da pulseira</string>
+    <string name="bip_prefs_shortcuts">Atalhos</string>
+    <string name="hr_widget_last_notification">Última notificação</string>
+    <string name="controlcenter_set_alias">Definir alias</string>
+    <string name="fw_upgrade_notice_amazfit_trex">Você está prestes a instalar o firmware %s no seu Amazit T-Rex. 
+\n 
+\nCertifique-se de instalar o arquivo .fw, depois o arquivo .res e finalmente o arquivo .gps. Seu relógio será reiniciado após a instalação do arquivo .fw. 
+\n 
+\nNota: você não precisa instalar .res e .gps se esse arquivo for exatamente o mesmo que os instalados anteriormente. 
+\n 
+\nPROSSIGA POR SUA CONTA E RISCO!</string>
+    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
+    <string name="about_additional_contributions">Muito obrigado a todos os contribuidores não listados aqui por contribuição com código, transdução, suporte, ideias, motivação, relatórios de erros, dinheiro… ✊</string>
+    <string name="about_additional_device_support">Suporte a dispositivos adicionais</string>
+    <string name="about_contributors">Contribuidores</string>
+    <string name="about_core_team_title">Equipe Core (na ordem da primeira contribuição de código)</string>
+    <string name="about_description">Um substituto livre e sem nuvem para os aplicativos Android de código fechado dos seus fornecedores de gadgets.</string>
+    <string name="about_activity_title">Sobre o Gadgetbridge</string>
+    <string name="about_title">Sobre</string>
+    <string name="pref_title_weather_summary">Usado para o provedor do clima do LineageOS, outras versões do Android precisam usar um aplicativo como o \"Notificação de clima\". Encontrará mais informações no wiki do Gadgetbridge.</string>
+    <string name="menuitem_worldclock">Relógio mundial</string>
+    <string name="error_version_check_extreme_caution">CUIDADO: Erro ao verificar informação da versão! Você não deve continuar! Encontrei o nome de versão \"%s\"</string>
+    <string name="permission_granting_mandatory">Todas estas permissões são necessárias e instabilidade pode ocorrer se não concedidas</string>
+    <string name="error_background_service_reason_truncated">A inicialização do serviço de plano de fundo porque…</string>
+    <string name="fw_upgrade_notice_miband5">Você está prestes a instalar o firmware %s na sua Mi Band 5.
+\n
+\nCertifique-se de instalar o arquivo .fw e, após, o arquivo .res. Sua pulseira vai reiniciar após instalar o arquivo .fw.
+\n
+\nNota: Você não tem que instalar .res se ele for exatamente o mesmo arquivo que o instalado anteriormente.
+\n
+\nPROSSIGA POR SUA CONTA E RISCO!</string>
+    <string name="error_background_service_reason">A inicialização do serviço de plano de fundo falhou por causa de uma exceção. Erro:</string>
+    <string name="error_background_service">Falha ao iniciar o serviço de plano de fundo</string>
+    <string name="menuitem_stress">Estresse</string>
+    <string name="menuitem_cycles">Ciclos</string>
+    <string name="menuitem_breathing">Respiração</string>
+    <string name="devicetype_miband5">Mi Band 5</string>
+    <string name="devicetype_tlw64">TLW64</string>
+    <string name="error_location_enabled_mandatory">A localização deve ser ligada para procurar dispositivos</string>
+    <string name="ignore_bonded_devices_description">Habilitar esta opção ignorará dispositivos que já foram associados/emparelhados durante a varredura</string>
+    <string name="ignore_bonded_devices">Ignorar dispositivos associados</string>
+    <string name="error_retrieving_devices_database">Erro ao obter dispositivos do banco de dados</string>
+    <string name="error_setting_alias">Erro ao definir um alias:</string>
+    <string name="error_exporting_device_preferences">Erro ao exportar as preferências específicas do dispositivo</string>
+    <string name="pref_check_permission_status_summary">Verifique e peça permissões ausentes mesmo quando elas podem não ser necessárias no exato momento. Desabilite isso somente se seus dispositivos realmente não suportarem nenhum desses recursos. Não conceder uma permissão pode causar problemas!</string>
+    <string name="pref_check_permission_status">Verificar status de permissão</string>
+    <string name="device_requires_key">CHAVE NECESSÁRIA</string>
+    <string name="device_is_currently_bonded">JÁ ASSOCIADO</string>
+    <string name="companiondevice_pairing_details">Habilita o novo suporte à API CompanionDevice (tem efeito apenas em Android 8 ou mais novo) que vai aumentar a confiabilidade se o serviço precisar ser reiniciado em segundo plano, requer novo emparelhamento usando o Gadgetbridge para ter um efeito</string>
+    <string name="companiondevice_pairing">Pareamento de CompanionDevice</string>
+    <string name="require_location_provider">Localização deve estar habilitada</string>
+    <string name="devicetype_pinetime_jf">PineTime (JF Firmware)</string>
+    <string name="averageStrokeDistance">Distância média das braçadas</string>
+    <string name="averageStride">Média da caminhada</string>
+    <string name="averageKMPaceSeconds">Ritmo</string>
+    <string name="averageHR">Frequência cardíaca</string>
+    <string name="totalStride">Total da caminhada</string>
+    <string name="maxPace">Ritmo mais rápido</string>
+    <string name="minPace">Ritmo mais lento</string>
+    <string name="maxSpeed">Máxima</string>
+    <string name="caloriesBurnt">Calorias</string>
+    <string name="activeSeconds">Ativos</string>
+    <string name="steps">Passos</string>
+    <string name="minAltitude">Mínima</string>
+    <string name="maxAltitude">Máxima</string>
+    <string name="descentMeters">Descida</string>
+    <string name="ascentMeters">Subida</string>
+    <string name="distanceMeters">Distância</string>
+    <string name="activity_summary_detail">Detalhes de atividade de esporte</string>
+    <string name="medley">Medley</string>
+    <string name="backstroke">Costas</string>
+    <string name="freestyle">Livre</string>
+    <string name="breaststroke">Nado de peito</string>
+    <string name="activity_summaries_all_activities">Todas atividades</string>
+    <string name="activity_summaries_statistics">Estatísticas</string>
+    <string name="activity_filter_apply_filter">Aplicar filtro</string>
+    <string name="activity_filter_name_contains">Rótulo</string>
+    <string name="activity_filter_filter_title">Filtro</string>
+    <string name="activity_filter_reset_filter">Redefinir filtro</string>
+    <string name="activity_filter_date_to">Até</string>
+    <string name="activity_filter_date_from">De</string>
+    <string name="pref_header_statistics">Estatísticas de atividades esportivas</string>
+    <string name="pref_header_filter">Filtro de atividades esportivas</string>
+    <string name="prefs_events_forwarding_action_title">Executar ação</string>
+    <string name="prefs_events_forwarding_broadcast_title">Transmitir mensagem</string>
+    <string name="prefs_events_forwarding_startnonwear">Quando não usado</string>
+    <string name="prefs_events_forwarding_wokeup">Ao acordar</string>
+    <string name="prefs_events_forwarding_fellsleep">Ao dormir</string>
+    <string name="prefs_events_forwarding_title">Ações do dispositivo</string>
+    <string name="prefs_events_forwarding_summary">Usar eventos do dispositivo para disparar ações e transmissões do Android</string>
+    <string name="activity_detail_show_gps_label">Mostrar rastro GPS</string>
+    <string name="activity_detail_duration_label">Duração</string>
+    <string name="activity_detail_end_label">Fim</string>
+    <string name="activity_detail_start_label">Início</string>
+    <string name="Steps">Passos</string>
+    <string name="Activity">Atividade</string>
+    <string name="Speed">Velocidade</string>
+    <string name="Elevation">Elevação</string>
+    <string name="Distance">Distância</string>
+    <string name="Swimming">Natação</string>
+    <string name="Strokes">Braçadas</string>
+    <string name="km">km</string>
+    <string name="bpm">bpm</string>
+    <string name="minutes_km">min/km</string>
+    <string name="seconds_m">seg/m</string>
+    <string name="seconds_km">seg/km</string>
+    <string name="calories_unit">kcal</string>
+    <string name="laps_unit">voltas</string>
+    <string name="swolf_index">swolf índice</string>
+    <string name="seconds">seg</string>
+    <string name="strokes_unit">brç</string>
+    <string name="strokes_second">brç/s</string>
+    <string name="km_h">km/h</string>
+    <string name="meters_second">m/s</string>
+    <string name="steps_unit">passos</string>
+    <string name="cm">cm</string>
+    <string name="meters">m</string>
+    <string name="flatSeconds">Plano</string>
+    <string name="ascentSeconds">Acendente</string>
+    <string name="laps">Voltas</string>
+    <string name="averageLapPace">Ritmo médio das voltas</string>
+    <string name="averageStrokesPerSecond">Média das braçadas</string>
+    <string name="devicetype_sg2">Lemfo SG2</string>
+    <string name="activity_summary_yesterday">Ontem</string>
+    <string name="activity_summary_today">Hoje</string>
+    <string name="activity_summary_edit_name_title">Editar rótulo</string>
+    <string name="activity_type_yoga">Ioga</string>
+    <string name="activity_type_jump_roping">Corda de pular</string>
+    <string name="activity_type_elliptical_trainer">Treinador rlíptico</string>
+    <string name="activity_type_indoor_cycling">Ciclismo indoor</string>
+    <string name="activity_type_swimming_openwater">Natação (Águas abertas)</string>
+    <string name="activity_summaries_all_devices">Todos dispositivos</string>
+    <string name="sports_activity_quick_filter_select">Período de tempo</string>
+    <string name="sports_activity_quick_filter_30days">30 dias</string>
+    <string name="sports_activity_quick_filter_7days">7 dias</string>
+    <string name="sports_activity_quick_filter_last_month">Mês anterior</string>
+    <string name="sports_activity_quick_filter_this_month">Este mês</string>
+    <string name="sports_activity_quick_filter_last_week">Semana passada</string>
+    <string name="sports_activity_quick_filter_this_week">Esta semana</string>
+    <string name="no">Não</string>
+    <string name="yes">Sim</string>
+    <string name="activity_filter_individual_items">Itens selecionados individualmente</string>
+    <string name="addto_filter">Adicionar ao filtro</string>
+    <string name="swim_style">estilo de natação</string>
+    <string name="averageSpeed">Velocidade média</string>
+    <string name="baseAltitude">Elevação base</string>
+    <string name="swimStyle">nataçãoEstilo</string>
+    <string name="swolfIndex">swolfÍndice</string>
+    <string name="activity_type_badminton">Badminton</string>
+    <string name="activity_type_pingpong">Ping pong</string>
+    <string name="activity_type_basketball">Basquete</string>
+    <string name="activity_type_cricket">Críquete</string>
+    <string name="activity_type_rowing_machine">Máquina de remo</string>
+    <string name="activity_type_soccer">Futebol</string>
+    <string name="activity_filter_to_placeholder">hoje</string>
+    <string name="activity_filter_from_placeholder">passado distante</string>
+    <string name="about_links">Links</string>
+    <string name="sonyswr12_settings_title">Configurações de Sony SWR12</string>
+    <string name="sonyswr12_settings_low_vibration">Baixa vibração habilitada</string>
+    <string name="sonyswr12_settings_stamina">O modo de economia de energia está ativado</string>
+    <string name="sonyswr12_settings_alarm_interval">Intervalo de alarme inteligente em minutos</string>
+    <string name="sonyswr12_settings_low_vibration_summary">Ativar baixa intensidade de vibração na banda</string>
+    <string name="sonyswr12_settings_stamina_summary">O modo de economia de energia desativa a medição automática periódica da frequência cardíaca, aumentando assim o tempo de trabalho</string>
+    <string name="sonyswr12_settings_alarm_interval_summary">O intervalo de alarme inteligente é o intervalo antes do alarme instalado. Neste intervalo, o dispositivo está tentando detectar a fase mais leve do sono para acordar o usuário</string>
 </resources>

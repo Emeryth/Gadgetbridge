@@ -1,5 +1,5 @@
-/*  Copyright (C) 2017-2019 Carsten Pfeiffer, Daniele Gobbetti, João Paulo
-    Barraca, Roi Greenberg
+/*  Copyright (C) 2017-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, João Paulo Barraca, Nephiel, Roi Greenberg
 
     This file is part of Gadgetbridge.
 
@@ -16,6 +16,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util;
+
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.StandardCharsets;
 
 import androidx.annotation.NonNull;
 
@@ -37,14 +41,26 @@ public class StringUtils {
         return s.substring(0, length);
     }
 
+    public static int utf8ByteLength(String string, int length) {
+        if (string == null) {
+            return 0;
+        }
+        ByteBuffer outBuf = ByteBuffer.allocate(length);
+        CharBuffer inBuf = CharBuffer.wrap(string.toCharArray());
+        StandardCharsets.UTF_8.newEncoder().encode(inBuf, outBuf, true);
+        return outBuf.position();
+    }
+
     public static String pad(String s, int length){
         return pad(s, length, ' ');
     }
 
-    public static String pad(String s, int length, char padChar){
-        while(s.length() < length) {
-            s += padChar;
+    public static String pad(String s, int length, char padChar) {
+        StringBuilder sBuilder = new StringBuilder(s);
+        while (sBuilder.length() < length) {
+            sBuilder.append(padChar);
         }
+        s = sBuilder.toString();
         return s;
     }
 
@@ -95,5 +111,24 @@ public class StringUtils {
             return message;
         }
         return "";
+    }
+
+    public static String terminateNull(String input) {
+        if (input == null || input.length() == 0) {
+            return new String(new byte[]{(byte) 0});
+        }
+        char lastChar = input.charAt(input.length() - 1);
+        if (lastChar == 0) return input;
+
+        byte[] newArray = new byte[input.getBytes().length + 1];
+        System.arraycopy(input.getBytes(), 0, newArray, 0, input.getBytes().length);
+
+        newArray[newArray.length - 1] = 0;
+
+        return new String(newArray);
+    }
+
+    public static String bytesToHex(byte[] array) {
+        return GB.hexdump(array, 0, -1);
     }
 }

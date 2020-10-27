@@ -1,6 +1,6 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti, Frank Slezak, jcrode, Johann C. Rode, Julien Pivotto, Kevin Richter,
-    Sergio Lopez, Steffen Liebergeld, Uwe Hermann
+    Matej Drobnič, Sergio Lopez, Steffen Liebergeld, Uwe Hermann
 
     This file is part of Gadgetbridge.
 
@@ -1510,7 +1510,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
         String blobDBKey;
         switch (cannedMessagesSpec.type) {
-            case CannedMessagesSpec.TYPE_MISSEDCALLS:
+            case CannedMessagesSpec.TYPE_REJECTEDCALLS:
                 blobDBKey = "com.pebble.android.phone";
                 break;
             case CannedMessagesSpec.TYPE_NEWSMS:

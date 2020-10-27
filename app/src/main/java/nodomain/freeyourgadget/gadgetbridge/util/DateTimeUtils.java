@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, AndrewH, Carsten Pfeiffer,
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, AndrewH, Carsten Pfeiffer,
     Daniele Gobbetti, Pavel Elagin
 
     This file is part of Gadgetbridge.
@@ -152,5 +152,8 @@ public class DateTimeUtils {
 
     public static String minutesToHHMM(int minutes) {
         return String.format(Locale.US, "%d:%02d", minutes / 60, minutes % 60); // no I do not want to use durationformatter :P
+    }
+    public static boolean isYesterday(Date d) {
+        return DateUtils.isToday(d.getTime() + DateUtils.DAY_IN_MILLIS);
     }
 }

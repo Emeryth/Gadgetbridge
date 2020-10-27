@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti, Taavi Eomäe
 
     This file is part of Gadgetbridge.
@@ -75,7 +75,7 @@ public class ParcelableWeather2 implements Parcelable {
             JSONArray list = new JSONArray();
             JSONObject city = new JSONObject();
             while (--conditions > 0) {
-                timeOffset += 86400000; //manually determined
+                timeOffset += 86400; //manually determined
                 JSONObject item = new JSONObject();
                 JSONObject condition = new JSONObject();
                 JSONObject main = new JSONObject();

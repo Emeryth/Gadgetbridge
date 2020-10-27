@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti
 
     This file is part of Gadgetbridge.
@@ -151,8 +151,14 @@ public class FetchActivityOperation extends AbstractMiBand1Operation {
 
     private ActivityStruct activityStruct;
 
-    public FetchActivityOperation(MiBandSupport support) {
+    public FetchActivityOperation(MiBandSupport support) throws IOException {
         super(support);
+        if (support == null) {
+            throw new IOException("MiBandSupport was null");
+        }
+        if (support.getDeviceInfo() == null) {
+            throw new IOException("MiBandSupport getDeviceInfo returned null");
+        }
         hasExtendedActivityData = support.getDeviceInfo().supportsHeartrate();
         hasPacketCounter = support.getDeviceInfo().getProfileVersion() >= 0x02000700;
         //temporary buffer, size is a multiple of 60 because we want to store complete minutes (1 minute = 3 or 4 bytes)

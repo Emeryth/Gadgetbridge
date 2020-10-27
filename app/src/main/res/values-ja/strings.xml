@@ -160,10 +160,10 @@
     <string name="tap_connected_device_for_activity">アクティビティの接続されたデバイスをタップ</string>
     <string name="tap_connected_device_for_vibration">バイブレーションの接続されたデバイスをタップ</string>
     <string name="tap_a_device_to_connect">接続するデバイスをタップ</string>
-    <string name="cannot_connect_bt_address_invalid_">接続できません。 BTアドレスが無効?</string>
+    <string name="cannot_connect_bt_address_invalid_">接続できません。 Bluetoothアドレスが無効ですか\?</string>
     <string name="gadgetbridge_running">ガジェットブリッジは実行中</string>
     <string name="installing_binary_d_d">バイナリーのインストール中 %1$d/%2$d</string>
-    <string name="installation_failed_">インストールに失敗しました!</string>
+    <string name="installation_failed_">インストールに失敗しました</string>
     <string name="installation_successful">インストールに成功しました</string>
     <string name="firmware_install_warning">ファームウェアをインストールしようとしています。ご自身の責任で行って下さい。\n\n\n このファームウェアは次のHWリビジョン用: %s</string>
     <string name="app_install_info">次のアプリをインストールしようとしています:\n\n\n%1$s バージョン %2$s 作成 %3$s\n</string>
@@ -185,7 +185,7 @@
     <string name="pairing_already_bonded">既に %1$s (%2$s) と結合しています。接続中…</string>
     <string name="message_cannot_pair_no_mac">MACアドレスが渡されませんでした。ペアリングできません。</string>
     <string name="preferences_category_device_specific_settings">デバイス固有の設定</string>
-    <string name="preferences_miband_settings">Mi Bandの設定</string>
+    <string name="preferences_miband_settings">Mi Band/Amazfitの設定</string>
     <string name="male">男性</string>
     <string name="female">女性</string>
     <string name="other">その他</string>
@@ -205,7 +205,7 @@
     <string name="busy_task_fetch_activity_data">アクティビティデータを取得中</string>
     <string name="sleep_activity_date_range">%1$sから%2$sまで</string>
     <string name="prefs_wearside">左または右に身に着けますか?</string>
-    <string name="pref_screen_vibration_profile">バイブレーション プロファイル</string>
+    <string name="pref_screen_vibration_profile">バイブレーションプロファイル</string>
     <string name="vibration_profile_staccato">スタッカート</string>
     <string name="vibration_profile_short">短い</string>
     <string name="vibration_profile_medium">標準</string>
@@ -217,7 +217,7 @@
     <string name="vibration_try">試す</string>
     <string name="pref_screen_notification_profile_sms">SMS通知</string>
     <string name="pref_header_vibration_settings">バイブレーションの設定</string>
-    <string name="pref_screen_notification_profile_generic">全般通知</string>
+    <string name="pref_screen_notification_profile_generic">一般的な通知</string>
     <string name="pref_screen_notification_profile_email">メール通知</string>
     <string name="pref_screen_notification_profile_incoming_call">着信通知</string>
     <string name="pref_screen_notification_profile_generic_chat">チャット</string>
@@ -228,7 +228,7 @@
     <string name="stats_y_axis_label">毎分の歩数</string>
     <string name="control_center_find_lost_device">なくしたデバイスを探す</string>
     <string name="control_center_cancel_to_stop_vibration">キャンセルで振動を停止します。</string>
-    <string name="title_activity_charts">あなたのアクティビティ</string>
+    <string name="title_activity_charts">あなたのアクティビティと睡眠</string>
     <string name="title_activity_set_alarm">アラームを設定</string>
     <string name="controlcenter_start_configure_alarms">アラームを設定</string>
     <string name="title_activity_alarm_details">アラームの詳細</string>
@@ -240,8 +240,8 @@
     <string name="alarm_fri_short">金</string>
     <string name="alarm_sat_short">土</string>
     <string name="alarm_smart_wakeup">スマート ウェイクアップ</string>
-    <string name="user_feedback_miband_set_alarms_failed">アラームの設定時にエラーが発生しました。もう一度試してください!</string>
-    <string name="user_feedback_miband_set_alarms_ok">アラームをデバイスに送信しました!</string>
+    <string name="user_feedback_miband_set_alarms_failed">アラームの設定中にエラーが発生しました。もう一度試してください</string>
+    <string name="user_feedback_miband_set_alarms_ok">アラームがデバイスに送信しました</string>
     <string name="chart_no_data_synchronize">データはありません。デバイスを同期しますか?</string>
     <string name="user_feedback_miband_activity_data_transfer">%1$s のデータを %2$s から転送します</string>
     <string name="miband_prefs_fitness_goal">毎日の目標ステップ</string>
@@ -256,11 +256,11 @@
     <string name="notif_battery_low_percent">%1$s バッテリー残: %2$s%%</string>
     <string name="notif_battery_low_bigtext_last_charge_time">最後の充電: %s \n</string>
     <string name="notif_battery_low_bigtext_number_of_charges">充電回数: %s</string>
-    <string name="sleepchart_your_sleep">あなたの睡眠</string>
+    <string name="sleepchart_your_sleep">睡眠</string>
     <string name="weeksleepchart_sleep_a_week">週の睡眠</string>
     <string name="weeksleepchart_today_sleep_description">今日の睡眠、目標: %1$s</string>
-    <string name="weekstepschart_steps_a_week">週あたり歩数</string>
-    <string name="activity_sleepchart_activity_and_sleep">あなたのアクティビティと睡眠</string>
+    <string name="weekstepschart_steps_a_week">週の歩数</string>
+    <string name="activity_sleepchart_activity_and_sleep">アクティビティ</string>
     <string name="updating_firmware">ファームウェアの更新中…</string>
     <string name="fwapp_install_device_not_ready">ファイルをインストールできません。デバイスの準備ができていません。</string>
     <string name="installhandler_firmware_name">%1$s: %2$s %3$s</string>
@@ -297,7 +297,7 @@
     <string name="abstract_chart_fragment_kind_activity">アクティビティ</string>
     <string name="abstract_chart_fragment_kind_light_sleep">浅い睡眠</string>
     <string name="abstract_chart_fragment_kind_deep_sleep">深い睡眠</string>
-    <string name="abstract_chart_fragment_kind_not_worn">非装着</string>
+    <string name="abstract_chart_fragment_kind_not_worn">未着用</string>
     <string name="device_not_connected">接続されていません。</string>
     <string name="user_feedback_all_alarms_disabled">すべてのアラームを無効にしました</string>
     <string name="pref_title_keep_data_on_device">アクティビティデータをデバイスに保持</string>
@@ -306,7 +306,7 @@
     <string name="miband_prefs_reserve_alarm_calendar">今後のイベントのために予約するアラーム</string>
     <string name="miband_prefs_hr_sleep_detection">睡眠の検出を改善するために心拍センサーを使用する</string>
     <string name="miband_prefs_device_time_offset_hours">デバイスの時刻オフセット時間 (交代勤務の睡眠検知用)</string>
-    <string name="miband2_prefs_dateformat">Mi2: 日付形式</string>
+    <string name="miband2_prefs_dateformat">日付形式</string>
     <string name="dateformat_time">時間</string>
     <string name="dateformat_date_time"><![CDATA[時間 & 日付]]></string>
     <string name="mi2_prefs_goal_notification">目標通知</string>
@@ -331,13 +331,13 @@
     <string name="activity_prefs_height_cm">身長（cm）</string>
     <string name="activity_prefs_weight_kg">体重（kg）</string>
     <string name="authenticating">認証中</string>
-    <string name="authentication_required">認証が必要</string>
+    <string name="authentication_required">認証が必要です</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">ウィジェットを追加</string>
     <string name="activity_prefs_sleep_duration">好ましい睡眠時間（時間）</string>
     <string name="appwidget_setting_alarm">%1$02d:%2$02d のアラームを設定しました</string>
-    <string name="device_hw">HW: %1$s</string>
-    <string name="device_fw">FW: %1$s</string>
+    <string name="device_hw">ハードウェアリビジョン: %1$s</string>
+    <string name="device_fw">ファームウェアバージョン: %1$s</string>
     <string name="error_creating_directory_for_logfiles">ログファイルのディレクトリを作成中にエラー: %1$s</string>
     <string name="DEVINFO_HR_VER">HR: </string>
     <string name="updatefirmwareoperation_update_in_progress">ファームウェアを更新しています</string>
@@ -361,7 +361,7 @@
     <string name="dbmanagementactivity_error_importing_shared">設定のインポート時にエラー: %1$s</string>
     <string name="dbmanagementactivity_delete_activity_data_title">アクティビティデータを削除しますか\?</string>
     <string name="dbmanagementactivity_really_delete_entire_db">データベース全体を削除してもよろしいですか\? アクティビティデータとお使いのデバイスに関する情報がすべて失われます。</string>
-    <string name="dbmanagementactivity_database_successfully_deleted">データを正常に削除しました。</string>
+    <string name="dbmanagementactivity_database_successfully_deleted">データが削除しました。</string>
     <string name="dbmanagementactivity_db_deletion_failed">データベースの削除に失敗しました。</string>
     <string name="dbmanagementactivity_delete_old_activity_db">古いアクティビティデータベースを削除しますか\?</string>
     <string name="dbmanagementactivity_delete_old_activitydb_confirmation">古いアクティビティデータベースを削除してもよろしいですか\? インポートされなかったアクティビティデータは失われます。</string>
@@ -403,37 +403,34 @@
     <string name="discovery_yes_pair">ペア</string>
     <string name="discovery_dont_pair">ペアにしない</string>
     <string name="fw_upgrade_notice_amazfitbip">Amazfit Bip に %s のファームウェアをインストールしようとしています。 
-\n 
-\n.fw ファイル、その後 .res ファイル、最後に .gps ファイルをインストールしてください。お使いのウォッチは、.fw ファイルをインストールした後に再起動します。 
-\n 
-\n注: これらのファイルが以前インストールされているのものと完全に同じ場合、.res と .gps をインストールする必要はありません。 
-\n 
+\n
+\n.fw ファイル、その後 .res ファイル、最後に .gps ファイルをインストールしてください。お使いのウォッチは、.fw ファイルをインストールした後に再起動します。
+\n
+\n注: これらのファイルが以前インストールされているのものと完全に同じ場合、.res と .gps をインストールする必要はありません。
+\n
 \nご自身の責任で行ってください!</string>
     <string name="mi2_prefs_button_actions">ボタンの動作</string>
-    <string name="mi2_prefs_button_actions_summary">Mi Band 2 ボタンを押した動作を指定します</string>
+    <string name="mi2_prefs_button_actions_summary">ボタンを押した動作を指定します</string>
     <string name="mi2_prefs_button_press_count">ボタン押したカウント</string>
     <string name="mi2_prefs_button_press_count_summary">ブロードキャスト メッセージをトリガーするボタンを押した数</string>
     <string name="mi2_prefs_button_press_broadcast">送信するブロードキャスト メッセージ</string>
     <string name="mi2_prefs_button_press_broadcast_summary">ボタンを押した数で定義された数に達したブロードキャスト メッセージ</string>
-    <string name="mi2_prefs_button_press_broadcast_default_value">nodomain.freeyourgadget.gadgetbridge.mibandButtonPressed</string>
     <string name="mi2_prefs_button_action">ボタンの動作を有効にする</string>
     <string name="mi2_prefs_button_action_summary">指定したボタンを押した数の動作を有効にします</string>
     <string name="mi2_prefs_button_action_vibrate">band の振動を有効にする</string>
     <string name="mi2_prefs_button_action_vibrate_summary">ボタンの動作をトリガーに band の振動を有効にします</string>
     <string name="mi2_prefs_button_press_count_max_delay">ボタンを押す間の最大遅延時間</string>
     <string name="mi2_prefs_button_press_count_max_delay_summary">ボタンを押す間隔の最大遅延時間 (ミリ秒単位)</string>
-    <string name="mi2_prefs_button_press_count_match_delay">ボタン操作の後に遅延</string>
-    <string name="mi2_prefs_button_press_count_match_delay_summary">1回のボタン操作に一致した後の遅滞 (数字は button_id インテント拡張内) 0 の場合はすぐ</string>
     <string name="_pebble_watch_open_on_phone">電話で開く</string>
     <string name="_pebble_watch_mute">ミュート</string>
     <string name="_pebble_watch_reply">返信</string>
     <string name="controlcenter_connect">接続…</string>
-    <string name="fw_upgrade_notice_amazfitcor">Amazfit Cor に %s のファームウェアをインストールしようとしています。 
-\n 
-\n.fw ファイルをインストールし、その後 .res ファイルをインストールしください。お使いの band は、.fw ファイルをインストールした後に再起動します。 
-\n 
-\n注: 以前にインストールされたものと同じ場合は、.res をインストールする必要はありません。 
-\n 
+    <string name="fw_upgrade_notice_amazfitcor">Amazfit Cor に %s のファームウェアをインストールしようとしています。
+\n
+\n.fw ファイルをインストールし、その後 .res ファイルをインストールしください。お使いの band は、.fw ファイルをインストールした後に再起動します。
+\n
+\n注: 以前にインストールされたものと同じ場合は、.res をインストールする必要はありません。
+\n
 \nご自身の責任で行って下さい!</string>
     <string name="pref_title_pebble_enable_bgjs">バックグラウンド JS を有効にします</string>
     <string name="pref_summary_pebble_enable_bgjs">有効にすると、ウォッチフェースに天気、バッテリー情報等を表示することができます。</string>
@@ -517,15 +514,15 @@
     <string name="controlcenter_change_fm_frequency">FMの周波数を変更</string>
     <string name="controlcenter_calibrate_device">デバイスを校正</string>
     <string name="debugactivity_really_factoryreset_title">工場出荷値にリセットしますか\?</string>
-    <string name="debugactivity_really_factoryreset">工場出荷値にリセットすると、(サポートされている場合) 接続されているデバイスからすべてのデータを削除します。Xiaomi/Huamiデバイスでは、BluetoothのMACアドレスも変更するので、GadgetBligeに新しいデバイスとして表示されます。</string>
+    <string name="debugactivity_really_factoryreset">工場出荷値にリセットすると、(サポートされている場合) 接続されているデバイスからすべてのデータを削除します。Xiaomi/Huamiデバイスでは、BluetoothのMACアドレスも変更するので、Gadgetbridgeに新しいデバイスとして表示されます。</string>
     <string name="blacklist_all_for_notifications">すべて通知のブラックリストにする</string>
     <string name="whitelist_all_for_notifications">すべて通知のホワイトリストにする</string>
-    <string name="fw_upgrade_notice_miband3">Mi Band 3 に %s ファームウェアをインストールします。 
-\n 
-\n.fw ファイルをインストールして、その後 .res ファイルをインストールするようにしてください。 .fw ファイルをインストールした後、お使いの band は再起動します。 
-\n 
-\n注意: .res が以前にインストールしたものと全く同じ場合は、インストールする必要はありません。 
-\n 
+    <string name="fw_upgrade_notice_miband3">Mi Band 3 に %s ファームウェアをインストールします。
+\n
+\n.fw ファイルをインストールして、その後 .res ファイルをインストールするようにしてください。 .fw ファイルをインストールした後、お使いの band は再起動します。
+\n
+\n注意: .res が以前にインストールしたものと全く同じ場合は、インストールする必要はありません。
+\n
 \nご自身の責任で行ってください!</string>
     <string name="pref_title_notifications_timeout">通知の間の最小時間</string>
     <string name="pref_title_rtl">右から左へ</string>
@@ -642,4 +639,127 @@
     <string name="pref_display_add_device_fab">新しいデバイスを接続するボタン</string>
     <string name="pref_display_add_device_fab_on">常に表示</string>
     <string name="pref_display_add_device_fab_off">デバイスが追加されていない場合にのみ表示</string>
+    <string name="pref_header_charts">チャートの設定</string>
+    <string name="pref_title_charts_average">グラーフに平均を表示する</string>
+    <string name="czesh">チェコ語</string>
+    <string name="swedish">スウェーデン語</string>
+    <string name="hebrew">ヘブライ語</string>
+    <string name="greek">ギリシャ語</string>
+    <string name="hungarian">ハンガリー語</string>
+    <string name="romanian">ルーマニア語</string>
+    <string name="portuguese">ポルトガル語</string>
+    <string name="vietnamese">ベトナム語</string>
+    <string name="thai">タイ語</string>
+    <string name="arabic">アラビア語</string>
+    <string name="ukrainian">ウクライナ語</string>
+    <string name="turkish">トルコ語</string>
+    <string name="dutch">オランダ語</string>
+    <string name="pref_summary_force_white_color_scheme">時計が暗い針を持っている場合に便利</string>
+    <string name="bip_prefs_shotcuts_summary">バンド画面のショートカットを選択する</string>
+    <string name="bip_prefs_shortcuts">ショートカット</string>
+    <string name="prefs_enable_find_phone">「携帯電話を探す」をオンにする</string>
+    <string name="prefs_find_phone">携帯電話を探す</string>
+    <string name="average">平均: %1$s</string>
+    <string name="alarm_snooze">スヌーズ</string>
+    <string name="interval_forty_five_minutes">45分ごと</string>
+    <string name="interval_fifteen_minutes">15分ごと</string>
+    <string name="pref_screen_notification_profile_calendar">カレンダーの通知</string>
+    <string name="pref_screen_notification_profile_missed_call">不在着信通知</string>
+    <string name="find_my_phone_notification">携帯電話を探す</string>
+    <string name="zetime_signaling_none">サイレント</string>
+    <string name="zetime_date_format_3">MM/DD/YY</string>
+    <string name="zetime_date_format_2">DD/MM/YY</string>
+    <string name="zetime_date_format_1">YY/MM/DD</string>
+    <string name="zetime_handmove_display">手の動き</string>
+    <string name="zetime_title_settings">ZeTime 設定</string>
+    <string name="preferences_makibes_hr3_settings">Makibes HR3 設定</string>
+    <string name="pref_title_sync_caldendar">カレンダーの予定を同期する</string>
+    <string name="pref_theme_system">システム</string>
+    <string name="zetime_prefs_inactivity_su">日曜日</string>
+    <string name="zetime_prefs_inactivity_sa">土曜日</string>
+    <string name="zetime_prefs_inactivity_fr">金曜日</string>
+    <string name="zetime_prefs_inactivity_th">木曜日</string>
+    <string name="zetime_prefs_inactivity_we">水曜日</string>
+    <string name="zetime_prefs_inactivity_tu">火曜日</string>
+    <string name="zetime_prefs_inactivity_mo">月曜日</string>
+    <string name="zetime_analog_mode">アナログモード</string>
+    <string name="activity_prefs_alarm_min_heart_rate">最小心拍数</string>
+    <string name="activity_prefs_alarm_max_heart_rate">最大心拍数</string>
+    <string name="zetime_heart_rate_alarm_enable">心拍数アラームを有効にする</string>
+    <string name="zetime_title_heart_rate_alarm">心拍数アラーム</string>
+    <string name="zetime_title_heartrate">心拍数の設定</string>
+    <string name="pref_header_device_spec_settings">デバイスの設定</string>
+    <string name="pref_header_notifications_and_calls">通知と通話</string>
+    <string name="seconds">秒</string>
+    <string name="km_h">km/h</string>
+    <string name="meters_second">m/s</string>
+    <string name="steps_unit">歩数</string>
+    <string name="cm">cm</string>
+    <string name="meters">m</string>
+    <string name="averageKMPaceSeconds">ペース</string>
+    <string name="averageHR">心拍数</string>
+    <string name="maxPace">最速のペース</string>
+    <string name="maxSpeed">最大</string>
+    <string name="caloriesBurnt">カロリー</string>
+    <string name="activeSeconds"/>
+    <string name="steps">歩数</string>
+    <string name="minAltitude">最小</string>
+    <string name="maxAltitude">最大</string>
+    <string name="distanceMeters">距離</string>
+    <string name="device_requires_key">キーが必要です</string>
+    <string name="about_contributors">貢献者</string>
+    <string name="about_activity_title">Gadgetbridgeについて</string>
+    <string name="about_title">について</string>
+    <string name="hr_widget_last_notification">最終通知</string>
+    <string name="hr_appname_commute">通勤</string>
+    <string name="hr_appname_stopwatch">ストップウォッチ</string>
+    <string name="hr_widget_weather">天気</string>
+    <string name="hr_widget_battery">バッテリー</string>
+    <string name="hr_widget_calories">カロリー</string>
+    <string name="hr_widget_date">日付</string>
+    <string name="hr_widget_steps">歩数</string>
+    <string name="hr_widget_heart_rate">心拍数</string>
+    <string name="qhybrid_vibration_strength">振動強度:</string>
+    <string name="widget_1_hour">1時間</string>
+    <string name="widget_20_minutes">20分</string>
+    <string name="widget_10_minutes">10分</string>
+    <string name="widget_5_minutes">5分</string>
+    <string name="widget_sleep_label">睡眠: %1$s</string>
+    <string name="widget_steps_label">歩数: %1$02d</string>
+    <string name="appwidget_sleep_alarm_widget_label">睡眠アラーム</string>
+    <string name="menuitem_worldclock">世界時計</string>
+    <string name="menuitem_unknown">不明</string>
+    <string name="menuitem_hr">心拍数</string>
+    <string name="menuitem_pai">PAI</string>
+    <string name="menuitem_stress">ストレス</string>
+    <string name="menuitem_nfc">NFC</string>
+    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
+    <string name="devicetype_amazfit_cor2">Amazfit Cor 2</string>
+    <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
+    <string name="devicetype_miband5">Mi Band 5</string>
+    <string name="devicetype_miband4">Mi Band 4</string>
+    <string name="activity_type_exercise">運動</string>
+    <string name="activity_summary_yesterday">昨日</string>
+    <string name="activity_summary_today">今日</string>
+    <string name="activity_type_yoga">ヨガ</string>
+    <string name="activity_type_jump_roping">縄跳び</string>
+    <string name="activity_type_indoor_cycling">屋内サイクリング</string>
+    <string name="maximum_duration">期間</string>
+    <string name="find_lost_device_you_found_it">見つけた!</string>
+    <string name="activity_DB_delete_legacy_button">古いDBを削除</string>
+    <string name="activity_db_management_autoexport_label">自動エクスポート</string>
+    <string name="pref_chart_sleep_rolling_24_on">過去24時間</string>
+    <string name="pref_title_chart_heartrate_color">心拍数の色</string>
+    <string name="pref_chart_heartrate_color_orange">オレンジ色</string>
+    <string name="pref_chart_heartrate_color_red">赤</string>
+    <string name="indonesian">インドネシア語</string>
+    <string name="prefs_disconnect_notification">切断通知</string>
+    <string name="Distance">距離</string>
+    <string name="sonyswr12_settings_title">Sony SWR12 設定</string>
+    <string name="sonyswr12_settings_low_vibration">低振動対応</string>
+    <string name="sonyswr12_settings_stamina">省電力モードがオンになっている</string>
+    <string name="sonyswr12_settings_alarm_interval">分単位のスマートアラーム間隔</string>
+    <string name="sonyswr12_settings_low_vibration_summary">バンドで低強度の振動を有効にする</string>
+    <string name="sonyswr12_settings_stamina_summary">省電力モードでは、心拍数の定期的な自動測定がオフになり、作業時間が長くなります</string>
+    <string name="sonyswr12_settings_alarm_interval_summary">スマートアラーム間隔は、インストールされたアラームの前の間隔です。 この間隔では、デバイスはユーザーを目覚めさせるために睡眠の最も軽い段階を検出しようとしています</string>
 </resources>

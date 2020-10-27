@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti, Felix Konstantin Maurer, JohnnySun
 
     This file is part of Gadgetbridge.
@@ -22,6 +22,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,15 +39,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
 import de.greenrobot.dao.query.WhereCondition;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.entities.ActivityDescription;
 import nodomain.freeyourgadget.gadgetbridge.entities.ActivityDescriptionDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Alarm;
@@ -69,7 +70,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 
 /**
- * Provides utiliy access to some common entities, so you won't need to use
+ * Provides utility access to some common entities, so you won't need to use
  * their DAO classes.
  * <p/>
  * Maybe this code should actually be in the DAO classes themselves, but then
@@ -427,6 +428,7 @@ public class DBHelper {
         if (!isDeviceUpToDate(device, gbDevice)) {
             device.setIdentifier(gbDevice.getAddress());
             device.setName(gbDevice.getName());
+            device.setAlias(gbDevice.getAlias());
             DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(gbDevice);
             device.setManufacturer(coordinator.getManufacturer());
             device.setType(gbDevice.getType().getKey());
@@ -445,6 +447,9 @@ public class DBHelper {
             return false;
         }
         if (!Objects.equals(device.getName(), gbDevice.getName())) {
+            return false;
+        }
+        if (!Objects.equals(device.getAlias(), gbDevice.getAlias())) {
             return false;
         }
         DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(gbDevice);
@@ -582,9 +587,9 @@ public class DBHelper {
     @NonNull
     public static List<Alarm> getAlarms(@NonNull GBDevice gbDevice) {
         DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(gbDevice);
-        Prefs prefs = GBApplication.getPrefs();
-        // TODO: this alarm reservation is a device dependent detail
-        int reservedSlots = prefs.getInt(MiBandConst.PREF_MIBAND_RESERVE_ALARM_FOR_CALENDAR, 0);
+        Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
+
+        int reservedSlots = prefs.getInt(DeviceSettingsPreferenceConst.PREF_RESERVER_ALARMS_CALENDAR, 0);
         int alarmSlots = coordinator.getAlarmSlotCount();
 
         try (DBHandler db = GBApplication.acquireDB()) {

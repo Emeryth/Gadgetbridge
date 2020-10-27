@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2019 Andreas Shimokawa, Carsten Pfeiffer
+/*  Copyright (C) 2017-2020 Andreas Shimokawa, Carsten Pfeiffer
 
     This file is part of Gadgetbridge.
 
@@ -19,14 +19,16 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import java.util.List;
+
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.adapter.AbstractItemAdapter;
+import nodomain.freeyourgadget.gadgetbridge.adapter.AbstractActivityListingAdapter;
 
 public abstract class AbstractListActivity<T> extends AbstractGBActivity {
-    private AbstractItemAdapter<T> itemAdapter;
+    private AbstractActivityListingAdapter<T> itemAdapter;
     private ListView itemListView;
 
-    public void setItemAdapter(AbstractItemAdapter<T> itemAdapter) {
+    public void setItemAdapter(AbstractActivityListingAdapter<T> itemAdapter) {
         this.itemAdapter = itemAdapter;
         itemListView.setAdapter(itemAdapter);
     }
@@ -35,7 +37,31 @@ public abstract class AbstractListActivity<T> extends AbstractGBActivity {
         this.itemAdapter.loadItems();
     }
 
-    public AbstractItemAdapter<T> getItemAdapter() {
+    public void setActivityKindFilter(int activityKind){
+        this.itemAdapter.setActivityKindFilter(activityKind);
+    }
+
+    public void setDateFromFilter(long date){
+        this.itemAdapter.setDateFromFilter(date);
+    }
+
+    public void setDateToFilter(long date){
+        this.itemAdapter.setDateToFilter(date);
+    }
+
+    public void setNameContainsFilter(String name){
+        this.itemAdapter.setNameContainsFilter(name);
+    }
+
+    public void setItemsFilter(List items) {
+        this.itemAdapter.setItemsFilter(items);
+    }
+
+    public void setDeviceFilter(long device) {
+        this.itemAdapter.setDeviceFilter(device);
+    }
+
+    public AbstractActivityListingAdapter<T> getItemAdapter() {
         return itemAdapter;
     }
 

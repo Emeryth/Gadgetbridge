@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti
 
     This file is part of Gadgetbridge.
@@ -25,10 +25,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.DrawableRes;
 import nodomain.freeyourgadget.gadgetbridge.R;
 
 /**
@@ -43,6 +44,7 @@ public abstract class AbstractItemAdapter<T> extends ArrayAdapter<T> {
     private final List<T> items;
     private boolean horizontalAlignment;
     private int size = SIZE_MEDIUM;
+    private int backgroundColor=0;
 
     public AbstractItemAdapter(Context context) {
         this (context, new ArrayList<T>());
@@ -58,6 +60,8 @@ public abstract class AbstractItemAdapter<T> extends ArrayAdapter<T> {
     public void setHorizontalAlignment(boolean horizontalAlignment) {
         this.horizontalAlignment = horizontalAlignment;
     }
+
+
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
@@ -87,6 +91,7 @@ public abstract class AbstractItemAdapter<T> extends ArrayAdapter<T> {
         nameView.setText(getName(item));
         detailsView.setText(getDetails(item));
         iconView.setImageResource(getIcon(item));
+        iconView.setBackgroundColor(backgroundColor);
 
         return view;
     }
@@ -102,10 +107,12 @@ public abstract class AbstractItemAdapter<T> extends ArrayAdapter<T> {
         this.size = size;
     }
 
+    public void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
     public int getSize() {
         return size;
     }
-
     public List<T> getItems() {
         return items;
     }

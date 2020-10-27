@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti, Martin, Matthieu Baerts, Normano64, Pavel Elagin, Taavi Eomäe
 
     This file is part of Gadgetbridge.
@@ -22,6 +22,7 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.NotificationManager.Policy;
+import android.app.UiModeManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -42,10 +43,14 @@ import android.provider.ContactsContract.PhoneLookup;
 import android.util.Log;
 import android.util.TypedValue;
 
+import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -78,14 +83,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.AMAZFITBIP;
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.AMAZFITCOR;
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.AMAZFITCOR2;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.HPLUS;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.ID115;
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND;
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND2;
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND3;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND4;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.ZETIME;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.PEBBLE;
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.fromKey;
+import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_CHANNEL_ID;
 
 /**
@@ -103,7 +106,10 @@ public class GBApplication extends Application {
     private static SharedPreferences sharedPrefs;
     private static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
-    private static final int CURRENT_PREFS_VERSION = 5;
+    private static final int CURRENT_PREFS_VERSION = 8;
+
+    private static final int ERROR_IN_GADGETBRIDGE_NOTIFICATION = 42;
+
     private static LimitedQueue mIDSenderLookup = new LimitedQueue(16);
     private static Prefs prefs;
     private static GBPrefs gbPrefs;
@@ -208,10 +214,34 @@ public class GBApplication extends Application {
                     notificationManager.createNotificationChannel(channel);
                 }
 
+                NotificationChannel channelHighPr = notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID);
+                if (channelHighPr == null) {
+                    channelHighPr = new NotificationChannel(NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID,
+                            getString(R.string.notification_channel_high_priority_name),
+                            NotificationManager.IMPORTANCE_HIGH);
+                    notificationManager.createNotificationChannel(channelHighPr);
+                }
+
                 bluetoothStateChangeReceiver = new BluetoothStateChangeReceiver();
                 registerReceiver(bluetoothStateChangeReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
             }
-            startService(new Intent(this, NotificationCollectorMonitorService.class));
+            try {
+                startService(new Intent(this, NotificationCollectorMonitorService.class));
+            } catch (IllegalStateException e) {
+                String message = e.toString();
+                if (message == null) {
+                    message = getString(R.string._unknown_);
+                }
+                notificationManager.notify(ERROR_IN_GADGETBRIDGE_NOTIFICATION,
+                        new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID)
+                                .setSmallIcon(R.drawable.gadgetbridge_img)
+                                .setContentTitle(getString(R.string.error_background_service))
+                                .setContentText(getString(R.string.error_background_service_reason_truncated))
+                                .setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(getString(R.string.error_background_service_reason) + "\"" + message + "\""))
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .build());
+            }
         }
     }
 
@@ -339,6 +369,10 @@ public class GBApplication extends Application {
 
     public static boolean isRunningOreoOrLater() {
         return VERSION.SDK_INT >= Build.VERSION_CODES.O;
+    }
+
+    public static boolean isRunningPieOrLater() {
+        return VERSION.SDK_INT >= Build.VERSION_CODES.P;
     }
 
     private static boolean isPrioritySender(int prioritySenders, String number) {
@@ -596,6 +630,58 @@ public class GBApplication extends Application {
         }
     }
 
+    private void migrateStringPrefToPerDevicePref(String globalPref, String globalPrefDefault, String perDevicePref, ArrayList<DeviceType> deviceTypes) {
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        String globalPrefValue = prefs.getString(globalPref, globalPrefDefault);
+        try (DBHandler db = acquireDB()) {
+            DaoSession daoSession = db.getDaoSession();
+            List<Device> activeDevices = DBHelper.getActiveDevices(daoSession);
+            for (Device dbDevice : activeDevices) {
+                SharedPreferences deviceSpecificSharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(dbDevice.getIdentifier());
+                if (deviceSpecificSharedPrefs != null) {
+                    SharedPreferences.Editor deviceSharedPrefsEdit = deviceSpecificSharedPrefs.edit();
+                    DeviceType deviceType = fromKey(dbDevice.getType());
+
+                    if (deviceTypes.contains(deviceType)) {
+                        Log.i(TAG, "migrating global string preference " + globalPref + " for " + deviceType.name() + " " + dbDevice.getIdentifier() );
+                        deviceSharedPrefsEdit.putString(perDevicePref, globalPrefValue);
+                    }
+                    deviceSharedPrefsEdit.apply();
+                }
+            }
+            editor.remove(globalPref);
+            editor.apply();
+        } catch (Exception e) {
+            Log.w(TAG, "error acquiring DB lock");
+        }
+    }
+
+    private void migrateBooleanPrefToPerDevicePref(String globalPref, Boolean globalPrefDefault, String perDevicePref, ArrayList<DeviceType> deviceTypes) {
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        boolean globalPrefValue = prefs.getBoolean(globalPref, globalPrefDefault);
+        try (DBHandler db = acquireDB()) {
+            DaoSession daoSession = db.getDaoSession();
+            List<Device> activeDevices = DBHelper.getActiveDevices(daoSession);
+            for (Device dbDevice : activeDevices) {
+                SharedPreferences deviceSpecificSharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(dbDevice.getIdentifier());
+                if (deviceSpecificSharedPrefs != null) {
+                    SharedPreferences.Editor deviceSharedPrefsEdit = deviceSpecificSharedPrefs.edit();
+                    DeviceType deviceType = fromKey(dbDevice.getType());
+
+                    if (deviceTypes.contains(deviceType)) {
+                        Log.i(TAG, "migrating global boolean preference " + globalPref + " for " + deviceType.name() + " " + dbDevice.getIdentifier() );
+                        deviceSharedPrefsEdit.putBoolean(perDevicePref, globalPrefValue);
+                    }
+                    deviceSharedPrefsEdit.apply();
+                }
+            }
+            editor.remove(globalPref);
+            editor.apply();
+        } catch (Exception e) {
+            Log.w(TAG, "error acquiring DB lock");
+        }
+    }
+
     private void migratePrefs(int oldVersion) {
         SharedPreferences.Editor editor = sharedPrefs.edit();
         if (oldVersion == 0) {
@@ -684,7 +770,7 @@ public class GBApplication extends Application {
                         switch (deviceType) {
                             case MIBAND:
                                 deviceSharedPrefsEdit.putBoolean("low_latency_fw_update", prefs.getBoolean("mi_low_latency_fw_update", true));
-                                deviceSharedPrefsEdit.putInt("device_time_offset_hours", prefs.getInt("mi_device_time_offset_hours", 0));
+                                deviceSharedPrefsEdit.putString("device_time_offset_hours", String.valueOf(prefs.getInt("mi_device_time_offset_hours", 0)));
                                 break;
                             case AMAZFITCOR:
                                 displayItems = prefs.getStringSet("cor_display_items", null);
@@ -788,6 +874,9 @@ public class GBApplication extends Application {
                             case MIBAND4:
                                 newWearside = prefs.getString("mi_wearside", "left");
                                 break;
+                            case MIBAND5:
+                                newWearside = prefs.getString("mi_wearside", "left");
+                                break;
                             case HPLUS:
                                 newWearside = prefs.getString("hplus_wrist", "left");
                                 newTimeformat = prefs.getString("hplus_timeformat", "24h");
@@ -825,6 +914,32 @@ public class GBApplication extends Application {
                 Log.w(TAG, "error acquiring DB lock");
             }
         }
+        if (oldVersion < 6) {
+            migrateBooleanPrefToPerDevicePref("mi2_enable_button_action", false, "button_action_enable", new ArrayList<>(Collections.singletonList(MIBAND2)));
+            migrateBooleanPrefToPerDevicePref("mi2_button_action_vibrate", false, "button_action_vibrate", new ArrayList<>(Collections.singletonList(MIBAND2)));
+            migrateStringPrefToPerDevicePref("mi_button_press_count", "6", "button_action_press_count", new ArrayList<>(Collections.singletonList(MIBAND2)));
+            migrateStringPrefToPerDevicePref("mi_button_press_count_max_delay", "2000", "button_action_press_max_interval", new ArrayList<>(Collections.singletonList(MIBAND2)));
+            migrateStringPrefToPerDevicePref("mi_button_press_count_match_delay", "0", "button_action_broadcast_delay", new ArrayList<>(Collections.singletonList(MIBAND2)));
+            migrateStringPrefToPerDevicePref("mi_button_press_broadcast", "nodomain.freeyourgadget.gadgetbridge.ButtonPressed", "button_action_broadcast", new ArrayList<>(Collections.singletonList(MIBAND2)));
+        }
+        if (oldVersion < 7) {
+            migrateStringPrefToPerDevicePref("mi_reserve_alarm_calendar", "0", "reserve_alarms_calendar", new ArrayList<>(Arrays.asList(MIBAND, MIBAND2)));
+        }
+
+        if (oldVersion < 8) {
+            for (int i = 1; i <= 16; i++) {
+                String message = prefs.getString("canned_message_dismisscall_" + i, null);
+                if (message != null) {
+                    migrateStringPrefToPerDevicePref("canned_message_dismisscall_" + i, "", "canned_message_dismisscall_" + i, new ArrayList<>(Collections.singletonList(PEBBLE)));
+                }
+            }
+            for (int i = 1; i <= 16; i++) {
+                String message = prefs.getString("canned_reply_" + i, null);
+                if (message != null) {
+                    migrateStringPrefToPerDevicePref("canned_reply_" + i, "", "canned_reply_" + i, new ArrayList<>(Collections.singletonList(PEBBLE)));
+                }
+            }
+        }
 
         editor.putString(PREFS_VERSION, Integer.toString(CURRENT_PREFS_VERSION));
         editor.apply();
@@ -859,7 +974,13 @@ public class GBApplication extends Application {
     }
 
     public static boolean isDarkThemeEnabled() {
-        return prefs.getString("pref_key_theme", context.getString(R.string.pref_theme_value_light)).equals(context.getString(R.string.pref_theme_value_dark));
+        String selectedTheme = prefs.getString("pref_key_theme", context.getString(R.string.pref_theme_value_system));
+
+        UiModeManager umm = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+
+        return selectedTheme.equals(context.getString(R.string.pref_theme_value_dark)) ||
+                (selectedTheme.equals(context.getString(R.string.pref_theme_value_system))
+                        && (umm.getNightMode() == UiModeManager.MODE_NIGHT_YES));
     }
 
     public static int getTextColor(Context context) {

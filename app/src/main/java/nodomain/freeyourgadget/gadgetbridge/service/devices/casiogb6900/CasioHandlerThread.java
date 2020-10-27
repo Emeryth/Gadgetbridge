@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019 Andreas Böhler, Daniele Gobbetti
+/*  Copyright (C) 2019-2020 Andreas Böhler, Daniele Gobbetti
     based on code from BlueWatcher, https://github.com/masterjc/bluewatcher
 
     This file is part of Gadgetbridge.
@@ -30,11 +30,11 @@ import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 
 public class CasioHandlerThread extends GBDeviceIoThread {
     private static final Logger LOG = LoggerFactory.getLogger(CasioHandlerThread.class);
-    private boolean mQuit = false;
-    private CasioGB6900DeviceSupport mDeviceSupport;
+    private static final int TX_PERIOD = 60;
     private final Object waitObject = new Object();
+    private boolean mQuit;
+    private final CasioGB6900DeviceSupport mDeviceSupport;
 
-    private int TX_PERIOD = 60;
 
     private Calendar mTxTime = GregorianCalendar.getInstance();
 
@@ -88,9 +88,7 @@ public class CasioHandlerThread extends GBDeviceIoThread {
     public void requestTxPowerLevel() {
         try {
             mDeviceSupport.readTxPowerLevel();
-
-        } catch(Exception e) {
-
+        } catch (Exception ignored) {
         }
 
         mTxTime = GregorianCalendar.getInstance();

@@ -211,7 +211,7 @@
     <string name="pref_screen_notification_profile_generic_social">רשת חברתית</string>
     <string name="control_center_find_lost_device">איתור התקן שאבד</string>
     <string name="control_center_cancel_to_stop_vibration">יש לבטל כדי לעצור את הרטט.</string>
-    <string name="title_activity_charts">הפעילות שלך</string>
+    <string name="title_activity_charts">פעילות ושינה</string>
     <string name="title_activity_set_alarm">הגדרת שעון מעורר</string>
     <string name="controlcenter_start_configure_alarms">הגדרת שעון מעורר</string>
     <string name="title_activity_alarm_details">פרטי השעון המעורר</string>
@@ -239,11 +239,11 @@
     <string name="notif_battery_low_percent">נותר בסוללה של %1$s:‏ %2$s%%</string>
     <string name="notif_battery_low_bigtext_last_charge_time">טעינה אחרונה: %s \n</string>
     <string name="notif_battery_low_bigtext_number_of_charges">מספר טעינות: %s</string>
-    <string name="sleepchart_your_sleep">השינה שלך</string>
+    <string name="sleepchart_your_sleep">שינה</string>
     <string name="weeksleepchart_sleep_a_week">שינה בשבוע</string>
     <string name="weeksleepchart_today_sleep_description">שינה היום, יעד: %1$s</string>
     <string name="weekstepschart_steps_a_week">צעדים בשבוע</string>
-    <string name="activity_sleepchart_activity_and_sleep">הפעילות והשינה שלך</string>
+    <string name="activity_sleepchart_activity_and_sleep">פעילות</string>
     <string name="updating_firmware">הקושחה מתעדכנת…</string>
     <string name="fwapp_install_device_not_ready">לא ניתן להתקין את הקובץ, ההתקן לא מוכן.</string>
     <string name="installhandler_firmware_name">%3$s %2$s :%1$s</string>
@@ -263,7 +263,7 @@
     <string name="liveactivity_live_activity">פעילות חיה</string>
     <string name="weeksteps_today_steps_description">צעדים היום, יעד: %1$s</string>
     <string name="pref_title_dont_ack_transfer">לא לשלוח אישור על העברת נתוני פעילות</string>
-    <string name="pref_summary_dont_ack_transfers">אם נתוני הפעילות לא יקבלו אישור על ההעברה הם לא יימחקו. שימושי אם נעשה שימוש ביישומונים שונים למעט Gadgetbridge.</string>
+    <string name="pref_summary_dont_ack_transfers">אם הנתונים לא יאושרו בצמיד, נתוני הפעילות לא יימחקו. שימושי אם נעשה שימוש ביישומונים שונים למעט Gadgetbridge.</string>
     <string name="pref_summary_keep_data_on_device">תכונה זו תגרום לשמירת נתוני הפעילות על ה־Mi Band גם לאחר הסנכרון. שימושי אם נעשה שימוש ביישומונים שונים למעט Gadgetbridge.</string>
     <string name="pref_title_low_latency_fw_update">שימוש במצב חיבור מהיר לעדכוני קושחה</string>
     <string name="pref_summary_low_latency_fw_update">הפעלת אפשרות זו עשויה לסייע במקרים שבהם עדכון הקושחה נכשל.</string>
@@ -385,12 +385,12 @@
     <string name="mi2_prefs_inactivity_warnings_dnd_summary">השבתת אזהרות חוסר פעילות לפרק זמן מסוים</string>
     <string name="mi2_prefs_do_not_disturb_start">מועד ההתחלה</string>
     <string name="mi2_prefs_do_not_disturb_end">מועד הסיום</string>
-    <string name="fw_upgrade_notice_amazfitbip">פעולה זו תתקין את הקושחה %s במקום זו שכרגע מותקנת ב־Amazfit Bip שלך. 
-\n 
-\nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res ולבסוף קובץ ה־‎.gps השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw. 
-\n 
-\nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res וה־‎.gps אם הם כבר זהים לאלו שהתקנת בעבר. 
-\n 
+    <string name="fw_upgrade_notice_amazfitbip">פעולה זו תתקין את הקושחה %s ב־Amazfit Bip שלך.
+\n
+\nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res ולבסוף קובץ ה־‎.gps השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
+\n
+\nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res וה־‎.gps אם הם כבר זהים לאלו שהתקנת בעבר.
+\n
 \nהמשך התהליך הוא על אחריותך!</string>
     <string name="pref_summary_transliteration">יש להפעיל אפשרות זו אם להתקן אין תמיכה בגופן השפה שלך</string>
     <string name="dbmanagementactivity_error_exporting_shared">שגיאה בייצוא ההעדפה: %1$s</string>
@@ -412,35 +412,32 @@
     <string name="discovery_yes_pair">לצמד</string>
     <string name="discovery_dont_pair">לא לצמד</string>
     <string name="mi2_prefs_button_actions">פעולות כפתור</string>
-    <string name="mi2_prefs_button_actions_summary">ציון פעולות בלחיצה על הכפתור של Mi Band 2</string>
+    <string name="mi2_prefs_button_actions_summary">ציון פעולות בלחיצה על הכפתור</string>
     <string name="mi2_prefs_button_press_count">ספירת לחיצות על הכפתור</string>
-    <string name="mi2_prefs_button_press_count_summary">מספר לחיצות על הכפתור כדי להפעיל שידור הודעה</string>
+    <string name="mi2_prefs_button_press_count_summary">מספר לחיצות על הכפתור כדי להפעיל את אירוע 1. לחיצות רצופות בכמות זהה ליצירת אירוע 2 ואילך.</string>
     <string name="mi2_prefs_button_press_broadcast">הודעת שידור לשליחה</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">שידור הודעה כשמגיעים למספר מסוים של לחיצות</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">הודעת שידור שנשלחת עם האירוע. המשתנה `button_id` (מזהה כפתור) נוסף אוטומטית לכל הודעה.</string>
     <string name="mi2_prefs_button_action">הפעלת פעולת כפתור</string>
     <string name="mi2_prefs_button_action_summary">הפעלת פעולה עם מספר מוגדר של לחיצות כפתור</string>
     <string name="mi2_prefs_button_action_vibrate">הפעלת רטט בצמיד</string>
     <string name="mi2_prefs_button_action_vibrate_summary">הפעלת רטט בצמיד עם פעולת כפתור</string>
     <string name="mi2_prefs_button_press_count_max_delay">הפרש מרבי בין לחיצות</string>
     <string name="mi2_prefs_button_press_count_max_delay_summary">הפרש מרבי בין לחיצות על הכפתור במילישניות</string>
-    <string name="mi2_prefs_button_press_count_match_delay">הפרש לאחר לחיצת כפתור</string>
     <string name="_pebble_watch_open_on_phone">פתיחה בהתקן Android</string>
     <string name="_pebble_watch_mute">השתקה</string>
     <string name="_pebble_watch_reply">תגובה</string>
     <string name="pref_title_pebble_enable_bgjs">הפעלת JS ברקע</string>
-    <string name="mi2_prefs_button_press_count_match_delay_summary">המתנה לאחר התאמת פעולת כפתור אחת (המספר נמצא בתוספת של intent בשם button_id) או 0 לתגובה מיידית</string>
     <string name="activity_web_view">פעילות תצוגת דפדפן</string>
     <string name="controlcenter_connect">התחבר …</string>
     <string name="pref_summary_pebble_enable_bgjs">כשאפשרות זו פעילה, יתאפשר למסיכות השעון להציג מזג אוויר, סוללה וכו׳.</string>
-    <string name="fw_upgrade_notice_amazfitcor">פעולה זו תתקין את הקושחה %s במקום הנוכחית שעל ה־Amazfit Cor שלך. 
-\n 
-\nנא לוודא את התקנת קובץ ה־‎.fw, ולאחר מכן את קובץ ה־‎.res. הצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.fw 
-\n 
-\nלתשומת לבך: אין צורך להתקין את קובץ ה־‎.res אם הוא זהה לקובץ שהתקנת בעבר. 
-\n 
+    <string name="fw_upgrade_notice_amazfitcor">פעולה זו תתקין את הקושחה %s במקום הנוכחית שעל ה־Amazfit Cor שלך.
+\n
+\nנא לוודא את התקנת קובץ ה־‎.fw, ולאחר מכן את קובץ ה־‎.res. הצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.fw
+\n
+\nלתשומת לבך: אין צורך להתקין את קובץ ה־‎.res אם הוא זהה לקובץ שהתקנת בעבר.
+\n
 \nהמשך מעבר לנקודה זו הוא על אחריותך!</string>
     <string name="pref_title_charts_swipe">הפעלת הסטה לימין/שמאל בפעילות התרשימים</string>
-    <string name="preferences_amazfitbip_settings">הגדרות Amazfit Bip</string>
     <string name="automatic">אוטומטי</string>
     <string name="simplified_chinese">סינית מפושטת</string>
     <string name="traditional_chinese">סינית מסורתית</string>
@@ -451,7 +448,7 @@
     <string name="interval_ten_minutes">כל 10 דקות</string>
     <string name="interval_thirty_minutes">כל חצי שעה</string>
     <string name="interval_one_hour">פעם בשעה</string>
-    <string name="pref_title_weather_location">מיקום מזג אוויר (CM/LOS)</string>
+    <string name="pref_title_weather_location">מיקום מזג אוויר (לספק מזג האוויר של LineageOS)</string>
     <string name="kind_firmware">קושחה</string>
     <string name="kind_invalid">נתונים שגויים</string>
     <string name="kind_font">גופן</string>
@@ -496,7 +493,7 @@
     <string name="activity_type_walking">הליכה</string>
     <string name="activity_type_swimming">שחייה</string>
     <string name="activity_type_unknown">פעילות לא ידועה</string>
-    <string name="activity_summaries">פעילויות</string>
+    <string name="activity_summaries">פעילויות ספורטיביות</string>
     <string name="activity_type_biking">רכיבת אופניים</string>
     <string name="activity_type_treadmill">הליכון</string>
     <string name="select_all">בחירת הכול</string>
@@ -515,12 +512,12 @@
     <string name="menuitem_shortcut_alipay">Alipay (קיצור דרך)</string>
     <string name="menuitem_shortcut_weather">מזג אוויר (קיצור דרך)</string>
     <string name="devicetype_q8">Q8</string>
-    <string name="fw_upgrade_notice_miband3">פעולה זו תתקין את הקושחה %s במקום זו שכרגע מותקנת ב־Mi Band 3 שלך. 
-\n 
-\nנא לוודא את התקנת קובץ ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res הרצועה שלך תופעל מחדש לאחר התקנת קובץ ה־fw. 
-\n 
-\nלתשומת לבך: אין צורך בהתקנת קובץ ה־‎.res אם הוא כבר זהה לזה שהתקנת בעבר. 
-\n 
+    <string name="fw_upgrade_notice_miband3">פעולה זו תתקין את הקושחה %s במקום זו שכרגע מותקנת ב־Mi Band 3 שלך.
+\n
+\nנא לוודא את התקנת קובץ ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res הרצועה שלך תופעל מחדש לאחר התקנת קובץ ה־fw.
+\n
+\nלתשומת לבך: אין צורך בהתקנת קובץ ה־‎.res אם הוא כבר זהה לזה שהתקנת בעבר.
+\n
 \nהמשך התהליך הוא על אחריותך!</string>
     <string name="devicetype_miband3">Mi Band 3</string>
     <string name="blacklist_all_for_notifications">הוספת כולם לרשימה השחורה של ההתראות</string>
@@ -679,13 +676,13 @@
     <string name="pref_summary_authkey">ניתן להחליף את מפתח האימות למפתח משותף בכל מכשירי ה־Android שלך מהם ברצונך להתחבר. מפתח בררת המחדל הקודם לכל המכשירים הוא 0123456789@ABCDE</string>
     <string name="devicetype_bfh16">BFH-16</string>
     <string name="fw_upgrade_notice_amazfitcor2">פעולה זו תתקין את הקושחה %s במקום זו שכרגע מותקנת ב־Amazfit Cor 2 שלך.
-\n 
-\nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res. הצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־fw. 
-\n 
-\nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res אם הוא כבר זהים לזה שהתקנת בעבר. 
-\n 
-\nהמשך התהליך הוא על אחריותך! 
-\n 
+\n
+\nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res. הצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
+\n
+\nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res אם הוא כבר זהים לזה שהתקנת בעבר.
+\n
+\nהמשך התהליך הוא על אחריותך!
+\n
 \nתהליך זה לא נבדק, כנראה שיהיה עליך להתקין קושחה מסוג BEATS_W אם שם המכשיר שלך הוא „Amazfit Band 2”</string>
     <string name="dutch">הולנדית</string>
     <string name="turkish">טורקית</string>
@@ -697,12 +694,12 @@
     <string name="portuguese">פורטוגלית</string>
     <string name="devicetype_amazfit_cor2">Amazfit Cor 2</string>
     <string name="devicetype_miband4">Mi Band 4</string>
-    <string name="fw_upgrade_notice_miband4">פעולה זו תתקין את הקושחה %s ב־Mi Band 4 שלך. 
-\n 
-\nנא לוודא את התקנת קובץ ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw. 
-\n 
-\nלתשומת לבך: אין צורך בהתקנת קובץ ה־‎.res אם הוא כבר זהה לזה שהתקנת בעבר. 
-\n 
+    <string name="fw_upgrade_notice_miband4">פעולה זו תתקין את הקושחה %s ב־Mi Band 4 שלך.
+\n
+\nנא לוודא את התקנת קובץ ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
+\n
+\nלתשומת לבך: אין צורך בהתקנת קובץ ה־‎.res אם הוא כבר זהה לזה שהתקנת בעבר.
+\n
 \nהמשך התהליך הוא על אחריותך!</string>
     <string name="prefs_hr_alarm_activity">התראת דופק במהלך פעילות ספורטיבית</string>
     <string name="prefs_hr_alarm_low">גבול תחתון</string>
@@ -755,8 +752,346 @@
     <string name="devicetype_makibes_hr3">Makibes HR3</string>
     <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="prefs_find_phone">איתור הטלפון</string>
-    <string name="prefs_enable_find_phone">הפעלת איתור הטלפון</string>
+    <string name="prefs_enable_find_phone">הפעלת ‚איתור הטלפון’</string>
     <string name="prefs_find_phone_summary">ניתן להשתמש בצמיד כדי שהטלפון שלך ישמיע צלצול.</string>
     <string name="prefs_find_phone_duration">משך זמן הצלצול בשניות</string>
     <string name="maximum_duration">משך</string>
+    <string name="discovery_need_to_enter_authkey">למכשיר זה נדרש מפתח אימות סודי, יש לגעת נגיעה ארוכה על המכשיר כדי להזין אותו. פרטים נוספים בוויקי.</string>
+    <string name="fw_upgrade_notice_amazfitbip_lite">פעולה זו תתקין את הקושחה %s על ה־Amazfit Bip Lite שלך.
+\n
+\nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
+\n
+\nלתשומת לבך: אין צורך בהתקנת קובץ ה־‎.res אם הוא כבר זהה לזה שהתקנת בעבר.
+\n
+\nהמשך התהליך הוא על אחריותך!</string>
+    <string name="devicetype_amazfit_gtr">Amazfit GTR</string>
+    <string name="fw_upgrade_notice_amazfitgtr">פעולה זו תתקין את הקושחה %s במקום זו שכרגע מותקנת ב־Amazfit GTR שלך.
+\n
+\nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res ולבסוף קובץ ה־‎.gps השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
+\n
+\nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res וה־‎.gps אם הם כבר זהים לאלו שהתקנת בעבר.
+\n
+\nהמשך התהליך הוא על אחריותך!</string>
+    <string name="pref_chart_heartrate_color_red">אדום</string>
+    <string name="pref_chart_heartrate_color_orange">כתום</string>
+    <string name="pref_title_chart_heartrate_color">צבע דופק</string>
+    <string name="pref_title_chart_sleep_rolling_24_hour">טווח שינה</string>
+    <string name="pref_chart_sleep_rolling_24_on">24 השעות האחרונות</string>
+    <string name="pref_chart_sleep_rolling_24_off">צהריים עד צהריים</string>
+    <string name="devicetype_amazfit_gts">Amazfit GTS</string>
+    <string name="fw_upgrade_notice_amazfitgts">פעולה זו תתקין את הקושחה %s ב־Amazfit GTS שלך.
+\n
+\nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res ולבסוף קובץ ה־‎.gps השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
+\n
+\nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res וה־‎.gps אם הם כבר זהים לאלו שהתקנת בעבר.
+\n
+\nהמשך התהליך הוא על אחריותך!</string>
+    <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
+    <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
+    <string name="preferences_qhybrid_settings">הגדרות Q Hybrid</string>
+    <string name="watch_not_connected">השעון לא מחובר</string>
+    <string name="qhybrid_vibration_strength">עצמת רטט:</string>
+    <string name="qhybrid_goal_in_steps">יעד בצעדים</string>
+    <string name="qhybrid_time_shift">הזחת זמן</string>
+    <string name="qhybrid_second_timezone_offset_relative_to_utc">היסט אזור זמן שני ביחס ל־UTC</string>
+    <string name="qhybrid_overwrite_buttons">דריסת כפתורים</string>
+    <string name="qhybrid_prompt_million_steps">נא להגדיר את מניין הצעדים למיליון כדי להפעיל זאת.</string>
+    <string name="qhybrid_buttons_overwrite_success">הכפתורים נדרסו</string>
+    <string name="qhybrid_buttons_overwrite_error">דריסת הכפתורים נכשלה</string>
+    <string name="qhybrid_changes_delay_prompt">השינויים יתבצעו בהקדם…</string>
+    <string name="qhybrid_use_activity_hand_as_notification_counter">להשתמש ביד הפעילות כמונה התראות</string>
+    <string name="qhybrid_offset_timezone">מרחק מאזור זמן</string>
+    <string name="qhybrid_offset_time_by">מרחק מהשעה</string>
+    <string name="pref_disable_new_ble_scanning">השבתת סריקת BLE חדשה</string>
+    <string name="pref_summary_disable_new_ble_scanning">יש לסמן את האפשרות הזאת אם המכשיר שלך לא נמצא במהלך האיתור</string>
+    <string name="devicetype_banglejs">Bangle.js</string>
+    <string name="devicetype_y5">Y5</string>
+    <string name="prefs_button_single_press_action_selection_title">פעולה עם אירוע 1</string>
+    <string name="prefs_button_double_press_action_selection_title">פעולה עם אירוע 2</string>
+    <string name="prefs_button_triple_press_action_selection_title">פעולה עם אירוע 3</string>
+    <string name="prefs_button_variable_actions">הגדרות נרחבות ללחיצת כפתור</string>
+    <string name="prefs_button_long_press_action_selection_title">פעולה ללחיצה ארוכה על הכפתור</string>
+    <string name="alarm_snooze">נודניק</string>
+    <string name="error_no_location_access">יש להעניק גישה למיקום כדי שהסריקה תעבוד כראוי</string>
+    <string name="devicetype_itag">iTag</string>
+    <string name="pref_title_allow_high_mtu">לאפשר MTU גבוה</string>
+    <string name="pref_summary_allow_high_mtu">מגביר את קצב ההעברה, יש מכשירי Android שלא תומכים בזה.</string>
+    <string name="pref_summary_sync_calendar">הפעלת התראות לוח שנה, אפילו ללא חיבור</string>
+    <string name="pref_title_sync_caldendar">סנכרון אירועי לוח שנה</string>
+    <string name="hr_widget_heart_rate">דופק</string>
+    <string name="hr_widget_steps">צעדים</string>
+    <string name="hr_widget_date">תאריך</string>
+    <string name="hr_widget_active_minutes">דקות פעילות</string>
+    <string name="hr_widget_calories">קלוריות</string>
+    <string name="hr_widget_battery">סוללה</string>
+    <string name="hr_widget_weather">מזג אוויר</string>
+    <string name="hr_widget_nothing">כלום</string>
+    <string name="find_lost_device_you_found_it">מצאתי!</string>
+    <string name="pref_title_force_white_color_scheme">לאכוף ערכת צבעים שחור על לבן</string>
+    <string name="pref_summary_force_white_color_scheme">שימושי לידיים כהות</string>
+    <string name="find_my_phone_notification">איתור הטלפון שלי</string>
+    <string name="notification_channel_high_priority_name">התראות מ־Gadgetbridge בעדיפות גבוהה</string>
+    <string name="pref_title_custom_deviceicon">הצגת סמל התראה ייעודי למכשיר</string>
+    <string name="pref_summary_custom_deviceicon">הצגת התראת Android תואמת מכשיר במקום הסמל של Gadgetbridge כשיש חיבור</string>
+    <string name="hr_appname_wellness">רווחה</string>
+    <string name="hr_appname_workout">אימון</string>
+    <string name="hr_appname_stopwatch">שעון עצר</string>
+    <string name="hr_appname_commute">התניידות</string>
+    <string name="pref_title_upper_button_function">כפתור עליון</string>
+    <string name="pref_title_middle_button_function">כפתור אמצעי</string>
+    <string name="pref_title_lower_button_function">כפתור תחתון</string>
+    <string name="pref_title_vibration_strength">עצמת הרטט</string>
+    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
+    <string name="pref_title_relax_firmware_checks">יש להפעיל זאת אם מטרתך היא לצרוב קושחה שאינה מיועדת להתקן שלך (באחריותך הבלעדית)</string>
+    <string name="pref_summary_relax_firmware_checks">הפחתת בדיקות חומרה</string>
+    <string name="pref_header_auto_fetch">קבלה אוטומטית</string>
+    <string name="pref_qhybrid_title_widget_draw_circles">ציור עיגולי וידג׳טים</string>
+    <string name="pref_qhybrid_save_raw_activity_files">שמירת קובצי פעילות גולמיים</string>
+    <string name="menuitem_workout">התעמלות</string>
+    <string name="menuitem_eventreminder">תזכורת אירועים</string>
+    <string name="menuitem_hr">דופק</string>
+    <string name="menuitem_pai">בינת פעילות</string>
+    <string name="devicetype_watchxplus">Watch X Plus</string>
+    <string name="devicetype_watchx">Watch X</string>
+    <string name="power_mode_title">צריכת חשמל בשעון</string>
+    <string name="pref_summary_notifications_and_calls_title_shake_reject">כפיל של פעולת כפתור השעון</string>
+    <string name="power_mode_watch">שעון בלבד</string>
+    <string name="power_mode_saving">חיסכון בחשמל</string>
+    <string name="power_mode_normal">רגיל</string>
+    <string name="prefs_sensors_button_bp_calibration_sum">יש ללחוץ כאן כדי להתחיל כיול</string>
+    <string name="prefs_sensors_button_bp_calibration">כיול</string>
+    <string name="pref_sensors_bp_calibration_high">לחץ דם סיסטולי (גבוה)</string>
+    <string name="pref_sensors_bp_calibration_low">לחץ דם דיאסטולי (נמוך)</string>
+    <string name="pref_sensors_bp_calibration">כיוון לחץ דם</string>
+    <string name="pref_title_sensors_altitude">כיוון גובה</string>
+    <string name="pref_summary_device_spec_settings_title_force_time">אילוץ סנכרון השעון בעת התחברות מחדש. מחוגים אנלוגיים עשויים להציג שעה שגויה!</string>
+    <string name="pref_header_sensors_calibration">כיול חיישנים</string>
+    <string name="pref_title_device_spec_settings_force_time">אילוץ סנכרון השעון</string>
+    <string name="pref_header_device_spec_settings">הגדרות התקן</string>
+    <string name="prefs_notifications_and_calls_shake_reject">ניעור פרק כף היד כדי להתעלם/לדחות שיחות</string>
+    <string name="pref_summary_notifications_and_calls_title_reject">כבוי - התעלמות, פעיל - דחייה</string>
+    <string name="prefs_notifications_and_calls_reject">התעלמות/דחייה עם כפתור</string>
+    <string name="pref_header_notifications_and_calls_callhandling">טיפול בשיחות</string>
+    <string name="pref_title_notifications_and_calls_repeat_on_misscall">חזרה למשך X דקות</string>
+    <string name="pref_summary_notifications_and_calls_enable_misscall">חוזרת כל דקה</string>
+    <string name="pref_notifications_and_calls_enable_misscall">התראה על שיחה שהוחמצה</string>
+    <string name="pref_header_notifications_and_calls">התראות ושיחות</string>
+    <string name="pref_title_notifications_and_calls_repeat_on_call">חזרה על התראות על שיחות</string>
+    <string name="prefs_notifications_and_calls_continious_ring">התראה במהלך צלצול טלפון</string>
+    <string name="title_activity_LenovoWatch_calibration">כיול Watch X Plus</string>
+    <string name="pref_title_device_spec_settings_show_raw_graph">הצגת נתונים גולמיים בתרשים הפעילות</string>
+    <string name="pref_theme_system">מערכת</string>
+    <string name="hungarian">הונגרית</string>
+    <string name="romanian">רומנית</string>
+    <string name="czesh">צ׳כית</string>
+    <string name="swedish">שבדית</string>
+    <string name="hebrew">עברית</string>
+    <string name="greek">יוונית</string>
+    <string name="menuitem_unknown">לא ידוע</string>
+    <string name="bip_prefs_shotcuts_summary">נא לבחור את קיצורי הדרך על מסך הצמיד</string>
+    <string name="bip_prefs_shortcuts">קיצורי דרך</string>
+    <string name="hr_widget_last_notification">התראה אחרונה</string>
+    <string name="controlcenter_set_alias">הגדרת כינוי</string>
+    <string name="fw_upgrade_notice_amazfit_trex">פעולה זו תתקין את הקושחה %s ב־Amazfit T-Rex שלך. 
+\n 
+\nנא לוודא את התקנת קובץ ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res ולבסוף קובץ ה־‎.gps השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw. 
+\n 
+\nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res וה־‎.gps אם הם כבר זהים לאלו שהתקנת בעבר. 
+\n 
+\nהמשך התהליך הוא על אחריותך!</string>
+    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
+    <string name="about_additional_contributions">תודתנו נתונה לכל התורמים שתרמו קוד, תרגומים, תמיכה, רעיונות, מוטיבציה, דיווחי תקלות, כסף… ✊</string>
+    <string name="about_additional_device_support">תמיכה במכשירים נוספים</string>
+    <string name="about_contributors">תורמים</string>
+    <string name="about_core_team_title">צוות הליבה (מסודרים לפי מועד תרומת הקוד הראשונה)</string>
+    <string name="about_description">חלופה חופשית ונטולת ענן ליישומוני ה־Android לחפיצים עם הקוד הסגור של היצרנים.</string>
+    <string name="about_activity_title">על אודות Gadgetbridge</string>
+    <string name="about_title">על אודות</string>
+    <string name="pref_title_weather_summary">משמש לספק מזג האוויר של LineageOS, גרסאות אחרות של Android צריכות להשתמש ביישומונים כמו „התראות מזג אוויר”. אפשר למצוא מידע נוסף בוויקי של Gadgetbridge.</string>
+    <string name="menuitem_worldclock">שעון עולמי</string>
+    <string name="permission_granting_mandatory">כל ההרשאות האלו נדרשות ואם לא תוענקנה היציבות תתערער</string>
+    <string name="error_version_check_extreme_caution">אזהרה: בדיקת פרטי הגרסה נתקלה בשגיאה! עדיף שלא להמשיך! הגרסה שנצפתה היא „%s”</string>
+    <string name="error_background_service_reason">התחלת שירות הרקע נכשלה עקב חריגה. שגיאה:</string>
+    <string name="error_background_service_reason_truncated">התחלת שירות הרקע נכשל עקב…</string>
+    <string name="error_background_service">התחלת שירות הרקע נכשלה</string>
+    <string name="fw_upgrade_notice_miband5">פעולה זו תתקין את הקושחה %s במקום הנוכחית שעל ה־Mi Band 5 שלך.
+\n
+\nנא לוודא את התקנת קובץ ה־‎.fw, ולאחר מכן את קובץ ה־‎.res. הצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.fw
+\n
+\nלתשומת לבך: אין צורך להתקין את קובץ ה־‎.res אם הוא זהה לקובץ שהתקנת בעבר.
+\n
+\nהמשך מעבר לנקודה זו הוא על אחריותך!</string>
+    <string name="menuitem_stress">לחץ</string>
+    <string name="menuitem_cycles">מחזורים</string>
+    <string name="menuitem_breathing">נשימה</string>
+    <string name="devicetype_miband5">Mi Band 5</string>
+    <string name="ignore_bonded_devices_description">הפעלת אפשרות זו תתעלם ממכשירים שכבר אוגדו/צומדו טרם הסריקה</string>
+    <string name="ignore_bonded_devices">התעלמות ממכשירים שאוגדו</string>
+    <string name="error_retrieving_devices_database">שגיאה בקבלת מכשירים ממסד הנתונים</string>
+    <string name="error_setting_alias">שגיאה בהגדרת כינוי:</string>
+    <string name="error_exporting_device_preferences">שגיאה בייצוא העדפות ייחודיות למכשיר</string>
+    <string name="pref_check_permission_status">בדיקת מצב ההרשאות</string>
+    <string name="device_requires_key">נדרש מפתח</string>
+    <string name="device_is_currently_bonded">כבר מאוגד</string>
+    <string name="devicetype_tlw64">TLW64</string>
+    <string name="error_location_enabled_mandatory">יש להפעיל מיקום כדי לסרוק לאיתור מכשירים</string>
+    <string name="companiondevice_pairing_details">מפעיל את התמיכה ב־API החדש מסוג CompanionDevice (תקף על Android 8 ומעלה) שמגביר את האמינות אם יש להפעיל את השירות מחדש ברקע, דורש צימוד מחדש באמצעות Gadgetbridge כדי שייכנס לתוקף</string>
+    <string name="companiondevice_pairing">צימוד CompanionDevice</string>
+    <string name="require_location_provider">יש להפעיל מיקום</string>
+    <string name="pref_check_permission_status_summary">לבדוק ולבקש הרשאות חסרות אפילו אם אינן נדרשות באותו הרגע. יש להשבית את זה רק אם המכשירים שלך אכן לא תומכים בתכונות האלו. חסך בהענקת הרשאות עלול להוביל לתקלות!</string>
+    <string name="devicetype_pinetime_jf">PineTime (קושחה מסוג JF)</string>
+    <string name="distanceMeters">מרחק</string>
+    <string name="activity_summary_detail">פרטי הפעילות הספורטיבית</string>
+    <string name="activity_detail_show_gps_label">הצגת מסלול GPS</string>
+    <string name="activity_detail_end_label">סיום</string>
+    <string name="activity_detail_start_label">התחלה</string>
+    <string name="Steps">צעדים</string>
+    <string name="Activity">פעילות</string>
+    <string name="Speed">מהירות</string>
+    <string name="Elevation">עילוי</string>
+    <string name="Distance">מרחק</string>
+    <string name="Swimming">שחייה</string>
+    <string name="Strokes">תנועות חתירה</string>
+    <string name="bpm">סל״ד</string>
+    <string name="minutes_km">דק׳/ק״מ</string>
+    <string name="seconds_km">שנ׳/ק״מ</string>
+    <string name="calories_unit">קלוריות</string>
+    <string name="laps_unit">הקפות</string>
+    <string name="swim_style">סגנון שחייה</string>
+    <string name="swolf_index">ציון swolf</string>
+    <string name="seconds">שניות</string>
+    <string name="strokes_unit">חתירות</string>
+    <string name="strokes_second">חתירות/שנ׳</string>
+    <string name="km_h">קמ״ש</string>
+    <string name="meters_second">מ׳/שנ׳</string>
+    <string name="steps_unit">צעדים</string>
+    <string name="averageStrokesPerSecond">תנועות חתירה בממוצע</string>
+    <string name="averageStrokeDistance">מרחק תנועת חתירה ממוצע</string>
+    <string name="cm">ס״מ</string>
+    <string name="meters">מ׳</string>
+    <string name="flatSeconds">שטוח</string>
+    <string name="ascentSeconds">עלייה</string>
+    <string name="laps">הקפות</string>
+    <string name="swimStyle">סגנון שחייה</string>
+    <string name="swolfIndex">ציון swolf</string>
+    <string name="averageLapPace">קצב ממוצע להקפה</string>
+    <string name="activity_detail_duration_label">משך</string>
+    <string name="averageStride">פסיעה ממוצעת</string>
+    <string name="averageKMPaceSeconds">קצב</string>
+    <string name="averageHR">דופק</string>
+    <string name="totalStride">סך כל הפסיעות</string>
+    <string name="minPace">הקצב האטי ביותר</string>
+    <string name="maxPace">הקצב המהיר ביותר</string>
+    <string name="maxSpeed">מרבי</string>
+    <string name="caloriesBurnt">קלוריות</string>
+    <string name="activeSeconds">פעיל</string>
+    <string name="steps">צעדים</string>
+    <string name="minAltitude">מזערי</string>
+    <string name="maxAltitude">מרבי</string>
+    <string name="descentMeters">במורד</string>
+    <string name="ascentMeters">במעלה</string>
+    <string name="seconds_m">שנ׳/מ׳</string>
+    <string name="prefs_events_forwarding_action_title">הרצת פעולה</string>
+    <string name="prefs_events_forwarding_broadcast_title">הפצת הודעה</string>
+    <string name="prefs_events_forwarding_startnonwear">כשלא נענד</string>
+    <string name="prefs_events_forwarding_wokeup">עם השכמה</string>
+    <string name="prefs_events_forwarding_fellsleep">עם הירדמות</string>
+    <string name="prefs_events_forwarding_title">פעולות מכשיר</string>
+    <string name="prefs_events_forwarding_summary">להשתמש באירועי המכשיר כדי לגרור פעולות ושידורי Android</string>
+    <string name="activity_type_yoga">יוגה</string>
+    <string name="activity_type_jump_roping">קפיצה בחבל</string>
+    <string name="activity_type_elliptical_trainer">אליפטיקל</string>
+    <string name="activity_type_indoor_cycling">רכיבה בתוך מבנה</string>
+    <string name="activity_type_swimming_openwater">שחייה במים פתוחים</string>
+    <string name="activity_filter_apply_filter">החלת מסנן</string>
+    <string name="activity_filter_filter_title">מסנן</string>
+    <string name="activity_filter_reset_filter">איפוס המסנן</string>
+    <string name="activity_filter_date_to">סיום</string>
+    <string name="activity_filter_date_from">התחלה</string>
+    <string name="pref_header_filter">מסנן פעילויות ספורטיביות</string>
+    <string name="medley">מעורב</string>
+    <string name="backstroke">גב</string>
+    <string name="freestyle">חופשי</string>
+    <string name="breaststroke">חזה</string>
+    <string name="activity_summaries_statistics">סטטיסטיקה</string>
+    <string name="pref_header_statistics">סטטיסטיקת פעילות ספורטיבית</string>
+    <string name="km">ק״מ</string>
+    <string name="activity_filter_name_contains">תווית</string>
+    <string name="activity_summary_edit_name_title">עריכת התווית</string>
+    <string name="activity_summaries_all_activities">כל הפעילויות</string>
+    <string name="activity_summary_yesterday">אתמול</string>
+    <string name="activity_summary_today">היום</string>
+    <string name="devicetype_sg2">Lemfo SG2</string>
+    <string name="activity_summaries_all_devices">כל המכשירים</string>
+    <string name="sports_activity_quick_filter_select">תקופה</string>
+    <string name="sports_activity_quick_filter_30days">30 ימים</string>
+    <string name="sports_activity_quick_filter_7days">7 ימים</string>
+    <string name="sports_activity_quick_filter_last_month">חודש שעבר</string>
+    <string name="sports_activity_quick_filter_this_month">החודש</string>
+    <string name="sports_activity_quick_filter_last_week">שבוע שעבר</string>
+    <string name="sports_activity_quick_filter_this_week">השבוע</string>
+    <string name="no">לא</string>
+    <string name="yes">כן</string>
+    <string name="activity_filter_individual_items">פריטים שנבחרו פרטנית</string>
+    <string name="addto_filter">הוספה למסנן</string>
+    <string name="averageSpeed">מהירות ממוצעת</string>
+    <string name="activity_type_badminton">בדמינטון</string>
+    <string name="activity_type_pingpong">פינג פונג</string>
+    <string name="activity_type_basketball">כדורסל</string>
+    <string name="activity_type_cricket">קריקט</string>
+    <string name="activity_type_rowing_machine">מכונת חתירה</string>
+    <string name="activity_type_soccer">כדורגל</string>
+    <string name="activity_filter_to_placeholder">היום</string>
+    <string name="activity_filter_from_placeholder">מרחק שעבר</string>
+    <string name="about_links">קישורים</string>
+    <string name="activity_prefs_chart_min_session_length">משך מזערי לפעילות (דקות)</string>
+    <string name="activity_prefs_chart_max_idle_phase_length">משך השהייה להפרדת פעילויות (דקות)</string>
+    <string name="activity_prefs_chart_min_steps_per_minute">כמות מזערית של צעדים לדקה לזיהוי פעילות</string>
+    <string name="activity_prefs_chart_min_steps_per_minute_for_run">כמות מזערית של צעדים לדקה לזיהוי ריצה</string>
+    <string name="charts_activity_list">רשימת פעילויות</string>
+    <string name="chart_get_active_and_synchronize">יש לעשות פעילות כלשהי ולסנכרן את ההתקן.</string>
+    <string name="chart_no_active_data">לא זוהו פעילויות.</string>
+    <string name="devicetype_lefun">Lefun</string>
+    <string name="lefun_prefs_interface_language_title">שפת המנשק</string>
+    <string name="lefun_prefs_antilost_summary">הצמיד ירוטו אם הטלפון שלך מתנתק מהצמיד</string>
+    <string name="lefun_prefs_antilost_title">מונע איבוד</string>
+    <string name="lefun_prefs_hydration_reminder_interval_title">הפרש תזכורת שתייה (בדקות)</string>
+    <string name="lefun_prefs_hydration_reminder_summary">הצמיד ירטוט כדי להזכיר לך לשתות מים</string>
+    <string name="lefun_prefs_hydration_reminder_title">תזכורת שתייה</string>
+    <string name="devicetype_sonyswr12">Sony SWR12</string>
+    <string name="sonyswr12_settings_title">Sony SWR12 הגדרות</string>
+    <string name="sonyswr12_settings_low_vibration">רטט נמוך מופעל</string>
+    <string name="sonyswr12_settings_stamina">מצב חיסכון בחשמל פועל</string>
+    <string name="sonyswr12_settings_alarm_interval">מרווח אזעקה חכם בדקות</string>
+    <string name="sonyswr12_settings_low_vibration_summary">אפשר עוצמת רטט נמוכה בלהקה</string>
+    <string name="sonyswr12_settings_stamina_summary">מצב חיסכון בחשמל מכבה מדידה אוטומטית תקופתית של דופק ובכך מגדיל את זמן העבודה</string>
+    <string name="sonyswr12_settings_alarm_interval_summary">מרווח אזעקה חכם הוא מרווח לפני ההתראה המותקנת. במרווח זה מכשיר מנסה לאתר את שלב השינה הקל ביותר למשתמש ער</string>
+    <string name="baseAltitude">בסיס לחישוב רום</string>
+    <string name="devicetype_nut_mini">Nut mini</string>
+    <string name="descentSeconds">ירידה</string>
+    <string name="activity_error_no_app_for_png">כדי לשתף את צילום המסך, עליך להתקין יישומון שיכול לטפל בקובצי תמונה.</string>
+    <string name="firmware_update_progress">מתבצעת העלאה
+\n%1d%% ב־%.2f קסל״ש (ממוצע %.2f קסל״ש)
+\nחלק %1d מתוך %1d</string>
+    <string name="devicestatus_upload_failed">ההעלאה נכשלה</string>
+    <string name="devicestatus_upload_aborted">ההעלאה בוטלה!</string>
+    <string name="devicestatus_upload_validating">ההעלאה נבדקת</string>
+    <string name="devicestatus_upload_completed">ההעלאה הושלמה</string>
+    <string name="devicestatus_disconnected">המכשיר התנתק!</string>
+    <string name="devicestatus_disconnecting">המכשיר מתנתק!</string>
+    <string name="devicestatus_upload_starting">העלאה מתחילה</string>
+    <string name="devicestatus_upload_started">החלה העלאה</string>
+    <string name="devicestatus_connected">המכשיר מחובר</string>
+    <string name="devicestatus_connecting">המכשיר מתחבר</string>
+    <string name="pref_title_lower_button_function_double">כפתור תחתון כפול</string>
+    <string name="pref_title_middle_button_function_double">כפתור אמצעי כפול</string>
+    <string name="pref_title_upper_button_function_double">כפתור עליון כפול</string>
+    <string name="pref_title_lower_button_function_long">כפתור תחתון ארוך</string>
+    <string name="pref_title_middle_button_function_long">כפתור אמצעי ארוך</string>
+    <string name="pref_title_upper_button_function_long">כפתור עליון ארוך</string>
+    <string name="pref_title_lower_button_function_short">כפתור תחתון קצר</string>
+    <string name="pref_title_middle_button_function_short">כפתור אמצעי קצר</string>
+    <string name="pref_title_upper_button_function_short">כפתור עליון קצר</string>
+    <string name="activity_prefs_step_length_cm">אורך צעד בס״מ</string>
+    <string name="devicetype_amazfit_band5">Amazfit Band 5</string>
 </resources>

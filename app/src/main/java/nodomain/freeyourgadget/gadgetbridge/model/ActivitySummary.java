@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2019 Carsten Pfeiffer
+/*  Copyright (C) 2017-2020 Carsten Pfeiffer
 
     This file is part of Gadgetbridge.
 
@@ -16,8 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.Date;
+
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 
 /**
  * Summarized information about a temporal activity.
@@ -25,6 +30,7 @@ import java.util.Date;
  * // TODO: split into separate entities?
  */
 public interface ActivitySummary extends Serializable {
+    Long getId();
     String getName();
     Date getStartTime();
     Date getEndTime();
@@ -35,6 +41,7 @@ public interface ActivitySummary extends Serializable {
     long getDeviceId();
 
     long getUserId();
+    String getSummaryData();
     //    long getSteps();
 //    float getDistanceMeters();
 //    float getAscentMeters();

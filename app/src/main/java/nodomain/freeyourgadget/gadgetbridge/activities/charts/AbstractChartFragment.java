@@ -1,5 +1,5 @@
-/*  Copyright (C) 2015-2019 0nse, Andreas Shimokawa, Carsten Pfeiffer,
-    Daniele Gobbetti, Dikay900, Pavel Elagin, walkjivefly
+/*  Copyright (C) 2015-2020 0nse, Andreas Shimokawa, Carsten Pfeiffer,
+    Daniele Gobbetti, Dikay900, Pavel Elagin, vanous, walkjivefly
 
     This file is part of Gadgetbridge.
 
@@ -69,6 +69,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
+import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 /**
  * A base class fragment to be used with ChartsActivity. The fragment can supply
@@ -151,8 +152,12 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         if (intentFilterActions != null) {
             mIntentFilterActions.addAll(Arrays.asList(intentFilterActions));
         }
-        mIntentFilterActions.add(ChartsHost.DATE_NEXT);
-        mIntentFilterActions.add(ChartsHost.DATE_PREV);
+        mIntentFilterActions.add(ChartsHost.DATE_NEXT_DAY);
+        mIntentFilterActions.add(ChartsHost.DATE_PREV_DAY);
+        mIntentFilterActions.add(ChartsHost.DATE_NEXT_WEEK);
+        mIntentFilterActions.add(ChartsHost.DATE_PREV_WEEK);
+        mIntentFilterActions.add(ChartsHost.DATE_NEXT_MONTH);
+        mIntentFilterActions.add(ChartsHost.DATE_PREV_MONTH);
         mIntentFilterActions.add(ChartsHost.REFRESH);
     }
 
@@ -170,12 +175,18 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
     }
 
     protected void init() {
+        Prefs prefs = GBApplication.getPrefs();
         TypedValue runningColor = new TypedValue();
         BACKGROUND_COLOR = GBApplication.getBackgroundColor(getContext());
         LEGEND_TEXT_COLOR = DESCRIPTION_COLOR = GBApplication.getTextColor(getContext());
         CHART_TEXT_COLOR = ContextCompat.getColor(getContext(), R.color.secondarytext);
-        HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate);
+        if (prefs.getBoolean("chart_heartrate_color", false)) {
+            HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_alternative);
+        }else{
+            HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate);
+        }
         HEARTRATE_FILL_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_fill);
+
         getContext().getTheme().resolveAttribute(R.attr.chart_activity, runningColor, true);
         AK_ACTIVITY_COLOR = runningColor.data;
         getContext().getTheme().resolveAttribute(R.attr.chart_deep_sleep, runningColor, true);
@@ -243,10 +254,18 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         String action = intent.getAction();
         if (ChartsHost.REFRESH.equals(action)) {
             refresh();
-        } else if (ChartsHost.DATE_NEXT.equals(action)) {
-            handleDateNext(getStartDate(), getEndDate());
-        } else if (ChartsHost.DATE_PREV.equals(action)) {
-            handleDatePrev(getStartDate(), getEndDate());
+        } else if (ChartsHost.DATE_NEXT_DAY.equals(action)) {
+            handleDate(getStartDate(), getEndDate(),+1);
+        } else if (ChartsHost.DATE_PREV_DAY.equals(action)) {
+            handleDate(getStartDate(), getEndDate(),-1);
+        } else if (ChartsHost.DATE_NEXT_WEEK.equals(action)) {
+            handleDate(getStartDate(), getEndDate(),+7);
+        } else if (ChartsHost.DATE_PREV_WEEK.equals(action)) {
+            handleDate(getStartDate(), getEndDate(),-7);
+        } else if (ChartsHost.DATE_NEXT_MONTH.equals(action)) {
+            handleDate(getStartDate(), getEndDate(),+30);
+        } else if (ChartsHost.DATE_PREV_MONTH.equals(action)) {
+            handleDate(getStartDate(), getEndDate(),-30);
         }
     }
 
@@ -256,31 +275,17 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
      *
      * @param startDate
      * @param endDate
+     * @param Offset
      */
-    protected void handleDatePrev(Date startDate, Date endDate) {
+    protected void handleDate(Date startDate, Date endDate, Integer Offset) {
         if (isVisibleInActivity()) {
-            if (!shiftDates(startDate, endDate, -1)) {
+            if (!shiftDates(startDate, endDate, Offset)) {
                 return;
             }
         }
         refreshIfVisible();
     }
 
-    /**
-     * Default implementation shifts the dates by one day, if visible
-     * and calls #refreshIfVisible().
-     *
-     * @param startDate
-     * @param endDate
-     */
-    protected void handleDateNext(Date startDate, Date endDate) {
-        if (isVisibleInActivity()) {
-            if (!shiftDates(startDate, endDate, +1)) {
-                return;
-            }
-        }
-        refreshIfVisible();
-    }
 
     protected void refreshIfVisible() {
         if (isVisibleInActivity()) {
@@ -359,7 +364,7 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         // enable touch gestures
         chart.setTouchEnabled(true);
 
-// commented out: this has weird bugs/sideeffects at least on WeekStepsCharts
+// commented out: this has weird bugs/side-effects at least on WeekStepsCharts
 // where only the first Day-label is drawn, because AxisRenderer.computeAxisValues(float,float)
 // appears to have an overflow when calculating 'n' (number of entries)
 //        chart.getXAxis().setGranularity(60*5);
@@ -415,7 +420,7 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
      */
     protected abstract void renderCharts();
 
-    protected DefaultChartsData<LineData> refresh(GBDevice gbDevice, List<? extends ActivitySample> samples) {
+    public DefaultChartsData<LineData> refresh(GBDevice gbDevice, List<? extends ActivitySample> samples) {
 //        Calendar cal = GregorianCalendar.getInstance();
 //        cal.clear();
         TimestampTranslation tsTranslation = new TimestampTranslation();
@@ -712,6 +717,29 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
         return samples;
     }
 
+    protected List<? extends ActivitySample> getSamplesofSleep(DBHandler db, GBDevice device) {
+        int SLEEP_HOUR_LIMIT = 12;
+
+        int tsStart = getTSStart();
+        Calendar day = GregorianCalendar.getInstance();
+        day.setTimeInMillis(tsStart * 1000L);
+        day.set(Calendar.HOUR_OF_DAY, SLEEP_HOUR_LIMIT);
+        day.set(Calendar.MINUTE, 0);
+        day.set(Calendar.SECOND, 0);
+        tsStart = toTimestamp(day.getTime());
+
+        int tsEnd = getTSEnd();
+        day.setTimeInMillis(tsEnd* 1000L);
+        day.set(Calendar.HOUR_OF_DAY, SLEEP_HOUR_LIMIT);
+        day.set(Calendar.MINUTE, 0);
+        day.set(Calendar.SECOND, 0);
+        tsEnd = toTimestamp(day.getTime());
+
+        List<ActivitySample> samples = (List<ActivitySample>) getSamples(db, device, tsStart, tsEnd);
+        ensureStartAndEndSamples(samples, tsStart, tsEnd);
+        return samples;
+    }
+
     protected void ensureStartAndEndSamples(List<ActivitySample> samples, int tsStart, int tsEnd) {
         if (samples == null || samples.isEmpty()) {
             return;
@@ -816,7 +844,7 @@ public abstract class AbstractChartFragment extends AbstractGBFragment {
      * It does this so that the large timestamp values can be used
      * floating point values, where the mantissa is just 24 bits.
      */
-    protected static class TimestampTranslation {
+    public static class TimestampTranslation {
         private int tsOffset = -1;
 
         public int shorten(int timestamp) {

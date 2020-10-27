@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2019 Andreas Shimokawa, Carsten Pfeiffer
+/*  Copyright (C) 2017-2020 Andreas Shimokawa, Carsten Pfeiffer, MyTimeKill
 
     This file is part of Gadgetbridge.
 
@@ -26,45 +26,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiFirmwareT
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 
 public class AmazfitBipFirmwareInfo extends HuamiFirmwareInfo {
-    // gps detection is totally bogus, just the first 16 bytes
-    private static final byte[][] GPS_HEADERS = {
-            new byte[]{
-                    (byte) 0xcb, 0x51, (byte) 0xc1, 0x30, 0x41, (byte) 0x9e, 0x5e, (byte) 0xd3,
-                    0x51, 0x35, (byte) 0xdf, 0x66, (byte) 0xed, (byte) 0xd9, 0x5f, (byte) 0xa7
-            },
-            new byte[]{
-                    0x10, 0x50, 0x26, 0x76, (byte) 0x8f, 0x4a, (byte) 0xa1, 0x49,
-                    (byte) 0xa7, 0x26, (byte) 0xd0, (byte) 0xe6, 0x4a, 0x21, (byte) 0x88, (byte) 0xd4
-            },
-            new byte[]{
-                    (byte) 0xeb, (byte) 0xfa, (byte) 0xc5, (byte) 0x89, (byte) 0xf0, 0x5c, 0x2e, (byte) 0xcc,
-                    (byte) 0xfa, (byte) 0xf3, 0x62, (byte) 0xeb, (byte) 0x92, (byte) 0xc6, (byte) 0xa1, (byte) 0xbb
-            },
-            new byte[]{
-                    0x0b, 0x61, 0x53, (byte) 0xed, (byte) 0x83, (byte) 0xac, 0x07, 0x21,
-                    (byte) 0x8c, 0x36, 0x2e, (byte) 0x8c, (byte) 0x9c, 0x08, 0x54, (byte) 0xa6
-            },
-            new byte[]{
-                    (byte) 0xec, 0x51, 0x73, 0x22, 0x60, 0x02, 0x14, (byte) 0xb7,
-                    (byte) 0xb5, (byte) 0xea, 0x4b, 0x22, 0x5d, 0x23, (byte) 0xe5, 0x4f
-            },
-            new byte[]{
-                    0x73, 0x75, 0x68, (byte) 0xd0, 0x70, 0x73, (byte) 0xbb, 0x5a,
-                    0x3e, (byte) 0xc3, (byte) 0xd3, 0x09, (byte) 0x9e, 0x1d, (byte) 0xd3, (byte) 0xc9
-            }
-    };
 
     // this is the same as Cor
-    private static final byte[] FW_HEADER = new byte[]{
+    public static final byte[] FW_HEADER = new byte[]{
             0x00, (byte) 0x98, 0x00, 0x20, (byte) 0xA5, 0x04, 0x00, 0x20, (byte) 0xAD, 0x04, 0x00, 0x20, (byte) 0xC5, 0x04, 0x00, 0x20
-    };
-
-    private static final byte[] GPS_ALMANAC_HEADER = new byte[]{ // probably wrong
-            (byte) 0xa0, (byte) 0x80, 0x08, 0x00, (byte) 0x8b, 0x07
-    };
-
-    private static final byte[] GPS_CEP_HEADER = new byte[]{ // probably wrong
-            0x2a, 0x12, (byte) 0xa0, 0x02
     };
 
     private static Map<Integer, String> crcToVersion = new HashMap<>();
@@ -109,10 +74,12 @@ public class AmazfitBipFirmwareInfo extends HuamiFirmwareInfo {
         crcToVersion.put(32576, "1.1.5.16");
         crcToVersion.put(28893, "1.1.5.24");
         crcToVersion.put(61710, "1.1.5.56");
+        crcToVersion.put(23387, "1.1.6.34");
 
         // Latin Firmware
         crcToVersion.put(52828, "1.1.5.36 (Latin)");
         crcToVersion.put(60625, "1.1.6.30 (Latin)");
+        crcToVersion.put(17913, "1.1.6.32 (Latin)");
 
         // resources
         crcToVersion.put(12586, "0.0.8.74");
@@ -139,7 +106,8 @@ public class AmazfitBipFirmwareInfo extends HuamiFirmwareInfo {
         crcToVersion.put(5341, "1.1.5.02-24");
         crcToVersion.put(22662, "1.1.5.36");
         crcToVersion.put(24045, "1.1.5.56");
-        crcToVersion.put(37677, "1.1.6.30");
+        crcToVersion.put(37677, "1.1.6.30-32");
+        crcToVersion.put(26735, "1.1.6.34");
 
         // gps
         crcToVersion.put(61520, "9367,8f79a91,0,0,");
@@ -153,6 +121,14 @@ public class AmazfitBipFirmwareInfo extends HuamiFirmwareInfo {
         crcToVersion.put(61054, "8");
         crcToVersion.put(62291, "9 (old Latin)");
         crcToVersion.put(59577, "9 (Latin)");
+
+        // BipOS FW
+        crcToVersion.put(28373, "1.1.2.05 (BipOS 0.5)");
+        crcToVersion.put(62977, "1.1.2.05 (BipOS 0.5.1)");
+
+        // BipOS RES
+        crcToVersion.put(16303, "1.1.2.05 (BipOS 0.5)");
+        crcToVersion.put(61135, "1.1.2.05 (BipOS 0.5.1)");
     }
 
     public AmazfitBipFirmwareInfo(byte[] bytes) {
@@ -162,7 +138,7 @@ public class AmazfitBipFirmwareInfo extends HuamiFirmwareInfo {
     @Override
     protected HuamiFirmwareType determineFirmwareType(byte[] bytes) {
         if (ArrayUtils.startsWith(bytes, RES_HEADER) || ArrayUtils.startsWith(bytes, NEWRES_HEADER)) {
-            if ((bytes.length <= 100000) || (bytes.length > 700000)) { // dont know how to distinguish from Cor/Mi Band 3 .res
+            if (bytes.length <= 100000) { // dont know how to distinguish from Cor/Mi Band 3 .res
                 return HuamiFirmwareType.INVALID;
             }
             return HuamiFirmwareType.RES;

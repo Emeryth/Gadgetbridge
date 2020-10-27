@@ -1,4 +1,5 @@
-/*  Copyright (C) 2017-2019 Daniele Gobbetti, João Paulo Barraca, tiparega
+/*  Copyright (C) 2016-2020 Andreas Shimokawa, Carsten Pfeiffer, Cre3per,
+    Daniele Gobbetti, José Rebelo, Petr Kadlec, protomors
 
     This file is part of Gadgetbridge.
 
@@ -18,7 +19,9 @@ package nodomain.freeyourgadget.gadgetbridge.devices.makibeshr3;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.greenrobot.dao.query.QueryBuilder;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
@@ -45,6 +49,8 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
+import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 import static nodomain.freeyourgadget.gadgetbridge.GBApplication.getContext;
 
@@ -72,7 +78,9 @@ public class MakibesHR3Coordinator extends AbstractDeviceCoordinator {
     }
 
     public static byte getTimeMode(SharedPreferences sharedPrefs) {
-        String timeMode = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_TIMEFORMAT, getContext().getString(R.string.p_timeformat_24h));
+        GBPrefs gbPrefs = new GBPrefs(new Prefs(sharedPrefs));
+
+        String timeMode = gbPrefs.getTimeFormat();
 
         if (timeMode.equals(getContext().getString(R.string.p_timeformat_24h))) {
             return MakibesHR3Constants.ARG_SET_TIMEMODE_24H;
@@ -145,9 +153,15 @@ public class MakibesHR3Coordinator extends AbstractDeviceCoordinator {
     public DeviceType getSupportedType(GBDeviceCandidate candidate) {
         String name = candidate.getDevice().getName();
 
-        // TODO: Device discovery
-        if ((name != null) && name.equals("Y808")) {
-            return DeviceType.MAKIBESHR3;
+        List<String> deviceNames = new ArrayList<String>(){{
+            add("Y808"); // Chinese version
+            add("MAKIBES HR3"); // English version
+        }};
+
+        if (name != null) {
+            if (deviceNames.contains(name)) {
+                return DeviceType.MAKIBESHR3;
+            }
         }
 
         return DeviceType.UNKNOWN;
@@ -162,7 +176,7 @@ public class MakibesHR3Coordinator extends AbstractDeviceCoordinator {
 
     @Override
     public int getBondingStyle() {
-        return BONDING_STYLE_NONE;
+        return BONDING_STYLE_BOND;
     }
 
     @Override

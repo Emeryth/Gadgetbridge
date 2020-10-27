@@ -1,5 +1,5 @@
-/*  Copyright (C) 2017-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, João Paulo Barraca
+/*  Copyright (C) 2017-2020 Andreas Shimokawa, Daniele Gobbetti, João
+    Paulo Barraca, José Rebelo, tiparega
 
     This file is part of Gadgetbridge.
 
@@ -26,7 +26,9 @@ import androidx.annotation.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
@@ -55,11 +57,30 @@ public class AmazfitBipLiteCoordinator extends AmazfitBipCoordinator {
 
     @Override
     public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return null;
+        AmazfitBipLiteFWInstallHandler handler = new AmazfitBipLiteFWInstallHandler(uri, context);
+        return handler.isValid() ? handler : null;
     }
 
     @Override
     public int getBondingStyle() {
         return BONDING_STYLE_REQUIRE_KEY;
+    }
+
+    @Override
+    public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
+        return new int[]{
+                R.xml.devicesettings_amazfitbip,
+                R.xml.devicesettings_timeformat,
+                R.xml.devicesettings_wearlocation,
+                R.xml.devicesettings_custom_emoji_font,
+                R.xml.devicesettings_liftwrist_display,
+                R.xml.devicesettings_disconnectnotification,
+                R.xml.devicesettings_sync_calendar,
+                R.xml.devicesettings_expose_hr_thirdparty,
+                R.xml.devicesettings_buttonactions_with_longpress,
+                R.xml.devicesettings_device_actions,
+                R.xml.devicesettings_pairingkey,
+                R.xml.devicesettings_relax_firmware_checks,
+        };
     }
 }

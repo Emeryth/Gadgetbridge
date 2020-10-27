@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2019 Carsten Pfeiffer
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer
 
     This file is part of Gadgetbridge.
 
@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 public interface Alarm extends Serializable {
     /**
-     * The {@link android.os.Bundle} name for transferring pacreled alarms.
+     * The {@link android.os.Bundle} name for transferring parceled alarms.
      */
     String EXTRA_ALARM = "alarm";
 
@@ -37,7 +37,11 @@ public interface Alarm extends Serializable {
 
     boolean getEnabled();
 
+    boolean getUnused();
+
     boolean getSmartWakeup();
+
+    boolean getSnooze();
 
     int getRepetition();
 
@@ -48,4 +52,8 @@ public interface Alarm extends Serializable {
     int getHour();
 
     int getMinute();
+
+    String getTitle();
+
+    String getDescription();
 }

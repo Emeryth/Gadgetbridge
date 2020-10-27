@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2019 Andreas Shimokawa, AndrewH, Carsten Pfeiffer,
+/*  Copyright (C) 2017-2020 Andreas Shimokawa, AndrewH, Carsten Pfeiffer,
     szilardx
 
     This file is part of Gadgetbridge.
@@ -179,7 +179,9 @@ public class HuamiActivityDetailsParser {
 
         baseLongitude += longitudeDelta;
         baseLatitude += latitudeDelta;
-        baseAltitude += altitudeDelta;
+        if (baseAltitude != -20000) {
+            baseAltitude += altitudeDelta;
+        }
 
         GPSCoordinate coordinate = new GPSCoordinate(
                 convertHuamiValueToDecimalDegrees(baseLongitude),

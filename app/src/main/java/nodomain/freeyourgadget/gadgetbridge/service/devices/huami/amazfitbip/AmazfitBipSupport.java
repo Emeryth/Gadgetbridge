@@ -1,5 +1,5 @@
-/*  Copyright (C) 2017-2019 Andreas Shimokawa, Carsten Pfeiffer, Matthieu
-    Baerts, Roi Greenberg
+/*  Copyright (C) 2017-2020 Andreas Shimokawa, Carsten Pfeiffer, DerFetzer,
+    Matthieu Baerts, Roi Greenberg
 
     This file is part of Gadgetbridge.
 
@@ -17,41 +17,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitbip;
 
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.net.Uri;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitbip.AmazfitBipFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitbip.AmazfitBipService;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
-import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.alertnotification.AlertCategory;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.alertnotification.AlertNotificationProfile;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.alertnotification.NewAlert;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiIcon;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.FetchActivityOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.FetchSportsSummaryOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.HuamiFetchDebugLogsOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.NotificationStrategy;
-import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class AmazfitBipSupport extends HuamiSupport {
 
@@ -68,97 +61,7 @@ public class AmazfitBipSupport extends HuamiSupport {
 
     @Override
     public void onNotification(NotificationSpec notificationSpec) {
-        if (notificationSpec.type == NotificationType.GENERIC_ALARM_CLOCK) {
-            onAlarmClock(notificationSpec);
-            return;
-        }
-
-        String senderOrTitle = StringUtils.getFirstOf(notificationSpec.sender, notificationSpec.title);
-
-        String message = StringUtils.truncate(senderOrTitle, 32) + "\0";
-        if (notificationSpec.subject != null) {
-            message += StringUtils.truncate(notificationSpec.subject, 128) + "\n\n";
-        }
-        if (notificationSpec.body != null) {
-            message += StringUtils.truncate(notificationSpec.body, 128);
-        }
-
-        try {
-            TransactionBuilder builder = performInitialized("new notification");
-
-            byte customIconId = HuamiIcon.mapToIconId(notificationSpec.type);
-            AlertCategory alertCategory = AlertCategory.CustomHuami;
-
-            // The SMS icon for AlertCategory.SMS is unique and not available as iconId
-            if (notificationSpec.type == NotificationType.GENERIC_SMS) {
-                alertCategory = AlertCategory.SMS;
-            }
-            // EMAIL icon does not work in FW 0.0.8.74, it did in 0.0.7.90
-            else if (customIconId == HuamiIcon.EMAIL) {
-                alertCategory = AlertCategory.Email;
-            }
-
-            int maxLength = 230;
-            if (characteristicChunked != null) {
-                int prefixlength = 2;
-
-                // We also need a (fake) source name for Mi Band 3 for SMS/EMAIL, else the message is not displayed
-                byte[] appSuffix = "\0 \0".getBytes();
-                int suffixlength = appSuffix.length;
-
-                if (alertCategory == AlertCategory.CustomHuami) {
-                    String appName;
-                    prefixlength = 3;
-                    final PackageManager pm = getContext().getPackageManager();
-                    ApplicationInfo ai = null;
-                    try {
-                        ai = pm.getApplicationInfo(notificationSpec.sourceAppId, 0);
-                    } catch (PackageManager.NameNotFoundException ignored) {
-                    }
-
-                    if (ai != null) {
-                        appName = "\0" + pm.getApplicationLabel(ai) + "\0";
-                    } else {
-                        appName = "\0" + "UNKNOWN" + "\0";
-                    }
-                    appSuffix = appName.getBytes();
-                    suffixlength = appSuffix.length;
-                }
-                if (gbDevice.getType() == DeviceType.MIBAND4) {
-                    prefixlength += 4;
-                }
-
-                byte[] rawmessage = message.getBytes();
-                int length = Math.min(rawmessage.length, maxLength - prefixlength);
-
-                byte[] command = new byte[length + prefixlength + suffixlength];
-                int pos = 0;
-                command[pos++] = (byte) alertCategory.getId();
-                if (gbDevice.getType() == DeviceType.MIBAND4) {
-                    command[pos++] = 0; // TODO
-                    command[pos++] = 0;
-                    command[pos++] = 0;
-                    command[pos++] = 0;
-                }
-                command[pos++] = 1;
-                if (alertCategory == AlertCategory.CustomHuami) {
-                    command[pos] = customIconId;
-                }
-
-                System.arraycopy(rawmessage, 0, command, prefixlength, length);
-                System.arraycopy(appSuffix, 0, command, prefixlength + length, appSuffix.length);
-
-                writeToChunked(builder, 0, command);
-            } else {
-                AlertNotificationProfile<?> profile = new AlertNotificationProfile(this);
-                NewAlert alert = new NewAlert(alertCategory, 1, message, customIconId);
-                profile.setMaxLength(maxLength);
-                profile.newAlert(builder, alert);
-            }
-            builder.queue(getQueue());
-        } catch (IOException ex) {
-            LOG.error("Unable to send notification to Amazfit Bip", ex);
-        }
+        super.sendNotificationNew(notificationSpec, false);
     }
 
     @Override
@@ -170,18 +73,15 @@ public class AmazfitBipSupport extends HuamiSupport {
     }
 
     @Override
-    public void handleButtonEvent() {
-        // ignore
-    }
-
-    @Override
     protected AmazfitBipSupport setDisplayItems(TransactionBuilder builder) {
         if (gbDevice.getFirmwareVersion() == null) {
             LOG.warn("Device not initialized yet, won't set menu items");
             return this;
         }
 
-        Set<String> pages = HuamiCoordinator.getDisplayItems(gbDevice.getAddress());
+        SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
+        Set<String> pages = prefs.getStringSet(HuamiConst.PREF_DISPLAY_ITEMS, new HashSet<>(Arrays.asList(getContext().getResources().getStringArray(R.array.pref_bip_display_items_default))));
+
         LOG.info("Setting display items to " + (pages == null ? "none" : pages));
         byte[] command = AmazfitBipService.COMMAND_CHANGE_SCREENS.clone();
 
@@ -219,9 +119,9 @@ public class AmazfitBipSupport extends HuamiSupport {
             if (pages.contains("shortcut_alipay")) {
                 shortcut_alipay = true;
             }
+            builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), command);
+            setShortcuts(builder, shortcut_weather, shortcut_alipay);
         }
-        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), command);
-        setShortcuts(builder, shortcut_weather, shortcut_alipay);
 
         return this;
     }
@@ -255,39 +155,6 @@ public class AmazfitBipSupport extends HuamiSupport {
         } catch (IOException ex) {
             LOG.error("Unable to fetch recorded data types" + dataTypes, ex);
         }
-    }
-
-    @Override
-    public boolean onCharacteristicChanged(BluetoothGatt gatt,
-                                           BluetoothGattCharacteristic characteristic) {
-        boolean handled = super.onCharacteristicChanged(gatt, characteristic);
-        if (!handled) {
-            UUID characteristicUUID = characteristic.getUuid();
-            if (HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION.equals(characteristicUUID)) {
-                return handleConfigurationInfo(characteristic.getValue());
-            }
-        }
-        return false;
-    }
-
-    private boolean handleConfigurationInfo(byte[] value) {
-        if (value == null || value.length < 4) {
-            return false;
-        }
-        if (value[0] == 0x10 && value[1] == 0x0e && value[2] == 0x01) {
-            String gpsVersion = new String(value, 3, value.length - 3);
-            LOG.info("got gps version = " + gpsVersion);
-            gbDevice.setFirmwareVersion2(gpsVersion);
-            return true;
-        }
-        return false;
-    }
-
-    // this probably does more than only getting the GPS version...
-    private AmazfitBipSupport requestGPSVersion(TransactionBuilder builder) {
-        LOG.info("Requesting GPS version");
-        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), AmazfitBipService.COMMAND_REQUEST_GPS_VERSION);
-        return this;
     }
 
     @Override

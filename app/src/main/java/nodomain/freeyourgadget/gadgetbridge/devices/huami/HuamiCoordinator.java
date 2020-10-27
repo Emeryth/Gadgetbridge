@@ -1,5 +1,5 @@
-/*  Copyright (C) 2016-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, José Rebelo
+/*  Copyright (C) 2016-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, José Rebelo, Nephiel
 
     This file is part of Gadgetbridge.
 
@@ -35,7 +35,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Set;
 
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -192,11 +191,6 @@ public abstract class HuamiCoordinator extends AbstractDeviceCoordinator {
         return getTimePreference(HuamiConst.PREF_DISCONNECT_NOTIFICATION_END, "00:00", deviceAddress);
     }
 
-    public static Set<String> getDisplayItems(String deviceAddress) {
-        SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(deviceAddress);
-        return prefs.getStringSet(HuamiConst.PREF_DISPLAY_ITEMS, null);
-    }
-
     public static boolean getUseCustomFont(String deviceAddress) {
         SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(deviceAddress);
         return prefs.getBoolean(HuamiConst.PREF_USE_CUSTOM_FONT, false);
@@ -321,6 +315,11 @@ public abstract class HuamiCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public boolean supportsFindDevice() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsAlarmSnoozing() {
         return true;
     }
 }

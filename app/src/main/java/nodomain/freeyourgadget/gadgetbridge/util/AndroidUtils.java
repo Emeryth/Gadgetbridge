@@ -1,5 +1,5 @@
-/*  Copyright (C) 2016-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, Felix Konstantin Maurer, Taavi Eomäe
+/*  Copyright (C) 2016-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, Felix Konstantin Maurer, Marc Nause, Taavi Eomäe, vanous
 
     This file is part of Gadgetbridge.
 
@@ -35,15 +35,16 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 
@@ -129,6 +130,17 @@ public class AndroidUtils {
         return colorToHex(color);
     }
 
+    public static int getBackgroundColor(Context context) {
+        int color;
+        if (GBApplication.isDarkThemeEnabled()) {
+            color = context.getResources().getColor(R.color.cardview_dark_background);
+        } else {
+            color = context.getResources().getColor(R.color.cardview_light_background);
+        }
+        return color;
+    }
+
+
     private static String colorToHex(int color) {
         return "#"
                 + Integer.toHexString(Color.red(color))
@@ -137,10 +149,11 @@ public class AndroidUtils {
     }
 
     /**
-     * As seen on stackoverflow https://stackoverflow.com/a/36714242/1207186
+     * As seen on StackOverflow https://stackoverflow.com/a/36714242/1207186
      * Try to find the file path of a document uri
+     *
      * @param context the application context
-     * @param uri the Uri for which the path should be resolved
+     * @param uri     the Uri for which the path should be resolved
      * @return the path corresponding to the Uri as a String
      * @throws IllegalArgumentException on any problem decoding the uri to a path
      */
@@ -159,7 +172,7 @@ public class AndroidUtils {
     }
 
     /**
-     * As seen on stackoverflow https://stackoverflow.com/a/36714242/1207186
+     * As seen on StackOverflow https://stackoverflow.com/a/36714242/1207186
      * Try to find the file path of a document uri
      * @param context the application context
      * @param uri the Uri for which the path should be resolved
@@ -206,8 +219,7 @@ public class AndroidUtils {
             String[] projection = {
                     MediaStore.Images.Media.DATA
             };
-            Cursor cursor = null;
-            cursor = context.getContentResolver()
+            Cursor cursor = context.getContentResolver()
                     .query(uri, projection, selection, selectionArgs, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             if (cursor.moveToFirst()) {

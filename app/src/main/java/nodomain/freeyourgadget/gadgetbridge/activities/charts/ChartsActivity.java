@@ -1,5 +1,5 @@
-/*  Copyright (C) 2015-2019 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, Vebryn
+/*  Copyright (C) 2015-2020 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, vanous, Vebryn
 
     This file is part of Gadgetbridge.
 
@@ -175,20 +175,52 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
             }
         });
 
-        Button mPrevButton = findViewById(R.id.charts_previous);
+        Button mPrevButton = findViewById(R.id.charts_previous_day);
         mPrevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handlePrevButtonClicked();
+                handleButtonClicked(DATE_PREV_DAY);
             }
         });
-        Button mNextButton = findViewById(R.id.charts_next);
+        Button mNextButton = findViewById(R.id.charts_next_day);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleNextButtonClicked();
+                handleButtonClicked(DATE_NEXT_DAY);
             }
         });
+
+        Button mPrevWeekButton = findViewById(R.id.charts_previous_week);
+        mPrevWeekButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleButtonClicked(DATE_PREV_WEEK);
+            }
+        });
+        Button mNextWeekButton = findViewById(R.id.charts_next_week);
+        mNextWeekButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleButtonClicked(DATE_NEXT_WEEK);
+            }
+        });
+
+        Button mPrevMonthButton = findViewById(R.id.charts_previous_month);
+        mPrevMonthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleButtonClicked(DATE_PREV_MONTH);
+            }
+        });
+        Button mNextMonthButton = findViewById(R.id.charts_next_month);
+        mNextMonthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleButtonClicked(DATE_NEXT_MONTH);
+            }
+        });
+
+
     }
 
     private String formatDetailedDuration() {
@@ -229,12 +261,8 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
         return mEndDate;
     }
 
-    private void handleNextButtonClicked() {
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(DATE_NEXT));
-    }
-
-    private void handlePrevButtonClicked() {
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(DATE_PREV));
+    private void handleButtonClicked(String Action) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Action));
     }
 
     @Override
@@ -280,7 +308,8 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
         return super.onOptionsItemSelected(item);
     }
 
-    private void enableSwipeRefresh(boolean enable) {
+    @Override
+    public void enableSwipeRefresh(boolean enable) {
         DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(mGBDevice);
         swipeLayout.setEnabled(enable && coordinator.allowFetchActivityData(mGBDevice));
     }
@@ -327,14 +356,16 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
                 case 0:
                     return new ActivitySleepChartFragment();
                 case 1:
-                    return new SleepChartFragment();
+                    return new ActivityListingChartFragment();
                 case 2:
-                    return new WeekSleepChartFragment();
+                    return new SleepChartFragment();
                 case 3:
-                    return new WeekStepsChartFragment();
+                    return new WeekSleepChartFragment();
                 case 4:
-                    return new SpeedZonesFragment();
+                    return new WeekStepsChartFragment();
                 case 5:
+                    return new SpeedZonesFragment();
+                case 6:
                     return new LiveActivityFragment();
             }
             return null;
@@ -345,9 +376,9 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
             // Show 5 or 6 total pages.
             DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(mGBDevice);
             if (coordinator.supportsRealtimeData()) {
-                return 6;
+                return 7;
             }
-            return 5;
+            return 6;
         }
 
         private String getSleepTitle() {
@@ -374,14 +405,16 @@ public class ChartsActivity extends AbstractGBFragmentActivity implements Charts
                 case 0:
                     return getString(R.string.activity_sleepchart_activity_and_sleep);
                 case 1:
-                    return getString(R.string.sleepchart_your_sleep);
+                    return getString(R.string.charts_activity_list);
                 case 2:
-                    return getSleepTitle();
+                    return getString(R.string.sleepchart_your_sleep);
                 case 3:
-                    return getStepsTitle();
+                    return getSleepTitle();
                 case 4:
-                    return getString(R.string.stats_title);
+                    return getStepsTitle();
                 case 5:
+                    return getString(R.string.stats_title);
+                case 6:
                     return getString(R.string.liveactivity_live_activity);
             }
             return super.getPageTitle(position);

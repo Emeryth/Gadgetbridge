@@ -1,7 +1,19 @@
-// TODO: GB sometimes fails to connect until a connection with WearFit was made. This must be caused
-// TODO: by GB, not by Makibes hr3 support. Charging the watch, attempting to pair, delete and
-// TODO: re-add, scan for devices and go back, might also help. This needs further research.
+/*  Copyright (C) 2019-2020 Andreas Shimokawa, Cre3per
 
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 // TODO: All the commands that aren't supported by GB should be added to device specific settings.
 
 // TODO: It'd be cool if we could change the language. There's no official way to do so, but the
@@ -76,7 +88,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLEDeviceSupport implement
 
     // The delay must be at least as long as it takes the watch to respond.
     // Reordering the requests could maybe reduce the delay, but this works fine too.
-    private CountDownTimer mFetchCountDown = new CountDownTimer(2000, 2000) {
+    private final CountDownTimer mFetchCountDown = new CountDownTimer(2000, 2000) {
         @Override
         public void onTick(long millisUntilFinished) {
 
@@ -89,7 +101,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLEDeviceSupport implement
         }
     };
 
-    private Handler mFindPhoneHandler = new Handler();
+    private final Handler mFindPhoneHandler = new Handler();
 
     private BluetoothGattCharacteristic mControlCharacteristic = null;
     private BluetoothGattCharacteristic mReportCharacteristic = null;
@@ -764,8 +776,8 @@ public class MakibesHR3DeviceSupport extends AbstractBTLEDeviceSupport implement
             byte[] value = characteristic.getValue();
             byte[] arguments = new byte[value.length - 6];
 
-            for (int i = 0; i < arguments.length; ++i) {
-                arguments[i] = value[i + 6];
+            if (arguments.length >= 0) {
+                System.arraycopy(value, 6, arguments, 0, arguments.length);
             }
 
             byte[] report = new byte[]{value[4], value[5]};
@@ -825,9 +837,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLEDeviceSupport implement
 
         result[MakibesHR3Constants.DATA_ARGUMENT_COUNT_INDEX] = (byte) (data.length + 3);
 
-        for (int i = 0; i < command.length; ++i) {
-            result[MakibesHR3Constants.DATA_COMMAND_INDEX + i] = command[i];
-        }
+        System.arraycopy(command, 0, result, 4, command.length);
 
         System.arraycopy(data, 0, result, 6, data.length);
 
