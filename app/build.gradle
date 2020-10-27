@@ -29,6 +29,7 @@ android {
         versionName "0.48.0"
         versionCode 182
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
