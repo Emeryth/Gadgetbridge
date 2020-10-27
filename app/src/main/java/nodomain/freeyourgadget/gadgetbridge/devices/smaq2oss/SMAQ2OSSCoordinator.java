@@ -51,7 +51,7 @@ public class SMAQ2OSSCoordinator extends AbstractDeviceCoordinator {
         try {
             BluetoothDevice device = candidate.getDevice();
             String name = device.getName();
-            if (name != null && name.equalsIgnoreCase("SMA-Q2-OSS")) {
+            if (name != null && name.startsWith("SMAQ2-")) {
                 return DeviceType.SMAQ2OSS;
             }
         } catch (Exception ex) {
