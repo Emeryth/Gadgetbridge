@@ -51,7 +51,8 @@ public class SMAQ2OSSCoordinator extends AbstractDeviceCoordinator {
         try {
             BluetoothDevice device = candidate.getDevice();
             String name = device.getName();
-            if (name != null && name.startsWith("SMAQ2-")) {
+            // TODO still match for "SMA-Q2-OSS" because of backward firmware compatibility - remove eventually
+            if (name != null && (name.startsWith("SMAQ2-") || name.equalsIgnoreCase("SMA-Q2-OSS"))) {
                 return DeviceType.SMAQ2OSS;
             }
         } catch (Exception ex) {
